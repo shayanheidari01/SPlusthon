@@ -252,7 +252,7 @@ def main(argv):
             packages=find_packages(exclude=[
                 'splusthon_*', 'tests*'
             ]),
-            install_requires=['pyaes', 'rsa'],
+            install_requires=['pyaes', 'rsa', 'websockets'],
             extras_require={
                 'cryptg': ['cryptg']
             }
