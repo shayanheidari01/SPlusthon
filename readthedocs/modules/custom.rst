@@ -2,7 +2,7 @@
 Custom package
 ==============
 
-The `telethon.tl.custom` package contains custom classes that the library
+The `splusthon.tl.custom` package contains custom classes that the library
 uses in order to make working with Telegram easier. Only those that you
 are supposed to use will be documented here. You can use undocumented ones
 at your own risk.
@@ -13,7 +13,7 @@ classes. They are returned by client methods.
 
 .. contents::
 
-.. automodule:: telethon.tl.custom
+.. automodule:: splusthon.tl.custom
     :members:
     :undoc-members:
     :show-inheritance:
@@ -22,7 +22,7 @@ classes. They are returned by client methods.
 AdminLogEvent
 =============
 
-.. automodule:: telethon.tl.custom.adminlogevent
+.. automodule:: splusthon.tl.custom.adminlogevent
     :members:
     :undoc-members:
     :show-inheritance:
@@ -31,7 +31,7 @@ AdminLogEvent
 Button
 ======
 
-.. automodule:: telethon.tl.custom.button
+.. automodule:: splusthon.tl.custom.button
     :members:
     :undoc-members:
     :show-inheritance:
@@ -40,7 +40,7 @@ Button
 ChatGetter
 ==========
 
-.. automodule:: telethon.tl.custom.chatgetter
+.. automodule:: splusthon.tl.custom.chatgetter
     :members:
     :undoc-members:
     :show-inheritance:
@@ -49,7 +49,7 @@ ChatGetter
 Conversation
 ============
 
-.. automodule:: telethon.tl.custom.conversation
+.. automodule:: splusthon.tl.custom.conversation
     :members:
     :undoc-members:
     :show-inheritance:
@@ -58,7 +58,7 @@ Conversation
 Dialog
 ======
 
-.. automodule:: telethon.tl.custom.dialog
+.. automodule:: splusthon.tl.custom.dialog
     :members:
     :undoc-members:
     :show-inheritance:
@@ -67,7 +67,7 @@ Dialog
 Draft
 =====
 
-.. automodule:: telethon.tl.custom.draft
+.. automodule:: splusthon.tl.custom.draft
     :members:
     :undoc-members:
     :show-inheritance:
@@ -76,7 +76,7 @@ Draft
 File
 ====
 
-.. automodule:: telethon.tl.custom.file
+.. automodule:: splusthon.tl.custom.file
     :members:
     :undoc-members:
     :show-inheritance:
@@ -85,7 +85,7 @@ File
 Forward
 =======
 
-.. automodule:: telethon.tl.custom.forward
+.. automodule:: splusthon.tl.custom.forward
     :members:
     :undoc-members:
     :show-inheritance:
@@ -94,7 +94,7 @@ Forward
 InlineBuilder
 =============
 
-.. automodule:: telethon.tl.custom.inlinebuilder
+.. automodule:: splusthon.tl.custom.inlinebuilder
     :members:
     :undoc-members:
     :show-inheritance:
@@ -103,7 +103,7 @@ InlineBuilder
 InlineResult
 ============
 
-.. automodule:: telethon.tl.custom.inlineresult
+.. automodule:: splusthon.tl.custom.inlineresult
     :members:
     :undoc-members:
     :show-inheritance:
@@ -112,7 +112,7 @@ InlineResult
 InlineResults
 =============
 
-.. automodule:: telethon.tl.custom.inlineresults
+.. automodule:: splusthon.tl.custom.inlineresults
     :members:
     :undoc-members:
     :show-inheritance:
@@ -121,7 +121,7 @@ InlineResults
 Message
 =======
 
-.. automodule:: telethon.tl.custom.message
+.. automodule:: splusthon.tl.custom.message
     :members:
     :undoc-members:
     :show-inheritance:
@@ -130,7 +130,7 @@ Message
 MessageButton
 =============
 
-.. automodule:: telethon.tl.custom.messagebutton
+.. automodule:: splusthon.tl.custom.messagebutton
     :members:
     :undoc-members:
     :show-inheritance:
@@ -139,7 +139,7 @@ MessageButton
 ParticipantPermissions
 ======================
 
-.. automodule:: telethon.tl.custom.participantpermissions
+.. automodule:: splusthon.tl.custom.participantpermissions
     :members:
     :undoc-members:
     :show-inheritance:
@@ -148,7 +148,7 @@ ParticipantPermissions
 QRLogin
 =======
 
-.. automodule:: telethon.tl.custom.qrlogin
+.. automodule:: splusthon.tl.custom.qrlogin
     :members:
     :undoc-members:
     :show-inheritance:
@@ -157,7 +157,7 @@ QRLogin
 SenderGetter
 ============
 
-.. automodule:: telethon.tl.custom.sendergetter
+.. automodule:: splusthon.tl.custom.sendergetter
     :members:
     :undoc-members:
     :show-inheritance:

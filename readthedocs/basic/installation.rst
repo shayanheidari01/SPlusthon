@@ -4,14 +4,14 @@
 Installation
 ============
 
-Telethon is a Python library, which means you need to download and install
+SPlusthon is a Python library, which means you need to download and install
 Python from https://www.python.org/downloads/ if you haven't already. Once
 you have Python installed, `upgrade pip`__ and run:
 
 .. code-block:: sh
 
     python3 -m pip install --upgrade pip
-    python3 -m pip install --upgrade telethon
+    python3 -m pip install --upgrade splusthon
 
 …to install or upgrade the library to the latest version.
 
@@ -25,7 +25,7 @@ you can run the following command instead:
 
 .. code-block:: sh
 
-    python3 -m pip install --upgrade https://github.com/LonamiWebs/Telethon/archive/v1.zip
+    python3 -m pip install --upgrade https://github.com/shayanheidari01/SPlusthon/archive/v1.zip
 
 .. note::
 
@@ -33,7 +33,7 @@ you can run the following command instead:
     use. However, when you are `reporting a library bug`__, you should try if the
     bug still occurs in this version.
 
-.. __: https://github.com/LonamiWebs/Telethon/issues/
+.. __: https://github.com/shayanheidari01/SPlusthon/issues/
 
 
 Verification
@@ -43,7 +43,7 @@ To verify that the library is installed correctly, run the following command:
 
 .. code-block:: sh
 
-    python3 -c "import telethon; print(telethon.__version__)"
+    python3 -c "import splusthon; print(splusthon.__version__)"
 
 The version number of the library should show in the output.
 
@@ -83,7 +83,7 @@ manually.
         apt update
         apt install clang lib{jpeg-turbo,webp}-dev python{,-dev} zlib-dev
         pip install -U --user setuptools
-        pip install -U --user telethon cryptg pillow
+        pip install -U --user splusthon cryptg pillow
 
     Thanks to `@bb010g`_ for writing down this nice list.
 

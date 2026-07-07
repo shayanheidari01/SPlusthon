@@ -5,7 +5,7 @@ Client Reference
 ================
 
 This page contains a summary of all the important methods and properties that
-you may need when using Telethon. They are sorted by relevance and are not in
+you may need when using SPlusthon. They are sorted by relevance and are not in
 alphabetical order.
 
 You should use this page to learn about which methods are available, and
@@ -14,16 +14,16 @@ sure to follow the links.
 
 .. contents::
 
-TelegramClient
+SoroushClient
 ==============
 
 This is a summary of the methods and
-properties you will find at :ref:`telethon-client`.
+properties you will find at :ref:`splusthon-client`.
 
 Auth
 ----
 
-.. currentmodule:: telethon.client.auth.AuthMethods
+.. currentmodule:: splusthon.client.auth.AuthMethods
 
 .. autosummary::
     :nosignatures:
@@ -38,7 +38,7 @@ Auth
 Base
 ----
 
-.. py:currentmodule:: telethon.client.telegrambaseclient.TelegramBaseClient
+.. py:currentmodule:: splusthon.client.telegrambaseclient.TelegramBaseClient
 
 .. autosummary::
     :nosignatures:
@@ -53,7 +53,7 @@ Base
 Messages
 --------
 
-.. py:currentmodule:: telethon.client.messages.MessageMethods
+.. py:currentmodule:: splusthon.client.messages.MessageMethods
 
 .. autosummary::
     :nosignatures:
@@ -71,7 +71,7 @@ Messages
 Uploads
 -------
 
-.. py:currentmodule:: telethon.client.uploads.UploadMethods
+.. py:currentmodule:: splusthon.client.uploads.UploadMethods
 
 .. autosummary::
     :nosignatures:
@@ -82,7 +82,7 @@ Uploads
 Downloads
 ---------
 
-.. currentmodule:: telethon.client.downloads.DownloadMethods
+.. currentmodule:: splusthon.client.downloads.DownloadMethods
 
 .. autosummary::
     :nosignatures:
@@ -95,7 +95,7 @@ Downloads
 Dialogs
 -------
 
-.. py:currentmodule:: telethon.client.dialogs.DialogMethods
+.. py:currentmodule:: splusthon.client.dialogs.DialogMethods
 
 .. autosummary::
     :nosignatures:
@@ -111,7 +111,7 @@ Dialogs
 Users
 -----
 
-.. py:currentmodule:: telethon.client.users.UserMethods
+.. py:currentmodule:: splusthon.client.users.UserMethods
 
 .. autosummary::
     :nosignatures:
@@ -126,7 +126,7 @@ Users
 Chats
 -----
 
-.. currentmodule:: telethon.client.chats.ChatMethods
+.. currentmodule:: splusthon.client.chats.ChatMethods
 
 .. autosummary::
     :nosignatures:
@@ -147,7 +147,7 @@ Chats
 Parse Mode
 ----------
 
-.. py:currentmodule:: telethon.client.messageparse.MessageParseMethods
+.. py:currentmodule:: splusthon.client.messageparse.MessageParseMethods
 
 .. autosummary::
     :nosignatures:
@@ -157,7 +157,7 @@ Parse Mode
 Updates
 -------
 
-.. py:currentmodule:: telethon.client.updates.UpdateMethods
+.. py:currentmodule:: splusthon.client.updates.UpdateMethods
 
 .. autosummary::
     :nosignatures:
@@ -173,7 +173,7 @@ Updates
 Bots
 ----
 
-.. currentmodule:: telethon.client.bots.BotMethods
+.. currentmodule:: splusthon.client.bots.BotMethods
 
 .. autosummary::
     :nosignatures:
@@ -183,7 +183,7 @@ Bots
 Buttons
 -------
 
-.. currentmodule:: telethon.client.buttons.ButtonMethods
+.. currentmodule:: splusthon.client.buttons.ButtonMethods
 
 .. autosummary::
     :nosignatures:
@@ -193,7 +193,7 @@ Buttons
 Account
 -------
 
-.. currentmodule:: telethon.client.account.AccountMethods
+.. currentmodule:: splusthon.client.account.AccountMethods
 
 .. autosummary::
     :nosignatures:

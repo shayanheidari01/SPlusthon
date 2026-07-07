@@ -6,13 +6,13 @@ Project Structure
 Main interface
 ==============
 
-The library itself is under the ``telethon/`` directory. The
-``__init__.py`` file there exposes the main ``TelegramClient``, a class
+The library itself is under the ``splusthon/`` directory. The
+``__init__.py`` file there exposes the main ``SoroushClient``, a class
 that servers as a nice interface with the most commonly used methods on
 Telegram such as sending messages, retrieving the message history,
 handling updates, etc.
 
-The ``TelegramClient`` inherits from several mixing ``Method`` classes,
+The ``SoroushClient`` inherits from several mixing ``Method`` classes,
 since there are so many methods that having them in a single file would
 make maintenance painful (it was three thousand lines before this separation
 happened!). It's a "god object", but there is only a way to interact with
@@ -36,8 +36,8 @@ their body, if they're further encrypted).
 Auto-generated code
 ===================
 
-The files under ``telethon_generator/`` are used to generate the code
-that gets placed under ``telethon/tl/``. The parsers take in files in
+The files under ``splusthon_generator/`` are used to generate the code
+that gets placed under ``splusthon/tl/``. The parsers take in files in
 a specific format (such as ``.tl`` for objects and ``.json`` for errors)
 and spit out the generated classes which represent, as Python classes,
 the request and types defined in the ``.tl`` file. It also constructs

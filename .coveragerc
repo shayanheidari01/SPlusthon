@@ -2,7 +2,7 @@
 branch = true
 parallel = true
 source =
-    telethon
+    splusthon
 
 [report]
 precision = 2

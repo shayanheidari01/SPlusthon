@@ -13,9 +13,9 @@ What are Sessions?
 ==================
 
 The first parameter you pass to the constructor of the
-:ref:`TelegramClient <telethon-client>` is
+:ref:`SoroushClient <splusthon-client>` is
 the ``session``, and defaults to be the session name (or full path). That is,
-if you create a ``TelegramClient('anon')`` instance and connect, an
+if you create a ``SoroushClient('anon')`` instance and connect, an
 ``anon.session`` file will be created in the working directory.
 
 Note that if you pass a string it will be a file in the current working
@@ -56,27 +56,27 @@ be noticeable, in which case you can also use a different storage. Note that
 this is rare and most people won't have this issue, but it's worth a mention.
 
 To use a custom session storage, simply pass the custom session instance to
-:ref:`TelegramClient <telethon-client>` instead of
+:ref:`SoroushClient <splusthon-client>` instead of
 the session name.
 
-Telethon contains three implementations of the abstract ``Session`` class:
+SPlusthon contains three implementations of the abstract ``Session`` class:
 
-.. currentmodule:: telethon.sessions
+.. currentmodule:: splusthon.sessions
 
 * `MemorySession <memory.MemorySession>`: stores session data within memory.
 * `SQLiteSession <sqlite.SQLiteSession>`: stores sessions within on-disk SQLite databases. Default.
 * `StringSession <string.StringSession>`: stores session data within memory,
   but can be saved as a string.
 
-You can import these ``from telethon.sessions``. For example, using the
+You can import these ``from splusthon.sessions``. For example, using the
 `StringSession <string.StringSession>` is done as follows:
 
 .. code-block:: python
 
-    from telethon.sync import TelegramClient
-    from telethon.sessions import StringSession
+    from splusthon.sync import SoroushClient
+    from splusthon.sessions import StringSession
 
-    with TelegramClient(StringSession(string), api_id, api_hash) as client:
+    with SoroushClient(StringSession(string), api_id, api_hash) as client:
         ...  # use the client
 
         # Save the string session as a string; you should decide how
@@ -89,19 +89,8 @@ You can import these ``from telethon.sessions``. For example, using the
 
     # Note that it's also possible to save any other session type
     # as a string by using ``StringSession.save(session_instance)``:
-    client = TelegramClient('sqlite-session', api_id, api_hash)
+    client = SoroushClient('sqlite-session', api_id, api_hash)
     string = StringSession.save(client.session)
-
-There are other community-maintained implementations available:
-
-* `SQLAlchemy <https://github.com/tulir/telethon-session-sqlalchemy>`_:
-  stores all sessions in a single database via SQLAlchemy.
-
-* `Redis <https://github.com/ezdev128/telethon-session-redis>`_:
-  stores all sessions in a single Redis data store.
-
-* `MongoDB <https://github.com/watzon/telethon-session-mongo>`_:
-  stores the current session in a MongoDB database.
 
 
 Creating your Own Storage
@@ -111,7 +100,7 @@ The easiest way to create your own storage implementation is to use
 `MemorySession <memory.MemorySession>` as the base and check out how
 `SQLiteSession <sqlite.SQLiteSession>` or one of the community-maintained
 implementations work. You can find the relevant Python files under the
-``sessions/`` directory in the Telethon's repository.
+``sessions/`` directory in the SPlusthon's repository.
 
 After you have made your own implementation, you can add it to the
 community-maintained session implementation list above with a pull request.
@@ -129,10 +118,10 @@ The easiest way to generate a string session is as follows:
 
 .. code-block:: python
 
-    from telethon.sync import TelegramClient
-    from telethon.sessions import StringSession
+    from splusthon.sync import SoroushClient
+    from splusthon.sessions import StringSession
 
-    with TelegramClient(StringSession(), api_id, api_hash) as client:
+    with SoroushClient(StringSession(), api_id, api_hash) as client:
         print(client.session.save())
 
 
@@ -156,7 +145,7 @@ you can save it in a variable directly:
 .. code-block:: python
 
     string = '1aaNk8EX-YRfwoRsebUkugFvht6DUPi_Q25UOCzOAqzc...'
-    with TelegramClient(StringSession(string), api_id, api_hash) as client:
+    with SoroushClient(StringSession(string), api_id, api_hash) as client:
         client.loop.run_until_complete(client.send_message('me', 'Hi'))
 
 

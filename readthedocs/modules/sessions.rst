@@ -1,4 +1,4 @@
-.. _telethon-sessions:
+.. _splusthon-sessions:
 
 ========
 Sessions
@@ -6,22 +6,22 @@ Sessions
 
 These are the different built-in session storage that you may subclass.
 
-.. automodule:: telethon.sessions.abstract
+.. automodule:: splusthon.sessions.abstract
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.sessions.memory
+.. automodule:: splusthon.sessions.memory
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.sessions.sqlite
+.. automodule:: splusthon.sessions.sqlite
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.sessions.string
+.. automodule:: splusthon.sessions.string
     :members:
     :undoc-members:
     :show-inheritance:

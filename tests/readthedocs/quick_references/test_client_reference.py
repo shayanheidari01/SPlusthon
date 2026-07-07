@@ -1,6 +1,6 @@
 import re
 
-from telethon import TelegramClient
+from splusthon import SoroushClient
 
 
 def test_all_methods_present(docs_dir):
@@ -8,7 +8,7 @@ def test_all_methods_present(docs_dir):
         present_methods = set(map(str.lstrip, re.findall(r'^ {4}\w+$', fd.read(), re.MULTILINE)))
 
     assert len(present_methods) > 0
-    for name in dir(TelegramClient):
-        attr = getattr(TelegramClient, name)
+    for name in dir(SoroushClient):
+        attr = getattr(SoroushClient, name)
         if callable(attr) and not name.startswith('_') and name != 'sign_up':
             assert name in present_methods

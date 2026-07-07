@@ -20,7 +20,7 @@ New layer (v1.42)
 | Scheme layer used: 216 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=214&to=216>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=214&to=216>`__.
 
 Bug fixes
 ~~~~~~~~~
@@ -36,7 +36,7 @@ New layer (v1.41)
 | Scheme layer used: 214 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=201&to=214>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=201&to=214>`__.
 
 Additions
 ~~~~~~~~~
@@ -72,7 +72,7 @@ New layer (v1.40)
 | Scheme layer used: 201 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=199&to=201>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=199&to=201>`__.
 
 Additions
 ~~~~~~~~~
@@ -104,7 +104,7 @@ New layer (v1.39)
 | Scheme layer used: 199 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=193&to=199>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=193&to=199>`__.
 
 Additions
 ~~~~~~~~~
@@ -135,7 +135,7 @@ New layer (v1.38)
 | Scheme layer used: 193 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=188&to=193>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=188&to=193>`__.
 
 Bug fixes
 ~~~~~~~~~
@@ -151,12 +151,12 @@ New layer (v1.37)
 | Scheme layer used: 188 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=181&to=188>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=181&to=188>`__.
 
 Additions
 ~~~~~~~~~
 
-* Support for CDN downloads should be back. Telethon still prefers no CDN by default.
+* Support for CDN downloads should be back. SPlusthon still prefers no CDN by default.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -177,7 +177,7 @@ New layer (v1.36)
 | Scheme layer used: 181 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=178&to=181>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=178&to=181>`__.
 
 Bug fixes
 ~~~~~~~~~
@@ -192,7 +192,7 @@ New layer (v1.35)
 | Scheme layer used: 178 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=173&to=178>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=173&to=178>`__.
 
 Additions
 ~~~~~~~~~
@@ -220,7 +220,7 @@ New layer (v1.34)
 | Scheme layer used: 173 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=167&to=173>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=167&to=173>`__.
 
 Additions
 ~~~~~~~~~
@@ -242,7 +242,7 @@ New layer (v1.33)
 | Scheme layer used: 167 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=166&to=167>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=166&to=167>`__.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -263,17 +263,17 @@ New layer (v1.32)
 | Scheme layer used: 166 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=165&to=166>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=165&to=166>`__.
 
 This enables you to use custom languages in preformatted blocks using HTML:
 
 .. code-block:: html
 
   <pre>
-    <code class='language-python'>from telethon import TelegramClient</code>
+    <code class='language-python'>from splusthon import SoroushClient</code>
   </pre>
 
-Note that Telethon v1's markdown is a custom format and won't support language tags.
+Note that SPlusthon v1's markdown is a custom format and won't support language tags.
 If you want to set a custom language, you have to use HTML or a custom formatter.
 
 
@@ -287,7 +287,7 @@ Dropped imghdr support (v1.31)
 This release contains a breaking change in preparation for Python 3.12.
 If you were sending photos from in-memory ``bytes`` or ``BytesIO`` containing images,
 you should now use ``BytesIO`` and set the ``.name`` property to a dummy name.
-This will allow Telethon to detect the correct extension (and file type).
+This will allow SPlusthon to detect the correct extension (and file type).
 
 .. code-block:: python
 
@@ -312,8 +312,8 @@ Bug fixes
 Breaking Changes
 ~~~~~~~~~~~~~~~~
 
-* ``imghdr`` is deprecated in newer Python versions, so Telethon no longer uses it.
-  This means there might be some cases where Telethon fails to infer the file extension for buffers containing images.
+* ``imghdr`` is deprecated in newer Python versions, so SPlusthon no longer uses it.
+  This means there might be some cases where SPlusthon fails to infer the file extension for buffers containing images.
   If you were relying on this, add ``.name = 'a.jpg'`` (or other extension) to the ``BytesIO`` buffers you upload.
 
 Layer bump and small changes (v1.30)
@@ -396,14 +396,14 @@ Plenty of stale issues closed, as well as improvements for some others.
 Additions
 ~~~~~~~~~
 
-* New ``entity_cache_limit`` parameter in the ``TelegramClient`` constructor.
+* New ``entity_cache_limit`` parameter in the ``SoroushClient`` constructor.
   This should help a bit in keeping memory usage in check.
 
 Enhancements
 ~~~~~~~~~~~~
 
 * ``progress_callback`` is now called when dealing with albums. See the
-  documentation on `client.send_file() <telethon.client.uploads.UploadMethods.send_file>`
+  documentation on `client.send_file() <splusthon.client.uploads.UploadMethods.send_file>`
   for details.
 * Update state and entities are now periodically saved, so that the information
   isn't lost in the case of crash or unexpected script terminations. You should
@@ -416,7 +416,7 @@ Bug fixes
 * Messages obtained via raw API could not be used in ``forward_messages``.
 * ``force_sms`` and ``sign_up`` have been deprecated. See `issue 4050`_ for details.
   It is no longer possible for third-party applications, such as those made with
-  Telethon, to use those features.
+  SPlusthon, to use those features.
 * ``events.ChatAction`` should now work in more cases in groups with hidden members.
 * Errors that occur at the connection level should now be properly propagated, so that
   you can actually have a chance to handle them.
@@ -426,7 +426,7 @@ Bug fixes
   to edit inline messages.
 
 
-.. _issue 4050: https://github.com/LonamiWebs/Telethon/issues/4050
+.. _issue 4050: https://github.com/shayanheidari01/SPlusthon/issues/4050
 
 
 New Layer and some Bug fixes (v1.27)
@@ -505,7 +505,7 @@ update handling.
   ``client.run_until_disconnected``.
 * Invite links with ``+`` are now recognized.
 * Added new known RPC errors.
-* ``telethon.types`` could not be used as a module.
+* ``splusthon.types`` could not be used as a module.
 * 0-length message entities are now stripped to avoid errors.
 * ``client.send_message`` was not returning a message with ``reply_to``
   in some cases.
@@ -549,7 +549,7 @@ should actually work properly.
 Breaking Changes
 ~~~~~~~~~~~~~~~~
 
-* In order for ``catch_up`` to work (new flag in the ``TelegramClient``
+* In order for ``catch_up`` to work (new flag in the ``SoroushClient``
   constructor), sessions need to impleemnt the new ``get_update_states``.
   Third-party session storages won't have this implemented by the time
   this version released, so ``catch_up`` may not work with those.
@@ -575,7 +575,7 @@ Breaking Changes
 
 There have been other changes which I currently don't have the time to document.
 You can refer to the following link to see them early:
-https://github.com/LonamiWebs/Telethon/compare/v1.23.0...v1.24.0
+https://github.com/shayanheidari01/SPlusthon/compare/v1.23.0...v1.24.0
 
 
 New schema and bug fixes (v1.23)
@@ -585,12 +585,12 @@ New schema and bug fixes (v1.23)
 | Scheme layer used: 130 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=129&to=130>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=129&to=130>`__.
 
 Enhancements
 ~~~~~~~~~~~~
 
-* `client.pin_message() <telethon.client.messages.MessageMethods.pin_message>`
+* `client.pin_message() <splusthon.client.messages.MessageMethods.pin_message>`
   can now pin on a single side in PMs.
 * Iterating participants should now be less expensive floodwait-wise.
 
@@ -608,16 +608,16 @@ New schema and bug fixes (v1.22)
 | Scheme layer used: 129 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=125&to=129>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=125&to=129>`__.
 
 Enhancements
 ~~~~~~~~~~~~
 
 * You can now specify a message in `client.get_stats()
-  <telethon.client.chats.ChatMethods.get_stats>`.
+  <splusthon.client.chats.ChatMethods.get_stats>`.
 * Metadata extraction from audio files with ``hachoir`` now recognises "artist".
 * Get default chat permissions by not supplying a user to `client.get_permissions()
-  <telethon.client.chats.ChatMethods.get_permissions>`.
+  <splusthon.client.chats.ChatMethods.get_permissions>`.
 * You may now use ``thumb`` when editing messages.
 
 Bug fixes
@@ -638,7 +638,7 @@ New schema and QoL improvements (v1.21)
 | Scheme layer used: 125 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=124&to=125>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=124&to=125>`__.
 
 Not many changes in this release, mostly the layer change. Lately quite a few
 people have been reporting `TypeNotFoundError`, which occurs when the server
@@ -646,12 +646,12 @@ people have been reporting `TypeNotFoundError`, which occurs when the server
 add a new, incomplete layer, and then they change the layer without bumping
 the layer number (so some constructor IDs no longer match and the error
 occurs). This layer change
-`should fix it <https://github.com/LonamiWebs/Telethon/issues/1724>`__.
+`should fix it <https://github.com/shayanheidari01/SPlusthon/issues/1724>`__.
 
 Additions
 ~~~~~~~~~
 
-* `Message.click() <telethon.tl.custom.message.Message.click>` now supports
+* `Message.click() <splusthon.tl.custom.message.Message.click>` now supports
   a ``password`` parameter, needed when doing things like changing the owner
   of a bot via `@BotFather <https://t.me/BotFather>`__.
 
@@ -663,9 +663,9 @@ Enhancements
 Bug fixes
 ~~~~~~~~~
 
-* `Message.edit <telethon.tl.custom.message.Message.edit>` wasn't working in
+* `Message.edit <splusthon.tl.custom.message.Message.edit>` wasn't working in
   your own chat on events other than ``NewMessage``.
-* `client.delete_dialog() <telethon.client.dialogs.DialogMethods.delete_dialog>`
+* `client.delete_dialog() <splusthon.client.dialogs.DialogMethods.delete_dialog>`
   was not working on chats.
 * ``events.UserUpdate`` should now handle channels' typing status.
 * :tl:`InputNotifyPeer` auto-cast should now work on other ``TLObject``.
@@ -679,9 +679,9 @@ New schema and QoL improvements (v1.20)
 | Scheme layer used: 124 |
 +------------------------+
 
-`View new and changed raw API methods <https://diff.telethon.dev/?from=122&to=124>`__.
+`View new and changed raw API methods <https://diff.splusthon.dev/?from=122&to=124>`__.
 
-A bit late to the party, but Telethon now offers a convenient way to comment
+A bit late to the party, but SPlusthon now offers a convenient way to comment
 on channel posts. It works very similar to ``reply_to``:
 
 .. code-block:: python
@@ -694,7 +694,7 @@ This code will leave a comment to the channel post with ID ``1134`` in
 In addition, the library now logs warning or error messages to ``stderr`` by
 default! You no longer should be left wondering "why isn't my event handler
 working" if you forgot to configure logging. It took so long for this change
-to arrive because nobody noticed that Telethon was using a
+to arrive because nobody noticed that SPlusthon was using a
 ``logging.NullHandler`` when it really shouldn't have.
 
 If you want the old behaviour of no messages being logged, you can configure
@@ -713,8 +713,8 @@ Additions
 ~~~~~~~~~
 
 * New ``comment_to`` parameter in `client.send_message()
-  <telethon.client.messages.MessageMethods.send_message>`, and
-  `client.send_file() <telethon.client.uploads.UploadMethods.send_file>`
+  <splusthon.client.messages.MessageMethods.send_message>`, and
+  `client.send_file() <splusthon.client.uploads.UploadMethods.send_file>`
   to comment on channel posts.
 
 Enhancements
@@ -751,18 +751,18 @@ Telegram has had group calls for some weeks now. This new version contains the
 raw API methods needed to initiate and manage these group calls, however, the
 library will likely **not offer ways to stream audio directly**.
 
-Telethon's focus is being an asyncio-based, pure-Python implementation to
+SPlusthon's focus is being an asyncio-based, pure-Python implementation to
 interact with Telegram's API. Streaming audio is beyond the current scope of
 the project and would be a big undertaking.
 
-However, that doesn't mean calls are not possible with Telethon. If you want
+However, that doesn't mean calls are not possible with SPlusthon. If you want
 to help design a Python library to perform audio calls, which can then be used
-with Telethon (so you can use Telethon + that new library to perform calls
-with Telethon), please refer to `@pytgcallschat <https://t.me/pytgcallschat/>`__
+with SPlusthon (so you can use SPlusthon + that new library to perform calls
+with SPlusthon), please refer to `@pytgcallschat <https://t.me/pytgcallschat/>`__
 and join the relevant chat to discuss and help with the implementation!
 
 The above message was also `posted in the official Telegram group
-<https://t.me/TelethonChat/284717>`__, if you wish to discuss it further.
+<https://t.me/SPlusthonChat/284717>`__, if you wish to discuss it further.
 
 With that out of the way, let's list the additions and bug fixes in this
 release:
@@ -771,14 +771,14 @@ Additions
 ~~~~~~~~~
 
 * New ``has_left`` property for user permissions on `client.get_permissions()
-  <telethon.client.chats.ChatMethods.get_permissions>`.
+  <splusthon.client.chats.ChatMethods.get_permissions>`.
 
 Enhancements
 ~~~~~~~~~~~~
 
 * Updated documentation and list of known RPC errors.
 * The library now treats a lack of ping responses as a network error.
-* `client.kick_participant() <telethon.client.chats.ChatMethods.kick_participant>`
+* `client.kick_participant() <splusthon.client.chats.ChatMethods.kick_participant>`
   now returns the service message about the user being kicked, so you can
   delete it.
 
@@ -791,7 +791,7 @@ Bug fixes
 * Automatic reconnection with no retries was failing.
 * :tl:`PhotoPathSize` is now ignored when determining a download size, since
   this "size" is not a JPEG thumbnail unlike the rest.
-* `events.ChatAction <telethon.events.chataction.ChatAction>` should misbehave
+* `events.ChatAction <splusthon.events.chataction.ChatAction>` should misbehave
   less.
 
 
@@ -808,18 +808,18 @@ For proxy users, a pull request was merged that will use the ``python-socks``
 library when available for proxy support. This library natively supports
 `asyncio`, so it should work better than the old ``pysocks``. ``pysocks`` will
 still be used if the new library is not available, and both will be handled
-transparently by Telethon so you don't need to worry about it.
+transparently by SPlusthon so you don't need to worry about it.
 
 Additions
 ~~~~~~~~~
 
 * New `client.set_proxy()
-  <telethon.client.telegrambaseclient.TelegramBaseClient.set_proxy>` method
+  <splusthon.client.telegrambaseclient.TelegramBaseClient.set_proxy>` method
   which lets you change the proxy without recreating the client. You will need
   to reconnect for it to take effect, but you won't need to recreate the
   client. This is also an external contribution.
 * New method to unpin messages `client.unpin_message()
-  <telethon.client.messages.MessageMethods.unpin_message>`.
+  <splusthon.client.messages.MessageMethods.unpin_message>`.
 
 Enhancements
 ~~~~~~~~~~~~
@@ -829,7 +829,7 @@ Enhancements
   will be used instead of ``pysocks`` for proxy support. This should fix some
   issues with proxy timeouts, because the new library natively supports
   `asyncio`.
-* `client.send_file() <telethon.client.uploads.UploadMethods.send_file>` will
+* `client.send_file() <splusthon.client.uploads.UploadMethods.send_file>` will
   now group any media type, instead of sending non-image documents separatedly.
   This lets you create music albums, for example.
 * You can now search messages with a ``from_user`` that's not a user. This is
@@ -867,7 +867,7 @@ can `use the following syntax <https://pip.pypa.io/en/stable/user_guide/>`__:
 
 .. code-block:: text
 
-    telethon~=1.16.0
+    splusthon~=1.16.0
 
 This will install any version compatible with the written version (so, any in
 the ``1.16`` series). Patch releases will never break your code (and if they
@@ -879,7 +879,7 @@ The reason to bring this up is that Telegram has changed things again, and
 with the introduction of anonymous administrators and channel comments, the
 sender of a message may not be a :tl:`User`! To accomodate for this, the field
 is now a :tl:`Peer` and not `int`. As a reminder, it's always a good idea to
-use Telethon's friendly methods and custom properties, which have a higher
+use SPlusthon's friendly methods and custom properties, which have a higher
 stability guarantee than accessing raw API fields.
 
 Even if you don't update, your code will still need to account for the fact
@@ -893,8 +893,8 @@ after upgrading and using an old session, the session will be updated, which
 means trying to use it back in older versions of the library won't work.
 
 For backwards-compatibility sake, the library has introduced the properties
-`Message.reply_to_msg_id <telethon.tl.custom.message.Message.reply_to_msg_id>`
-and `Message.to_id <telethon.tl.custom.message.Message.to_id>` that behave
+`Message.reply_to_msg_id <splusthon.tl.custom.message.Message.reply_to_msg_id>`
+and `Message.to_id <splusthon.tl.custom.message.Message.to_id>` that behave
 like they did before (Telegram has renamed and changed how these fields work).
 
 
@@ -906,8 +906,8 @@ Breaking Changes
   ``.sender_id``. This will mostly work, but of course in old and new versions
   you have to account for the fact that this sender may no longer be a user.
 * You can no longer assign to `Message.reply_to_msg_id
-  <telethon.tl.custom.message.Message.reply_to_msg_id>` and `Message.to_id
-  <telethon.tl.custom.message.Message.to_id>` because these are now properties
+  <splusthon.tl.custom.message.Message.reply_to_msg_id>` and `Message.to_id
+  <splusthon.tl.custom.message.Message.to_id>` because these are now properties
   that offer a "view" to the real value from a different field.
 * Answering inline queries with a ``photo`` or ``document`` will now send the
   photo or document used in the resulting message by default. Not sending the
@@ -921,22 +921,22 @@ Additions
   the same error produced by the last failing call, rather than a generic
   `ValueError`.
 * New ``formatting_entities`` parameter in `client.send_message()
-  <telethon.client.messages.MessageMethods.send_message>`, and
-  `client.send_file() <telethon.client.uploads.UploadMethods.send_file>`
+  <splusthon.client.messages.MessageMethods.send_message>`, and
+  `client.send_file() <splusthon.client.uploads.UploadMethods.send_file>`
   to bypass the parse mode and manually specify the formatting entities.
-* New `client.get_permissions() <telethon.client.chats.ChatMethods.get_permissions>`
+* New `client.get_permissions() <splusthon.client.chats.ChatMethods.get_permissions>`
   method to query a participant's permissions in a group or channel. This
   request is slightly expensive in small group chats because it has to fetch
   the entire chat to check just a user, so use of a cache is advised.
-* `Message.click() <telethon.tl.custom.message.Message.click>` now works on
+* `Message.click() <splusthon.tl.custom.message.Message.click>` now works on
   normal polls!
 * New ``local_addr`` parameter in the client constructor to use a specific
   local network address when connecting to Telegram.
-* `client.inline_query() <telethon.client.bots.BotMethods.inline_query>` now
+* `client.inline_query() <splusthon.client.bots.BotMethods.inline_query>` now
   lets you specify the chat where the query is being made from, which some
   bots need to provide certain functionality.
 * You can now get comments in a channel post with the ``reply_to`` parameter in
-  `client.iter_messages() <telethon.client.messages.MessageMethods.iter_messages>`.
+  `client.iter_messages() <splusthon.client.messages.MessageMethods.iter_messages>`.
   Comments are messages that "reply to" a specific channel message, hence the
   name (which is consistent with how Telegram's API calls it).
 
@@ -964,16 +964,16 @@ Bug fixes
 ~~~~~~~~~
 
 * In some cases, there were issues when using `events.Album
-  <telethon.events.album.Album>` together with `events.Raw
-  <telethon.events.raw.Raw>`.
+  <splusthon.events.album.Album>` together with `events.Raw
+  <splusthon.events.raw.Raw>`.
 * For some channels, one of their channel photos would not show up in
-  `client.iter_profile_photos() <telethon.client.chats.ChatMethods.iter_profile_photos>`.
+  `client.iter_profile_photos() <splusthon.client.chats.ChatMethods.iter_profile_photos>`.
 * In some cases, a request that failed to be sent would be forgotten, causing
   the original caller to be "locked" forever for a response that would never
   arrive. Failing requests should now consistently be automatically re-sent.
 * The library should more reliably handle certain updates with "empty" data.
 * Sending documents in inline queries should now work fine.
-* Manually using `client.sign_up <telethon.client.auth.AuthMethods.sign_up>`
+* Manually using `client.sign_up <splusthon.client.auth.AuthMethods.sign_up>`
   should now work correctly, instead of claiming "code invalid".
 
 Special mention to some of the other changes in the 1.16.x series:
@@ -997,7 +997,7 @@ again as long as Telegram adds it.
 Enhancements
 ~~~~~~~~~~~~
 
-* When trying to `client.start() <telethon.client.auth.AuthMethods.start>` to
+* When trying to `client.start() <splusthon.client.auth.AuthMethods.start>` to
   another account if you were previously logged in, the library will now warn
   you because this is probably not intended. To avoid the warning, make sure
   you're logging in to the right account or logout from the other first.
@@ -1021,7 +1021,7 @@ Channel Statistics (v1.16)
 
 The newest Telegram update has a new method to also retrieve megagroup
 statistics, which can now be used with `client.get_stats()
-<telethon.client.chats.ChatMethods.get_stats>`. This way you'll be able
+<splusthon.client.chats.ChatMethods.get_stats>`. This way you'll be able
 to access the raw data about your channel or megagroup statistics.
 
 The maximum file size limit has also been increased to 2GB on the server,
@@ -1039,7 +1039,7 @@ Breaking Changes
 Enhancements
 ~~~~~~~~~~~~
 
-* `client.upload_file() <telethon.client.uploads.UploadMethods.upload_file>`
+* `client.upload_file() <splusthon.client.uploads.UploadMethods.upload_file>`
   now works better when streaming files (anything that has a ``.read()``),
   instead of reading it all into memory when possible.
 
@@ -1060,18 +1060,18 @@ provides a way for you to easily do so with any other library of your choice.
 Additions
 ~~~~~~~~~
 
-* New `client.qr_login() <telethon.client.auth.AuthMethods.qr_login>`.
-* `message.click <telethon.tl.custom.message.Message.click>` now lets you
+* New `client.qr_login() <splusthon.client.auth.AuthMethods.qr_login>`.
+* `message.click <splusthon.tl.custom.message.Message.click>` now lets you
   click on buttons requesting phone or location.
 
 Enhancements
 ~~~~~~~~~~~~
 
 * Updated documentation and list of known errors.
-* `events.Album <telethon.events.album.Album>` should now handle albums from
+* `events.Album <splusthon.events.album.Album>` should now handle albums from
   different data centers more gracefully.
 * `client.download_file()
-  <telethon.client.downloads.DownloadMethods.download_file>` now supports
+  <splusthon.client.downloads.DownloadMethods.download_file>` now supports
   `pathlib.Path` as the destination.
 
 Bug fixes
@@ -1096,18 +1096,18 @@ Some nice things that were missing, along with the usual bug-fixes.
 Additions
 ~~~~~~~~~
 
-* New `Message.dice <telethon.tl.custom.message.Message.dice>` property.
+* New `Message.dice <splusthon.tl.custom.message.Message.dice>` property.
 * The ``func=`` parameter of events can now be an ``async`` function.
 
 Bug fixes
 ~~~~~~~~~
 
-* Fixed `client.action() <telethon.client.chats.ChatMethods.action>`
+* Fixed `client.action() <splusthon.client.chats.ChatMethods.action>`
   having an alias wrong.
 * Fixed incorrect formatting of some errors.
 * Probably more reliable detection of pin events in small groups.
 * Fixed send methods on `client.conversation()
-  <telethon.client.dialogs.DialogMethods.conversation>` were not honoring
+  <splusthon.client.dialogs.DialogMethods.conversation>` were not honoring
   cancellation.
 * Flood waits of zero seconds are handled better.
 * Getting the pinned message in a chat was failing.
@@ -1119,11 +1119,11 @@ Enhancements
 
 * ``.tgs`` files are now recognised as animated stickers.
 * The service message produced by `Message.pin()
-  <telethon.tl.custom.message.Message.pin>` is now returned.
+  <splusthon.tl.custom.message.Message.pin>` is now returned.
 * Sending a file with `client.send_file()
-  <telethon.client.uploads.UploadMethods.send_file>` now works fine when
+  <splusthon.client.uploads.UploadMethods.send_file>` now works fine when
   you pass an existing dice media (e.g. sending a message copy).
-* `client.edit_permissions() <telethon.client.chats.ChatMethods.edit_permissions>`
+* `client.edit_permissions() <splusthon.client.chats.ChatMethods.edit_permissions>`
   now has the ``embed_links`` parameter which was missing.
 
 Bug Fixes (v1.13)
@@ -1141,7 +1141,7 @@ Bug fixes
 ~~~~~~~~~
 
 * Passing ``None`` as the entity to `client.delete_messages()
-  <telethon.client.messages.MessageMethods.delete_messages>` would fail.
+  <splusthon.client.messages.MessageMethods.delete_messages>` would fail.
 * When downloading a thumbnail, the name inferred was wrong.
 
 Bug Fixes (v1.12)
@@ -1163,7 +1163,7 @@ These were already included in the ``v1.11.3`` patch:
 
 * ``libssl`` check was failing on macOS.
 * Getting input users would sometimes fail on `events.ChatAction
-  <telethon.events.chataction.ChatAction>`.
+  <splusthon.events.chataction.ChatAction>`.
 
 These bug fixes are available in this release and beyond:
 
@@ -1192,9 +1192,9 @@ Bug fixes
 ~~~~~~~~~
 
 * Fix ``MemoryError`` when casting certain media.
-* Fix `client.get_entity() <telethon.client.users.UserMethods.get_entity>`
+* Fix `client.get_entity() <splusthon.client.users.UserMethods.get_entity>`
   on small group chats.
-* `client.delete_dialog() <telethon.client.dialogs.DialogMethods.delete_dialog>`
+* `client.delete_dialog() <splusthon.client.dialogs.DialogMethods.delete_dialog>`
   now handles deactivated chats more gracefully.
 * Sending a message with ``file=`` would ignore some of the parameters.
 * Errors are now un-pickle-able once again.
@@ -1202,12 +1202,12 @@ Bug fixes
 
 The following are also present in ``v1.10.10``:
 
-* Fixed some issues with `events.Album <telethon.events.album.Album>`.
+* Fixed some issues with `events.Album <splusthon.events.album.Album>`.
 * Fixed some issues with `client.kick_participant()
-  <telethon.client.chats.ChatMethods.kick_participant>` and
-  `client.edit_admin() <telethon.client.chats.ChatMethods.edit_admin>`.
+  <splusthon.client.chats.ChatMethods.kick_participant>` and
+  `client.edit_admin() <splusthon.client.chats.ChatMethods.edit_admin>`.
 * Fixed sending albums and more within `client.conversation()
-  <telethon.client.dialogs.DialogMethods.conversation>`.
+  <splusthon.client.dialogs.DialogMethods.conversation>`.
 * Fixed some import issues.
 * And a lot more minor stuff.
 
@@ -1225,7 +1225,7 @@ The following are also present in ``v1.10.10``:
 * Auto-sleep now works for slow-mode too.
 * Improved some error messages.
 * Some internal improvements and updating.
-* `client.pin_message() <telethon.client.messages.MessageMethods.pin_message>`
+* `client.pin_message() <splusthon.client.messages.MessageMethods.pin_message>`
   now also works with message objects.
 * Asynchronous file descriptors are now allowed during download and upload.
 
@@ -1246,61 +1246,61 @@ time, which can also work as reminders for yourself when used in your own chat!
 
     from datetime import timedelta
 
-    # Remind yourself to walk the dog in 10 minutes (after you play with Telethon's update)
+    # Remind yourself to walk the dog in 10 minutes (after you play with SPlusthon's update)
     await client.send_message('me', 'Walk the dog',
                               schedule=timedelta(minutes=10))
 
-    # Remind your friend tomorrow to update Telethon
-    await client.send_message(friend, 'Update Telethon!',
+    # Remind your friend tomorrow to update SPlusthon
+    await client.send_message(friend, 'Update SPlusthon!',
                               schedule=timedelta(days=1))
 
 Additions
 ~~~~~~~~~
 
-* New `Button.auth <telethon.tl.custom.button.Button.auth>` friendly button
+* New `Button.auth <splusthon.tl.custom.button.Button.auth>` friendly button
   you can use to ask users to login to your bot.
-* Telethon's repository now contains ``*.nix`` expressions that you can use.
-* New `client.kick_participant() <telethon.client.chats.ChatMethods.kick_participant>`
+* SPlusthon's repository now contains ``*.nix`` expressions that you can use.
+* New `client.kick_participant() <splusthon.client.chats.ChatMethods.kick_participant>`
   method to truly kick (not ban) participants.
 * New ``schedule`` parameter in `client.send_message()
-  <telethon.client.messages.MessageMethods.send_message>`, `client.edit_message()
-  <telethon.client.messages.MessageMethods.edit_message>`, `client.forward_messages()
-  <telethon.client.messages.MessageMethods.forward_messages>` and `client.send_file()
-  <telethon.client.uploads.UploadMethods.send_file>`.
+  <splusthon.client.messages.MessageMethods.send_message>`, `client.edit_message()
+  <splusthon.client.messages.MessageMethods.edit_message>`, `client.forward_messages()
+  <splusthon.client.messages.MessageMethods.forward_messages>` and `client.send_file()
+  <splusthon.client.uploads.UploadMethods.send_file>`.
 
 Bug fixes
 ~~~~~~~~~
 
 * Fix calling ``flush`` on file objects which lack this attribute.
-* Fix `CallbackQuery <telethon.events.callbackquery.CallbackQuery>` pattern.
-* Fix `client.action() <telethon.client.chats.ChatMethods.action>` not returning
+* Fix `CallbackQuery <splusthon.events.callbackquery.CallbackQuery>` pattern.
+* Fix `client.action() <splusthon.client.chats.ChatMethods.action>` not returning
   itself when used in a context manager (so the ``as`` would be `None`).
 * Fix sending :tl:`InputKeyboardButtonUrlAuth` as inline buttons.
-* Fix `client.edit_permissions() <telethon.client.chats.ChatMethods.edit_permissions>`
+* Fix `client.edit_permissions() <splusthon.client.chats.ChatMethods.edit_permissions>`
   defaults.
-* Fix `Forward <telethon.tl.custom.forward.Forward>` had its ``client`` as `None`.
+* Fix `Forward <splusthon.tl.custom.forward.Forward>` had its ``client`` as `None`.
 * Fix (de)serialization of negative timestamps (caused by the information in some
   sites with instant view, where the date could be very old).
 * Fix HTML un-parsing.
 * Fix ``to/from_id`` in private messages when using multiple clients.
 * Stop disconnecting from `None` (incorrect logging).
 * Fix double-read on double-connect.
-* Fix `client.get_messages() <telethon.client.messages.MessageMethods.get_messages>`
+* Fix `client.get_messages() <splusthon.client.messages.MessageMethods.get_messages>`
   when being passed more than 100 IDs.
-* Fix `Message.document <telethon.tl.custom.message.Message.document>`
+* Fix `Message.document <splusthon.tl.custom.message.Message.document>`
   for documents coming from web-pages.
 
 Enhancements
 ~~~~~~~~~~~~
 
 * Some documentation improvements, including the TL reference.
-* Documentation now avoids ``telethon.sync``, which should hopefully be less confusing.
+* Documentation now avoids ``splusthon.sync``, which should hopefully be less confusing.
 * Better error messages for flood wait.
-* You can now `client.get_drafts() <telethon.client.dialogs.DialogMethods.get_drafts>`
+* You can now `client.get_drafts() <splusthon.client.dialogs.DialogMethods.get_drafts>`
   for a single entity (which means you can now get a single draft from a single chat).
-* New-style file IDs now work with Telethon.
+* New-style file IDs now work with SPlusthon.
 * The ``progress_callback`` for `client.upload_file()
-  <telethon.client.uploads.UploadMethods.upload_file>` can now be an ``async def``.
+  <splusthon.client.uploads.UploadMethods.upload_file>` can now be an ``async def``.
 
 
 Animated Stickers (v1.9)
@@ -1312,7 +1312,7 @@ Animated Stickers (v1.9)
 | Scheme layer used: 103 |
 +------------------------+
 
-With the layer 103, Telethon is now able to send and receive animated
+With the layer 103, SPlusthon is now able to send and receive animated
 stickers! These use the ``'application/x-tgsticker'`` mime-type and for
 now, you can access its raw data, which is a gzipped JSON.
 
@@ -1320,21 +1320,21 @@ now, you can access its raw data, which is a gzipped JSON.
 Additions
 ~~~~~~~~~
 
-* New `events.Album <telethon.events.album.Album>` to easily receive entire albums!
-* New `client.edit_admin() <telethon.client.chats.ChatMethods.edit_admin>`
-  and `client.edit_permissions() <telethon.client.chats.ChatMethods.edit_permissions>`
+* New `events.Album <splusthon.events.album.Album>` to easily receive entire albums!
+* New `client.edit_admin() <splusthon.client.chats.ChatMethods.edit_admin>`
+  and `client.edit_permissions() <splusthon.client.chats.ChatMethods.edit_permissions>`
   methods to more easily manage your groups.
 * New ``pattern=`` in `CallbackQuery
-  <telethon.events.callbackquery.CallbackQuery>`.
+  <splusthon.events.callbackquery.CallbackQuery>`.
 * New `conversation.cancel_all()
-  <telethon.tl.custom.conversation.Conversation.cancel>` method,
+  <splusthon.tl.custom.conversation.Conversation.cancel>` method,
   to cancel all currently-active conversations in a particular chat.
-* New `telethon.utils.encode_waveform` and `telethon.utils.decode_waveform`
+* New `splusthon.utils.encode_waveform` and `splusthon.utils.decode_waveform`
   methods as implemented by Telegram Desktop, which lets you customize how
   voice notes will render.
 * New ``ignore_pinned`` parameter in `client.iter_dialogs()
-  <telethon.client.dialogs.DialogMethods.iter_dialogs>`.
-* New `Message.mark_read() <telethon.tl.custom.message.Message.mark_read>`
+  <splusthon.client.dialogs.DialogMethods.iter_dialogs>`.
+* New `Message.mark_read() <splusthon.tl.custom.message.Message.mark_read>`
   method.
 * You can now use strike-through in markdown with ``~~text~~``, and the
   corresponding HTML tags for strike-through, quotes and underlined text.
@@ -1345,15 +1345,15 @@ Bug fixes
 
 * Fixed downloading contacts.
 * Fixed `client.iter_dialogs()
-  <telethon.client.dialogs.DialogMethods.iter_dialogs>` missing some under
+  <splusthon.client.dialogs.DialogMethods.iter_dialogs>` missing some under
   certain circumstances.
 * Fixed incredibly slow imports under some systems due to expensive path
   resolution when searching for ``libssl``.
 * Fixed captions when sending albums.
 * Fixed invalid states in `Conversation
-  <telethon.tl.custom.conversation.Conversation>`.
+  <splusthon.tl.custom.conversation.Conversation>`.
 * Fixes to some methods in utils regarding extensions.
-* Fixed memory cycle in `Forward <telethon.tl.custom.forward.Forward>`
+* Fixed memory cycle in `Forward <splusthon.tl.custom.forward.Forward>`
   which let you do things like the following:
 
   .. code-block:: python
@@ -1361,25 +1361,25 @@ Bug fixes
       original_fwd = message.forward.original_fwd.original_fwd.original_fwd.original_fwd.original_fwd.original_fwd
 
   Hopefully you didn't rely on that in your code.
-* Fixed `File.ext <telethon.tl.custom.file.File.ext>` not working on
+* Fixed `File.ext <splusthon.tl.custom.file.File.ext>` not working on
   unknown mime-types, despite the file name having the extension.
 * Fixed ``ids=..., reverse=True`` in `client.iter_messages()
-  <telethon.client.messages.MessageMethods.iter_messages>`.
-* Fixed `Draft <telethon.tl.custom.draft.Draft>` not being aware
+  <splusthon.client.messages.MessageMethods.iter_messages>`.
+* Fixed `Draft <splusthon.tl.custom.draft.Draft>` not being aware
   of the entity.
-* Added missing re-exports in ``telethon.sync``.
+* Added missing re-exports in ``splusthon.sync``.
 
 Enhancements
 ~~~~~~~~~~~~
 
 * Improved `conversation.cancel()
-  <telethon.tl.custom.conversation.Conversation.cancel>`
+  <splusthon.tl.custom.conversation.Conversation.cancel>`
   behaviour. Now you can use it from anywhere.
 * The ``progress_callback`` in `client.download_media()
-  <telethon.client.downloads.DownloadMethods.download_media>`
+  <splusthon.client.downloads.DownloadMethods.download_media>`
   now lets you use ``async def``.
 * Improved documentation and the online
-  method reference at https://tl.telethon.dev.
+  method reference at https://tl.splusthon.dev.
 
 
 Documentation Overhaul (v1.8)
@@ -1400,7 +1400,7 @@ that you don't accidentally make your life harder than it has to be.
 
 In addition, all methods in the client now are fully annotated with type
 hints! More work needs to be done, but this should already help a lot when
-using Telethon from any IDEs.
+using SPlusthon from any IDEs.
 
 You may have noticed that the patch versions between ``v1.7.2`` to ``v1.7.7``
 have not been documented. This is because patch versions should only contain
@@ -1421,33 +1421,33 @@ Breaking Changes
 * The layer changed, so take note if you use the raw API, as it's usual.
 * The way photos are downloaded changed during the layer update of the
   previous version, and fixing that bug as a breaking change in itself.
-  `client.download_media() <telethon.client.downloads.DownloadMethods.download_media>`
+  `client.download_media() <splusthon.client.downloads.DownloadMethods.download_media>`
   now offers a different way to deal with thumbnails.
 
 
 Additions
 ~~~~~~~~~
 
-* New `Message.file <telethon.tl.custom.message.Message.file>` property!
-  Now you can trivially access `message.file.id  <telethon.tl.custom.file.File.id>`
+* New `Message.file <splusthon.tl.custom.message.Message.file>` property!
+  Now you can trivially access `message.file.id  <splusthon.tl.custom.file.File.id>`
   to get the file ID of some media, or even ``print(message.file.name)``.
-* Archiving dialogs with `Dialog.archive() <telethon.tl.custom.dialog.Dialog.archive>`
-  or `client.edit_folder() <telethon.client.dialogs.DialogMethods.edit_folder>`
+* Archiving dialogs with `Dialog.archive() <splusthon.tl.custom.dialog.Dialog.archive>`
+  or `client.edit_folder() <splusthon.client.dialogs.DialogMethods.edit_folder>`
   is now possible.
 * New cleaned-up method to stream downloads with `client.iter_download()
-  <telethon.client.downloads.DownloadMethods.iter_download>`, which offers
+  <splusthon.client.downloads.DownloadMethods.iter_download>`, which offers
   a lot of flexibility, such as arbitrary offsets for efficient seeking.
-* `Dialog.delete() <telethon.tl.custom.dialog.Dialog.delete>` has existed
+* `Dialog.delete() <splusthon.tl.custom.dialog.Dialog.delete>` has existed
   for a while, and now `client.delete_dialog()
-  <telethon.client.dialogs.DialogMethods.delete_dialog>` exists too so you
+  <splusthon.client.dialogs.DialogMethods.delete_dialog>` exists too so you
   can easily leave chats or delete dialogs without fetching all dialogs.
 * Some people or chats have a lot of profile photos. You can now iterate
   over all of them with the new `client.iter_profile_photos()
-  <telethon.client.chats.ChatMethods.iter_profile_photos>` method.
+  <splusthon.client.chats.ChatMethods.iter_profile_photos>` method.
 * You can now annoy everyone with the new `Message.pin(notify=True)
-  <telethon.tl.custom.message.Message.pin>`! The client has its own
+  <splusthon.tl.custom.message.Message.pin>`! The client has its own
   variant too, called `client.pin_message()
-  <telethon.client.messages.MessageMethods.pin_message>`.
+  <splusthon.client.messages.MessageMethods.pin_message>`.
 
 
 Bug fixes
@@ -1457,9 +1457,9 @@ Bug fixes
 * Downloading stripped photos wouldn't work correctly.
 * Under some systems, ``libssl`` would fail to load earlier than
   expected, causing the library to fail when being imported.
-* `conv.get_response() <telethon.tl.custom.conversation.Conversation.get_response>`
+* `conv.get_response() <splusthon.tl.custom.conversation.Conversation.get_response>`
   after ID 0 wasn't allowed when it should.
-* `InlineBuilder <telethon.tl.custom.inlinebuilder.InlineBuilder>` only worked
+* `InlineBuilder <splusthon.tl.custom.inlinebuilder.InlineBuilder>` only worked
   with local files, but files from anywhere are supported.
 * Accessing the text property from a raw-API call to fetch :tl:`Message` would fail
   (any any other property that needed the client).
@@ -1468,7 +1468,7 @@ Bug fixes
 * Fixed saving ``pts`` and session-related stuff.
 * Disconnection should not raise any errors.
 * Invite links of the form ``tg://join?invite=`` now work.
-* `client.iter_participants(search=...) <telethon.client.chats.ChatMethods.iter_participants>`
+* `client.iter_participants(search=...) <splusthon.client.chats.ChatMethods.iter_participants>`
   now works on private chats again.
 * Iterating over messages in reverse with a date as offset wouldn't work.
 * The conversation would behave weirdly when a timeout occurred.
@@ -1477,9 +1477,9 @@ Bug fixes
 Enhancements
 ~~~~~~~~~~~~
 
-* ``telethon`` now re-export all the goodies that you commonly need when
-  using the library, so e.g. ``from telethon import Button`` will now work.
-* ``telethon.sync`` now re-exports everything from ``telethon``, so that
+* ``splusthon`` now re-export all the goodies that you commonly need when
+  using the library, so e.g. ``from splusthon import Button`` will now work.
+* ``splusthon.sync`` now re-exports everything from ``splusthon``, so that
   you can trivially import from just one place everything that you need.
 * More attempts at reducing CPU usage after automatically fetching missing
   entities on events. This isn't a big deal, even if it sounds like one.
@@ -1507,7 +1507,7 @@ so you can no longer use a :tl:`PhotoSize` alone to download a particular
 thumbnail size (this is a **breaking change**).
 
 Instead, you will have to specify the new ``thumb`` parameter in
-`client.download_media() <telethon.client.downloads.DownloadMethods.download_media>`
+`client.download_media() <splusthon.client.downloads.DownloadMethods.download_media>`
 to download a particular thumbnail size. This addition enables you to easily
 download thumbnails from documents, something you couldn't do easily before.
 
@@ -1521,7 +1521,7 @@ Easier Events (v1.7)
 | Scheme layer used: 98 |
 +-----------------------+
 
-If you have been using Telethon for a while, you probably know how annoying
+If you have been using SPlusthon for a while, you probably know how annoying
 the "Could not find the input entity for…" error can be. In this new version,
 the library will try harder to find the input entity for you!
 
@@ -1571,11 +1571,11 @@ Breaking Changes
   their :tl:`PhotoSize`. Version 1.7.1 introduces a new way to download
   thumbnails to work around this issue.
 * `client.disconnect()
-  <telethon.client.telegrambaseclient.TelegramBaseClient.disconnect>`
+  <splusthon.client.telegrambaseclient.TelegramBaseClient.disconnect>`
   is now asynchronous again. This means you need to ``await`` it. You
   don't need to worry about this if you were using ``with client`` or
   `client.run_until_disconnected
-  <telethon.client.updates.UpdateMethods.run_until_disconnected>`.
+  <splusthon.client.updates.UpdateMethods.run_until_disconnected>`.
   This should prevent the "pending task was destroyed" errors.
 
 Additions
@@ -1583,7 +1583,7 @@ Additions
 
 * New in-memory cache for input entities. This should mean a lot less
   of disk look-ups.
-* New `client.action <telethon.client.chats.ChatMethods.action>` method
+* New `client.action <splusthon.client.chats.ChatMethods.action>` method
   to easily indicate that you are doing some chat action:
 
   .. code-block:: python
@@ -1607,36 +1607,36 @@ Bug fixes
 * Fix unhandled error when sending requests that were too big.
 * Fix edits that arrive too early on conversations.
 * Fix `client.edit_message()
-  <telethon.client.messages.MessageMethods.edit_message>`
+  <splusthon.client.messages.MessageMethods.edit_message>`
   when trying to edit a file.
 * Fix method calls on the objects returned by `client.iter_dialogs()
-  <telethon.client.dialogs.DialogMethods.iter_dialogs>`.
+  <splusthon.client.dialogs.DialogMethods.iter_dialogs>`.
 * Attempt at fixing `client.iter_dialogs()
-  <telethon.client.dialogs.DialogMethods.iter_dialogs>` missing many dialogs.
+  <splusthon.client.dialogs.DialogMethods.iter_dialogs>` missing many dialogs.
 * ``offset_date`` in `client.iter_messages()
-  <telethon.client.messages.MessageMethods.iter_messages>` was being
+  <splusthon.client.messages.MessageMethods.iter_messages>` was being
   ignored in some cases. This has been worked around.
 * Fix `callback_query.edit()
-  <telethon.events.callbackquery.CallbackQuery.Event.edit>`.
-* Fix `CallbackQuery(func=...) <telethon.events.callbackquery.CallbackQuery>`
+  <splusthon.events.callbackquery.CallbackQuery.Event.edit>`.
+* Fix `CallbackQuery(func=...) <splusthon.events.callbackquery.CallbackQuery>`
   was being ignored.
-* Fix `UserUpdate <telethon.events.userupdate.UserUpdate>` not working for
+* Fix `UserUpdate <splusthon.events.userupdate.UserUpdate>` not working for
   "typing" (and uploading file, etc.) status.
 * Fix library was not expecting ``IOError`` from PySocks.
 * Fix library was raising a generic ``ConnectionError``
   and not the one that actually occurred.
 * Fix the ``blacklist_chats`` parameter in `MessageRead
-  <telethon.events.messageread.MessageRead>` not working as intended.
+  <splusthon.events.messageread.MessageRead>` not working as intended.
 * Fix `client.download_media(contact)
-  <telethon.client.downloads.DownloadMethods.download_media>`.
+  <splusthon.client.downloads.DownloadMethods.download_media>`.
 * Fix mime type when sending ``mp3`` files.
 * Fix forcibly getting the sender or chat from events would
   not always return all their information.
 * Fix sending albums with `client.send_file()
-  <telethon.client.uploads.UploadMethods.send_file>` was not returning
+  <splusthon.client.uploads.UploadMethods.send_file>` was not returning
   the sent messages.
 * Fix forwarding albums with `client.forward_messages()
-  <telethon.client.messages.MessageMethods.forward_messages>`.
+  <splusthon.client.messages.MessageMethods.forward_messages>`.
 * Some fixes regarding filtering updates from chats.
 * Attempt at preventing duplicated updates.
 * Prevent double auto-reconnect.
@@ -1649,7 +1649,7 @@ Enhancements
 * Several updates and improvements to the documentation,
   such as optional dependencies now being properly listed.
 * You can now forward messages from different chats directly with
-  `client.forward_messages <telethon.client.messages.MessageMethods.forward_messages>`.
+  `client.forward_messages <splusthon.client.messages.MessageMethods.forward_messages>`.
 
 
 Tidying up Internals (v1.6)
@@ -1690,7 +1690,7 @@ Additions
 ~~~~~~~~~
 
 * You can now pass ``phone`` and ``phone_code_hash`` in `client.sign_up
-  <telethon.client.auth.AuthMethods.sign_up>`, although you probably don't
+  <splusthon.client.auth.AuthMethods.sign_up>`, although you probably don't
   need that.
 * Thanks to the overhaul of all ``client.iter_*`` methods, you can now do:
 
@@ -1702,26 +1702,26 @@ Additions
 Bug fixes
 ~~~~~~~~~
 
-* Fix `telethon.utils.resolve_bot_file_id`, which wasn't working after
+* Fix `splusthon.utils.resolve_bot_file_id`, which wasn't working after
   the layer update (so you couldn't send some files by bot file IDs).
 * Fix sending albums as bot file IDs (due to image detection improvements).
-* Fix `takeout() <telethon.client.account.AccountMethods.takeout>` failing
+* Fix `takeout() <splusthon.client.account.AccountMethods.takeout>` failing
   when they need to download media from other DCs.
 * Fix repeatedly calling `conversation.get_response()
-  <telethon.tl.custom.conversation.Conversation.get_response>` when many
+  <splusthon.tl.custom.conversation.Conversation.get_response>` when many
   messages arrived at once (i.e. when several of them were forwarded).
 * Fixed connecting with `ConnectionTcpObfuscated
-  <telethon.network.connection.tcpobfuscated.ConnectionTcpObfuscated>`.
+  <splusthon.network.connection.tcpobfuscated.ConnectionTcpObfuscated>`.
 * Fix `client.get_peer_id('me')
-  <telethon.client.users.UserMethods.get_peer_id>`.
+  <splusthon.client.users.UserMethods.get_peer_id>`.
 * Fix warning of "missing sqlite3" when in reality it just had wrong tables.
 * Fix a strange error when using too many IDs in `client.delete_messages()
-  <telethon.client.messages.MessageMethods.delete_messages>`.
-* Fix `client.send_file <telethon.client.uploads.UploadMethods.send_file>`
+  <splusthon.client.messages.MessageMethods.delete_messages>`.
+* Fix `client.send_file <splusthon.client.uploads.UploadMethods.send_file>`
   with the result of `client.upload_file
-  <telethon.client.uploads.UploadMethods.upload_file>`.
+  <splusthon.client.uploads.UploadMethods.upload_file>`.
 * When answering inline results, their order was not being preserved.
-* Fix `events.ChatAction <telethon.events.chataction.ChatAction>`
+* Fix `events.ChatAction <splusthon.events.chataction.ChatAction>`
   detecting user leaves as if they were kicked.
 
 Enhancements
@@ -1762,7 +1762,7 @@ Additions
 ~~~~~~~~~
 
 * New ``supports_streaming`` parameter in `client.send_file
-  <telethon.client.uploads.UploadMethods.send_file>`.
+  <splusthon.client.uploads.UploadMethods.send_file>`.
 
 Bug fixes
 ~~~~~~~~~
@@ -1776,7 +1776,7 @@ Enhancements
 * Saner timeout defaults for conversations.
 * ``Path``-like files are now supported for thumbnails.
 * Added new hot-keys to the online documentation at
-  https://tl.telethon.dev/ such as ``/`` to search.
+  https://tl.splusthon.dev/ such as ``/`` to search.
   Press ``?`` to view them all.
 
 
@@ -1790,7 +1790,7 @@ Several bug fixes and some quality of life enhancements.
 Breaking Changes
 ~~~~~~~~~~~~~~~~
 
-* `message.edit <telethon.tl.custom.message.Message.edit>` now respects
+* `message.edit <splusthon.tl.custom.message.Message.edit>` now respects
   the previous message buttons or link preview being hidden. If you want to
   toggle them you need to explicitly set them. This is generally the desired
   behaviour, but may cause some bots to have buttons when they shouldn't.
@@ -1799,8 +1799,8 @@ Additions
 ~~~~~~~~~
 
 * You can now "hide_via" when clicking on results from `client.inline_query
-  <telethon.client.bots.BotMethods.inline_query>` to @bing and @gif.
-* You can now further configure the logger Telethon uses to suit your needs.
+  <splusthon.client.bots.BotMethods.inline_query>` to @bing and @gif.
+* You can now further configure the logger SPlusthon uses to suit your needs.
 
 Bug fixes
 ~~~~~~~~~
@@ -1817,7 +1817,7 @@ Enhancements
 
 * Chat and channel participants can now be used as peers.
 * Reworked README and examples at
-  https://github.com/LonamiWebs/Telethon/tree/master/telethon_examples
+  https://github.com/shayanheidari01/SPlusthon/tree/master/splusthon_examples
 
 
 Takeout Sessions (v1.5.2)
@@ -1826,16 +1826,16 @@ Takeout Sessions (v1.5.2)
 *Published at 2019/01/05*
 
 You can now easily start takeout sessions (also known as data export sessions)
-through `client.takeout() <telethon.client.account.AccountMethods.takeout>`.
+through `client.takeout() <splusthon.client.account.AccountMethods.takeout>`.
 Some of the requests will have lower flood limits when done through the
 takeout session.
 
 Bug fixes
 ~~~~~~~~~
 
-* The new `AdminLogEvent <telethon.tl.custom.adminlogevent.AdminLogEvent>`
+* The new `AdminLogEvent <splusthon.tl.custom.adminlogevent.AdminLogEvent>`
   had a bug that made it unusable.
-* `client.iter_dialogs() <telethon.client.dialogs.DialogMethods.iter_dialogs>`
+* `client.iter_dialogs() <splusthon.client.dialogs.DialogMethods.iter_dialogs>`
   will now locally check for the offset date, since Telegram ignores it.
 * Answering inline queries with media no works properly. You can now use
   the library to create inline bots and send stickers through them!
@@ -1857,27 +1857,27 @@ Additions
 ~~~~~~~~~
 
 * New `client.iter_admin_log()
-  <telethon.client.chats.ChatMethods.iter_admin_log>` method.
+  <splusthon.client.chats.ChatMethods.iter_admin_log>` method.
 
 Bug fixes
 ~~~~~~~~~
 
 * `client.is_connected()
-  <telethon.client.telegrambaseclient.TelegramBaseClient.is_connected>`
+  <splusthon.client.telegrambaseclient.TelegramBaseClient.is_connected>`
   would be wrong when the initial connection failed.
 * Fixed ``UnicodeDecodeError`` when accessing the text of messages
   with malformed offsets in their entities.
 * Fixed `client.get_input_entity()
-  <telethon.client.users.UserMethods.get_input_entity>` for integer IDs
+  <splusthon.client.users.UserMethods.get_input_entity>` for integer IDs
   that the client has not seen before.
 
 Enhancements
 ~~~~~~~~~~~~
 
 * You can now configure the reply markup when using `Button
-  <telethon.tl.custom.button.Button>` as a bot.
+  <splusthon.tl.custom.button.Button>` as a bot.
 * More properties for `Message
-  <telethon.tl.custom.message.Message>` to make accessing media convenient.
+  <splusthon.tl.custom.message.Message>` to make accessing media convenient.
 * Downloading to ``file=bytes`` will now return a `bytes` object
   with the downloaded media.
 
@@ -1893,7 +1893,7 @@ Polls with the Latest Layer (v1.5)
 
 This version doesn't really bring many new features, but rather focuses on
 updating the code base to support the latest available Telegram layer, 91.
-This layer brings polls, and you can create and manage them through Telethon!
+This layer brings polls, and you can create and manage them through SPlusthon!
 
 Breaking Changes
 ~~~~~~~~~~~~~~~~
@@ -1906,7 +1906,7 @@ Breaking Changes
 Additions
 ~~~~~~~~~
 
-* New `client.is_bot() <telethon.client.users.UserMethods.is_bot>` method.
+* New `client.is_bot() <splusthon.client.users.UserMethods.is_bot>` method.
 
 Bug fixes
 ~~~~~~~~~
@@ -1915,7 +1915,7 @@ Bug fixes
 * HTTP connection should now work correctly again.
 * Using ``caption=None`` would raise an error instead of setting no caption.
 * ``KeyError`` is now handled properly when forwarding messages.
-* `button.click() <telethon.tl.custom.messagebutton.MessageButton.click>`
+* `button.click() <splusthon.tl.custom.messagebutton.MessageButton.click>`
   now works as expected for :tl:`KeyboardButtonGame`.
 
 Enhancements
@@ -1948,15 +1948,15 @@ Bug fixes
 * ``TimeoutError`` was not handled during automatic reconnects.
 * Getting messages by ID using :tl:`InputMessageReplyTo` could fail.
 * Fixed `message.get_reply_message
-  <telethon.tl.custom.message.Message.get_reply_message>`
+  <splusthon.tl.custom.message.Message.get_reply_message>`
   as a bot when a user replied to a different bot.
 * Accessing some document properties in a `Message
-  <telethon.tl.custom.message.Message>` would fail.
+  <splusthon.tl.custom.message.Message>` would fail.
 
 Enhancements
 ~~~~~~~~~~~~
 
-* Accessing `events.ChatAction <telethon.events.chataction.ChatAction>`
+* Accessing `events.ChatAction <splusthon.events.chataction.ChatAction>`
   properties such as input users may now work in more cases.
 
 Internal changes
@@ -1979,7 +1979,7 @@ Bug fixes
 
 * Authorization key wouldn't be saved correctly, requiring re-login.
 * Conversations with custom events failed to be cancelled.
-* Fixed ``telethon.sync`` when using other threads.
+* Fixed ``splusthon.sync`` when using other threads.
 * Fix markdown/HTML parser from failing with leading/trailing whitespace.
 * Fix accessing ``chat_action_event.input_user`` property.
 * Potentially improved handling unexpected disconnections.
@@ -1989,7 +1989,7 @@ Enhancements
 ~~~~~~~~~~~~
 
 * Better default behaviour for `client.send_read_acknowledge
-  <telethon.client.messages.MessageMethods.send_read_acknowledge>`.
+  <splusthon.client.messages.MessageMethods.send_read_acknowledge>`.
 * Clarified some points in the documentation.
 * Clearer errors for ``utils.get_peer*``.
 
@@ -2017,19 +2017,19 @@ Breaking Changes
   because it never was properly maintained anyway. If you have old code, stick
   with old versions of the library, such as ``0.19.1.6``.
 * Timeouts no longer accept ``timedelta``. Simply use seconds.
-* The ``callback`` parameter from `telethon.tl.custom.button.Button.inline()`
+* The ``callback`` parameter from `splusthon.tl.custom.button.Button.inline()`
   was removed, since it had always been a bad idea. Adding the callback there
   meant a lot of extra work for every message sent, and only registering it
   after the first message was sent! Instead, use
-  `telethon.events.callbackquery.CallbackQuery`.
+  `splusthon.events.callbackquery.CallbackQuery`.
 
 
 Additions
 ~~~~~~~~~
 
-* New `dialog.delete() <telethon.tl.custom.dialog.Dialog.delete>` method.
+* New `dialog.delete() <splusthon.tl.custom.dialog.Dialog.delete>` method.
 * New `conversation.cancel()
-  <telethon.tl.custom.conversation.Conversation.cancel>` method.
+  <splusthon.tl.custom.conversation.Conversation.cancel>` method.
 * New ``retry_delay`` delay for the client to be used on auto-reconnection.
 
 
@@ -2037,18 +2037,18 @@ Bug fixes
 ~~~~~~~~~
 
 * Fixed `Conversation.wait_event()
-  <telethon.tl.custom.conversation.Conversation.wait_event>`.
+  <splusthon.tl.custom.conversation.Conversation.wait_event>`.
 * Fixed replying with photos/documents on inline results.
 * `client.is_user_authorized()
-  <telethon.client.users.UserMethods.is_user_authorized>` now works
+  <splusthon.client.users.UserMethods.is_user_authorized>` now works
   correctly after `client.log_out()
-  <telethon.client.auth.AuthMethods.log_out>`.
-* `dialog.is_group <telethon.tl.custom.dialog.Dialog>` now works for
+  <splusthon.client.auth.AuthMethods.log_out>`.
+* `dialog.is_group <splusthon.tl.custom.dialog.Dialog>` now works for
   :tl:`ChatForbidden`.
 * Not using ``async with`` when needed is now a proper error.
-* `events.CallbackQuery <telethon.events.callbackquery.CallbackQuery>`
+* `events.CallbackQuery <splusthon.events.callbackquery.CallbackQuery>`
   with string regex was not working properly.
-* `client.get_entity('me') <telethon.client.users.UserMethods.get_entity>`
+* `client.get_entity('me') <splusthon.client.users.UserMethods.get_entity>`
   now works again.
 * Empty codes when signing in are no longer valid.
 * Fixed file cache for in-memory sessions.
@@ -2058,7 +2058,7 @@ Enhancements
 ~~~~~~~~~~~~
 
 * Support ``next_offset`` in `inline_query.answer()
-  <telethon.events.inlinequery.InlineQuery.Event.answer>`.
+  <splusthon.events.inlinequery.InlineQuery.Event.answer>`.
 * Support ``<a href="tg://user?id=123">`` mentions in HTML parse mode.
 * New auto-casts for :tl:`InputDocument` and :tl:`InputChatPhoto`.
 * Conversations are now exclusive per-chat by default.
@@ -2066,7 +2066,7 @@ Enhancements
 * New full API examples in the generated documentation.
 * Fixed some broken links in the documentation.
 * `client.disconnect()
-  <telethon.client.telegrambaseclient.TelegramBaseClient.disconnect>`
+  <splusthon.client.telegrambaseclient.TelegramBaseClient.disconnect>`
   is now synchronous, but you can still ``await`` it for consistency
   or compatibility.
 
@@ -2083,7 +2083,7 @@ since it gives you the same features but even more conveniently:
 .. code-block:: python
 
     # handlers/welcome.py
-    from telethon import events
+    from splusthon import events
 
     @events.register(events.NewMessage('(?i)hello'))
     async def handler(event):
@@ -2092,7 +2092,7 @@ since it gives you the same features but even more conveniently:
         await client.send_message('me', 'Sent hello to someone')
 
 
-This will `register <telethon.events.register>` the ``handler`` callback
+This will `register <splusthon.events.register>` the ``handler`` callback
 to handle new message events. Note that you didn't add this to any client
 yet, and this is the key point: you don't need a client to define handlers!
 You can add it later:
@@ -2100,10 +2100,10 @@ You can add it later:
 .. code-block:: python
 
     # main.py
-    from telethon import TelegramClient
+    from splusthon import SoroushClient
     import handlers.welcome
 
-    with TelegramClient(...) as client:
+    with SoroushClient(...) as client:
         # This line adds the handler we defined before for new messages
         client.add_event_handler(handlers.welcome.handler)
         client.run_until_disconnected()
@@ -2139,7 +2139,7 @@ Bug fixes
 * Running code with `python3 -O` would remove critical code from asserts.
 * Fix some rare ghost disconnections after reconnecting.
 * Fix strange behavior for `send_message(chat, Message, reply_to=foo)
-  <telethon.client.messages.MessageMethods.send_message>`.
+  <splusthon.client.messages.MessageMethods.send_message>`.
 * The ``loop=`` argument was being pretty much ignored.
 * Fix ``MemorySession`` file caching.
 * The logic for getting entities from their username is now correct.
@@ -2152,12 +2152,12 @@ Bug fixes
 Enhancements
 ~~~~~~~~~~~~
 
-* `iter_participants <telethon.client.chats.ChatMethods.iter_participants>`
+* `iter_participants <splusthon.client.chats.ChatMethods.iter_participants>`
   will now use its ``search=`` as a symbol set when ``aggressive=True``,
   so you can do ``client.get_participants(group, aggressive=True,
   search='абвгдеёжзийклмнопрст')``.
 * The ``StringSession`` supports custom encoding.
-* Callbacks for `telethon.client.auth.AuthMethods.start` can be ``async``.
+* Callbacks for `splusthon.client.auth.AuthMethods.start` can be ``async``.
 
 
 Internal changes
@@ -2176,12 +2176,12 @@ Conversations, String Sessions and More (v1.2)
 
 
 This is a big release! Quite a few things have been added to the library,
-such as the new `Conversation <telethon.tl.custom.conversation.Conversation>`.
+such as the new `Conversation <splusthon.tl.custom.conversation.Conversation>`.
 This makes it trivial to get tokens from `@BotFather <https://t.me/BotFather>`_:
 
 .. code-block:: python
 
-    from telethon.tl import types
+    from splusthon.tl import types
 
     with client.conversation('BotFather') as conv:
         conv.send_message('/mybots')
@@ -2199,7 +2199,7 @@ without creating any on-disk file thanks to the ``StringSession``:
 
 .. code-block:: python
 
-    from telethon.sessions import StringSession
+    from splusthon.sessions import StringSession
     string = StringSession.save(client.session)
 
 Check out :ref:`sessions` for more details.
@@ -2216,23 +2216,23 @@ Additions
 ~~~~~~~~~
 
 - The mentioned method to start a new `client.conversation
-  <telethon.client.dialogs.DialogMethods.conversation>`.
+  <splusthon.client.dialogs.DialogMethods.conversation>`.
 - Implemented global search through `client.iter_messages
-  <telethon.client.messages.MessageMethods.iter_messages>`
+  <splusthon.client.messages.MessageMethods.iter_messages>`
   with `None` entity.
-- New `client.inline_query <telethon.client.bots.BotMethods.inline_query>`
+- New `client.inline_query <splusthon.client.bots.BotMethods.inline_query>`
   method to perform inline queries.
 - Bot-API-style ``file_id`` can now be used to send files and download media.
-  You can also access `telethon.utils.resolve_bot_file_id` and
-  `telethon.utils.pack_bot_file_id` to resolve and create these
+  You can also access `splusthon.utils.resolve_bot_file_id` and
+  `splusthon.utils.pack_bot_file_id` to resolve and create these
   file IDs yourself. Note that each user has its own ID for each file
   so you can't use a bot's ``file_id`` with your user, except stickers.
-- New `telethon.utils.get_peer`, useful when you expect a :tl:`Peer`.
+- New `splusthon.utils.get_peer`, useful when you expect a :tl:`Peer`.
 
 Bug fixes
 ~~~~~~~~~
 
-- UTC timezone for `telethon.events.userupdate.UserUpdate`.
+- UTC timezone for `splusthon.events.userupdate.UserUpdate`.
 - Bug with certain input parameters when iterating messages.
 - RPC errors without parent requests caused a crash, and better logging.
 - ``incoming = outgoing = True`` was not working properly.
@@ -2240,7 +2240,7 @@ Bug fixes
 - File attributes not being inferred for ``open()``'ed files.
 - Use ``MemorySession`` if ``sqlite3`` is not installed by default.
 - Self-user would not be saved to the session file after signing in.
-- `client.catch_up() <telethon.client.updates.UpdateMethods.catch_up>`
+- `client.catch_up() <splusthon.client.updates.UpdateMethods.catch_up>`
   seems to be functional again.
 
 
@@ -2258,7 +2258,7 @@ Better Custom Message (v1.1.1)
 
 *Published at 2018/07/23*
 
-The `custom.Message <telethon.tl.custom.message.Message>` class has been
+The `custom.Message <splusthon.tl.custom.message.Message>` class has been
 rewritten in a cleaner way and overall feels less hacky in the library.
 This should perform better than the previous way in which it was patched.
 
@@ -2282,14 +2282,14 @@ Bot Friendly (v1.1)
 *Published at 2018/07/21*
 
 Two new event handlers to ease creating normal bots with the library,
-namely `events.InlineQuery <telethon.events.inlinequery.InlineQuery>`
-and `events.CallbackQuery <telethon.events.callbackquery.CallbackQuery>`
+namely `events.InlineQuery <splusthon.events.inlinequery.InlineQuery>`
+and `events.CallbackQuery <splusthon.events.callbackquery.CallbackQuery>`
 for handling ``@InlineBot queries`` or reacting to a button click. For
 this second option, there is an even better way:
 
 .. code-block:: python
 
-    from telethon.tl.custom import Button
+    from splusthon.tl.custom import Button
 
     async def callback(event):
         await event.edit('Thank you!')
@@ -2314,7 +2314,7 @@ And yes, you can create more complex button layouts with lists:
 
 .. code-block:: python
 
-    from telethon import events
+    from splusthon import events
 
     global phone = ''
 
@@ -2343,12 +2343,12 @@ And yes, you can create more complex button layouts with lists:
 Additions
 ~~~~~~~~~
 
-- New `custom.Button <telethon.tl.custom.button.Button>` class
+- New `custom.Button <splusthon.tl.custom.button.Button>` class
   to help you create inline (or normal) reply keyboards. You
   must sign in as a bot to use the ``buttons=`` parameters.
 - New events usable if you sign in as a bot: `events.InlineQuery
-  <telethon.events.inlinequery.InlineQuery>` and `events.CallbackQuery
-  <telethon.events.callbackquery.CallbackQuery>`.
+  <splusthon.events.inlinequery.InlineQuery>` and `events.CallbackQuery
+  <splusthon.events.callbackquery.CallbackQuery>`.
 - New ``silent`` parameter when sending messages, usable in broadcast channels.
 - Documentation now has an entire section dedicate to how to use
   the client's friendly methods at *(removed broken link)*.
@@ -2396,10 +2396,10 @@ properly. You can use it doing the following, like any other mode:
 
 .. code-block:: python
 
-    from telethon import TelegramClient, sync
-    from telethon.network import ConnectionHttp
+    from splusthon import SoroushClient, sync
+    from splusthon.network import ConnectionHttp
 
-    client = TelegramClient(..., connection=ConnectionHttp)
+    client = SoroushClient(..., connection=ConnectionHttp)
     with client:
         client.send_message('me', 'Hi!')
 
@@ -2408,8 +2408,8 @@ Additions
 ~~~~~~~~~
 
 - ``add_mark=`` is now back on ``utils.get_input_peer`` and also on
-  `client.get_input_entity() <telethon.client.users.UserMethods.get_input_entity>`.
-- New `client.get_peer_id <telethon.client.users.UserMethods.get_peer_id>`
+  `client.get_input_entity() <splusthon.client.users.UserMethods.get_input_entity>`.
+- New `client.get_peer_id <splusthon.client.users.UserMethods.get_peer_id>`
   convenience for ``utils.get_peer_id(await client.get_input_entity(peer))``.
 
 
@@ -2421,7 +2421,7 @@ Bug fixes
   uploading 10 file parts at once will work properly again.
 - Documentation fixes and some missing ``await``.
 - Revert named argument for `client.forward_messages
-  <telethon.client.messages.MessageMethods.forward_messages>`
+  <splusthon.client.messages.MessageMethods.forward_messages>`
 
 Enhancements
 ~~~~~~~~~~~~
@@ -2447,7 +2447,7 @@ Iterate Messages in Reverse (v1.0.3)
 +-----------------------+
 
 Mostly bug fixes, but now there is a new parameter on `client.iter_messages
-<telethon.client.messages.MessageMethods.iter_messages>` to support reversing
+<splusthon.client.messages.MessageMethods.iter_messages>` to support reversing
 the order in which messages are returned.
 
 Additions
@@ -2463,7 +2463,7 @@ Bug fixes
 ~~~~~~~~~
 
 - Count was always `None` for `message.button_count
-  <telethon.tl.custom.message.Message.button_count>`.
+  <splusthon.tl.custom.message.Message.button_count>`.
 - Some fixes when disconnecting upon dropping the client.
 - Support for Python 3.4 in the sync version, and fix media download.
 - Some issues with events when accessing the input chat or their media.
@@ -2491,13 +2491,13 @@ unusable! This quick update should fix those, namely:
 Bug fixes
 ~~~~~~~~~
 
-- `client.start() <telethon.client.auth.AuthMethods.start>` was completely
+- `client.start() <splusthon.client.auth.AuthMethods.start>` was completely
   broken due to a last-time change requiring named arguments everywhere.
 - Since the rewrite, if your system clock was wrong, the connection would
   get stuck in an infinite "bad message" loop of responses from Telegram.
 - Accessing the buttons of a custom message wouldn't work in channels,
   which lead to fix a completely different bug regarding starting bots.
-- Disconnecting could complain if the magic ``telethon.sync`` was imported.
+- Disconnecting could complain if the magic ``splusthon.sync`` was imported.
 - Successful automatic reconnections now ask Telegram to send updates to us
   once again as soon as the library is ready to listen for them.
 
@@ -2509,7 +2509,7 @@ Synchronous magic (v1.0)
 
 .. important::
 
-    If you come from Telethon pre-1.0 you **really** want to read
+    If you come from SPlusthon pre-1.0 you **really** want to read
     :ref:`compatibility-and-convenience` to port your scripts to
     the new version.
 
@@ -2519,8 +2519,8 @@ have been implemented. It's time to consider the public API as stable, and
 remove some of the old methods that were around until now for compatibility
 reasons. But there's one more surprise!
 
-There is a new magic ``telethon.sync`` module to let you use **all** the
-methods in the :ref:`TelegramClient <telethon-client>` (and the types returned
+There is a new magic ``splusthon.sync`` module to let you use **all** the
+methods in the :ref:`SoroushClient <splusthon-client>` (and the types returned
 from its functions) in a synchronous way, while using `asyncio` behind
 the scenes! This means you're now able to do both of the following:
 
@@ -2535,7 +2535,7 @@ the scenes! This means you're now able to do both of the following:
 
     # ...can be rewritten as:
 
-    from telethon import sync
+    from splusthon import sync
     client.send_message('me', 'Hello!')
 
 Both ways can coexist (you need to ``await`` if the loop is running).
@@ -2549,19 +2549,19 @@ Breaking Changes
 ~~~~~~~~~~~~~~~~
 
 - ``message.get_fwd_sender`` is now in `message.forward
-  <telethon.tl.custom.message.Message.forward>`.
+  <splusthon.tl.custom.message.Message.forward>`.
 - ``client.idle`` is now `client.run_until_disconnected()
-  <telethon.client.updates.UpdateMethods.run_until_disconnected>`
+  <splusthon.client.updates.UpdateMethods.run_until_disconnected>`
 - ``client.add_update_handler`` is now `client.add_event_handler
-  <telethon.client.updates.UpdateMethods.add_event_handler>`
+  <splusthon.client.updates.UpdateMethods.add_event_handler>`
 - ``client.remove_update_handler`` is now `client.remove_event_handler
-  <telethon.client.updates.UpdateMethods.remove_event_handler>`
+  <splusthon.client.updates.UpdateMethods.remove_event_handler>`
 - ``client.list_update_handlers`` is now `client.list_event_handlers
-  <telethon.client.updates.UpdateMethods.list_event_handlers>`
+  <splusthon.client.updates.UpdateMethods.list_event_handlers>`
 - ``client.get_message_history`` is now `client.get_messages
-  <telethon.client.messages.MessageMethods.get_messages>`
+  <splusthon.client.messages.MessageMethods.get_messages>`
 - ``client.send_voice_note`` is now `client.send_file
-  <telethon.client.uploads.UploadMethods.send_file>` with ``is_voice=True``.
+  <splusthon.client.uploads.UploadMethods.send_file>` with ``is_voice=True``.
 - ``client.invoke()`` is now ``client(...)``.
 - ``report_errors`` has been removed since it's currently not used,
   and ``flood_sleep_threshold`` is now part of the client.
@@ -2576,27 +2576,27 @@ Breaking Changes
 Additions
 ~~~~~~~~~
 
-- `client.send_file <telethon.client.uploads.UploadMethods.send_file>` now
+- `client.send_file <splusthon.client.uploads.UploadMethods.send_file>` now
   accepts external ``http://`` and ``https://`` URLs.
-- You can use the :ref:`TelegramClient <telethon-client>` inside of ``with``
-  blocks, which will `client.start() <telethon.client.auth.AuthMethods.start>`
-  and `disconnect() <telethon.client.telegrambaseclient.TelegramBaseClient.disconnect>`
+- You can use the :ref:`SoroushClient <splusthon-client>` inside of ``with``
+  blocks, which will `client.start() <splusthon.client.auth.AuthMethods.start>`
+  and `disconnect() <splusthon.client.telegrambaseclient.TelegramBaseClient.disconnect>`
   the client for you:
 
   .. code-block:: python
 
-      from telethon import TelegramClient, sync
+      from splusthon import SoroushClient, sync
 
-      with TelegramClient(name, api_id, api_hash) as client:
+      with SoroushClient(name, api_id, api_hash) as client:
           client.send_message('me', 'Hello!')
 
   Convenience at its maximum! You can even chain the `.start()
-  <telethon.client.auth.AuthMethods.start>` method since
+  <splusthon.client.auth.AuthMethods.start>` method since
   it returns the instance of the client:
 
   .. code-block:: python
 
-      with TelegramClient(name, api_id, api_hash).start(bot_token=token) as bot:
+      with SoroushClient(name, api_id, api_hash).start(bot_token=token) as bot:
           bot.send_message(chat, 'Hello!')
 
 
@@ -2609,21 +2609,21 @@ Bug fixes
 - ``await`` the updates task upon disconnection.
 - Some bug in Python 3.5.2's `asyncio` causing 100% CPU load if you
   forgot to call `client.disconnect()
-  <telethon.client.telegrambaseclient.TelegramBaseClient.disconnect>`.
+  <splusthon.client.telegrambaseclient.TelegramBaseClient.disconnect>`.
   The method is called for you on object destruction, but you still should
   disconnect manually or use a ``with`` block.
 - Some fixes regarding disconnecting on client deletion and properly
   saving the authorization key.
 - Passing a class to `message.get_entities_text
-  <telethon.tl.custom.message.Message.get_entities_text>` now works properly.
+  <splusthon.tl.custom.message.Message.get_entities_text>` now works properly.
 - Iterating messages from a specific user in private messages now works.
 
 Enhancements
 ~~~~~~~~~~~~
 
-- Both `client.start() <telethon.client.auth.AuthMethods.start>` and
+- Both `client.start() <splusthon.client.auth.AuthMethods.start>` and
   `client.run_until_disconnected()
-  <telethon.client.updates.UpdateMethods.run_until_disconnected>` can
+  <splusthon.client.updates.UpdateMethods.run_until_disconnected>` can
   be ran in both a synchronous way (without starting the loop manually)
   or from an ``async def`` where they need to have an ``await``.
 
@@ -2659,30 +2659,30 @@ Breaking Changes
 
 - If you relied on internals like the ``MtProtoSender`` and the
   ``TelegramBareClient``, both are gone. They are now `MTProtoSender
-  <telethon.network.mtprotosender.MTProtoSender>` and `TelegramBaseClient
-  <telethon.client.telegrambaseclient.TelegramBaseClient>` and they behave
+  <splusthon.network.mtprotosender.MTProtoSender>` and `TelegramBaseClient
+  <splusthon.client.telegrambaseclient.TelegramBaseClient>` and they behave
   differently.
 - Underscores have been renamed from filenames. This means
-  ``telethon.errors.rpc_error_list`` won't work, but you should
-  have been using `telethon.errors` all this time instead.
-- `client.connect <telethon.client.telegrambaseclient.TelegramBaseClient.connect>`
+  ``splusthon.errors.rpc_error_list`` won't work, but you should
+  have been using `splusthon.errors` all this time instead.
+- `client.connect <splusthon.client.telegrambaseclient.TelegramBaseClient.connect>`
   no longer returns `True` on success. Instead, you should ``except`` the
   possible ``ConnectionError`` and act accordingly. This makes it easier to
   not ignore the error.
 - You can no longer set ``retries=n`` when calling a request manually. The
   limit works differently now, and it's done on a per-client basis.
-- Accessing `.sender <telethon.tl.custom.message.Message.sender>`,
-  `.chat <telethon.tl.custom.message.Message.chat>` and similar may *not* work
+- Accessing `.sender <splusthon.tl.custom.message.Message.sender>`,
+  `.chat <splusthon.tl.custom.message.Message.chat>` and similar may *not* work
   in events anymore, since previously they could access the network. The new
   rule is that properties are not allowed to make API calls. You should use
-  `.get_sender() <telethon.tl.custom.message.Message.get_sender>`,
-  `.get_chat() <telethon.tl.custom.message.Message.get_chat>` instead while
+  `.get_sender() <splusthon.tl.custom.message.Message.get_sender>`,
+  `.get_chat() <splusthon.tl.custom.message.Message.get_chat>` instead while
   using events. You can safely access properties if you get messages through
-  `client.get_messages() <telethon.client.messages.MessageMethods.get_messages>`
+  `client.get_messages() <splusthon.client.messages.MessageMethods.get_messages>`
   or other methods in the client.
 - The above point means ``reply_message`` is now `.get_reply_message()
-  <telethon.tl.custom.message.Message.get_reply_message>`, and ``fwd_from_entity``
-  is now `get_fwd_sender() <telethon.tl.custom.message.Message.get_fwd_sender>`.
+  <splusthon.tl.custom.message.Message.get_reply_message>`, and ``fwd_from_entity``
+  is now `get_fwd_sender() <splusthon.tl.custom.message.Message.get_fwd_sender>`.
   Also ``forward`` was gone in the previous version, and you should be using
   ``fwd_from`` instead.
 
@@ -2693,29 +2693,29 @@ Additions
 - Telegram's Terms Of Service are now accepted when creating a new account.
   This can possibly help avoid bans. This has no effect for accounts that
   were created before.
-- The `method reference <https://tl.telethon.dev/>`_ now shows
+- The `method reference <https://tl.splusthon.dev/>`_ now shows
   which methods can be used if you sign in with a ``bot_token``.
 - There's a new `client.disconnected
-  <telethon.client.telegrambaseclient.TelegramBaseClient.disconnected>` future
+  <splusthon.client.telegrambaseclient.TelegramBaseClient.disconnected>` future
   which you can wait on. When a disconnection occurs, you will now, instead
   letting it happen in the background.
 - More configurable retries parameters, such as auto-reconnection, retries
   when connecting, and retries when sending a request.
-- You can filter `events.NewMessage <telethon.events.newmessage.NewMessage>`
+- You can filter `events.NewMessage <splusthon.events.newmessage.NewMessage>`
   by sender ID, and also whether they are forwards or not.
 - New ``ignore_migrated`` parameter for `client.iter_dialogs
-  <telethon.client.dialogs.DialogMethods.iter_dialogs>`.
+  <splusthon.client.dialogs.DialogMethods.iter_dialogs>`.
 
 Bug fixes
 ~~~~~~~~~
 
-- Several fixes to `telethon.events.newmessage.NewMessage`.
+- Several fixes to `splusthon.events.newmessage.NewMessage`.
 - Removed named ``length`` argument in ``to_bytes`` for PyPy.
 - Raw events failed due to not having ``._set_client``.
 - `message.get_entities_text
-  <telethon.tl.custom.message.Message.get_entities_text>` properly
+  <splusthon.tl.custom.message.Message.get_entities_text>` properly
   supports filtering, even if there are no message entities.
-- `message.click <telethon.tl.custom.message.Message.click>` works better.
+- `message.click <splusthon.tl.custom.message.Message.click>` works better.
 - The server started sending :tl:`DraftMessageEmpty` which the library
   didn't handle correctly when getting dialogs.
 - The "correct" chat is now always returned from returned messages.
@@ -2725,18 +2725,18 @@ Bug fixes
   should be noticeable in Windows.
 - :tl:`MessageEmpty` is now handled when searching messages.
 - Fixed a rare infinite loop bug in `client.iter_dialogs
-  <telethon.client.dialogs.DialogMethods.iter_dialogs>` for some people.
+  <splusthon.client.dialogs.DialogMethods.iter_dialogs>` for some people.
 - Fixed ``TypeError`` when there is no `.sender
-  <telethon.tl.custom.message.Message.sender>`.
+  <splusthon.tl.custom.message.Message.sender>`.
 
 Enhancements
 ~~~~~~~~~~~~
 
 - You can now delete over 100 messages at once with `client.delete_messages
-  <telethon.client.messages.MessageMethods.delete_messages>`.
+  <splusthon.client.messages.MessageMethods.delete_messages>`.
 - Signing in now accounts for ``AuthRestartError`` itself, and also handles
   ``PasswordHashInvalidError``.
-- ``__all__`` is now defined, so ``from telethon import *`` imports sane
+- ``__all__`` is now defined, so ``from splusthon import *`` imports sane
   defaults (client, events and utils). This is however discouraged and should
   be used only in quick scripts.
 - ``pathlib.Path`` is now supported for downloading and uploading media.
@@ -2756,7 +2756,7 @@ Enhancements
 Internal changes
 ~~~~~~~~~~~~~~~~
 
-- The flow for sending a request is as follows: the ``TelegramClient`` creates
+- The flow for sending a request is as follows: the ``SoroushClient`` creates
   a ``MTProtoSender`` with a ``Connection``, and the sender starts send and
   receive loops. Sending a request means enqueueing it in the sender, which
   will eventually pack and encrypt it with its ``ConnectionState`` instead
@@ -2771,14 +2771,14 @@ Internal changes
 - Objects can no longer be ``content_related`` and instead subclass
   ``TLRequest``, making the separation of concerns easier.
 
-- The ``TelegramClient`` has been split into several mixin classes to avoid
+- The ``SoroushClient`` has been split into several mixin classes to avoid
   having a 3,000-lines-long file with all the methods.
 
 - More special cases in the ``MTProtoSender`` have been cleaned up, and also
   some attributes from the ``Session`` which didn't really belong there since
   they weren't being saved.
 
-- The ``telethon_generator/`` can now convert ``.tl`` files into ``.json``,
+- The ``splusthon_generator/`` can now convert ``.tl`` files into ``.json``,
   mostly as a proof of concept, but it might be useful for other people.
 
 
@@ -2792,9 +2792,9 @@ Custom Message class (v0.19.1)
 +-----------------------+
 
 
-This update brings a new `telethon.tl.custom.message.Message` object!
+This update brings a new `splusthon.tl.custom.message.Message` object!
 
-All the methods in the `telethon.telegram_client.TelegramClient` that
+All the methods in the `splusthon.telegram_client.SoroushClient` that
 used to return a :tl:`Message` will now return this object instead, which
 means you can do things like the following:
 
@@ -2806,45 +2806,45 @@ means you can do things like the following:
     print(msg.sender)
 
 Refer to its documentation to see all you can do, again, click
-`telethon.tl.custom.message.Message` to go to its page.
+`splusthon.tl.custom.message.Message` to go to its page.
 
 
 Breaking Changes
 ~~~~~~~~~~~~~~~~
 
-- The `telethon.network.connection.common.Connection` class is now an ABC,
+- The `splusthon.network.connection.common.Connection` class is now an ABC,
   and the old ``ConnectionMode`` is now gone. Use a specific connection (like
-  `telethon.network.connection.tcpabridged.ConnectionTcpAbridged`) instead.
+  `splusthon.network.connection.tcpabridged.ConnectionTcpAbridged`) instead.
 
 Additions
 ~~~~~~~~~
 
 - You can get messages by their ID with
-  `telethon.telegram_client.TelegramClient.get_messages`'s ``ids`` parameter:
+  `splusthon.telegram_client.SoroushClient.get_messages`'s ``ids`` parameter:
 
   .. code-block:: python
 
       message = client.get_messages(chats, ids=123)  # Single message
       message_list = client.get_messages(chats, ids=[777, 778])  # Multiple
 
-- More convenience properties for `telethon.tl.custom.dialog.Dialog`.
-- New default `telethon.telegram_client.TelegramClient.parse_mode`.
+- More convenience properties for `splusthon.tl.custom.dialog.Dialog`.
+- New default `splusthon.telegram_client.SoroushClient.parse_mode`.
 - You can edit the media of messages that already have some media.
 - New dark theme in the online ``tl`` reference, check it out at
-  https://tl.telethon.dev/.
+  https://tl.splusthon.dev/.
 
 Bug fixes
 ~~~~~~~~~
 
 - Some IDs start with ``1000`` and these would be wrongly treated as channels.
 - Some short usernames like ``@vote`` were being ignored.
-- `telethon.telegram_client.TelegramClient.iter_messages`'s ``from_user``
+- `splusthon.telegram_client.SoroushClient.iter_messages`'s ``from_user``
   was failing if no filter had been set.
-- `telethon.telegram_client.TelegramClient.iter_messages`'s ``min_id/max_id``
+- `splusthon.telegram_client.SoroushClient.iter_messages`'s ``min_id/max_id``
   was being ignored by Telegram. This is now worked around.
-- `telethon.telegram_client.TelegramClient.catch_up` would fail with empty
+- `splusthon.telegram_client.SoroushClient.catch_up` would fail with empty
   states.
-- `telethon.events.newmessage.NewMessage` supports ``incoming=False``
+- `splusthon.events.newmessage.NewMessage` supports ``incoming=False``
   to indicate ``outgoing=True``.
 
 Enhancements
@@ -2854,7 +2854,7 @@ Enhancements
 
   .. code-block:: python
 
-      from telethon.tl.functions.messages import SendMessageRequest
+      from splusthon.tl.functions.messages import SendMessageRequest
       client([SendMessageRequest(chat, 'Hello 1!'),
               SendMessageRequest(chat, 'Hello 2!')], ordered=True)
 
@@ -2864,7 +2864,7 @@ Internal changes
 - ``without rowid`` is not used in SQLite anymore.
 - Unboxed serialization would fail.
 - Different default limit for ``iter_messages`` and ``get_messages``.
-- Some clean-up in the ``telethon_generator/`` package.
+- Some clean-up in the ``splusthon_generator/`` package.
 
 
 Catching up on Updates (v0.19)
@@ -2877,7 +2877,7 @@ Catching up on Updates (v0.19)
 +-----------------------+
 
 This update prepares the library for catching up with updates with the new
-`telethon.telegram_client.TelegramClient.catch_up` method. This feature needs
+`splusthon.telegram_client.SoroushClient.catch_up` method. This feature needs
 more testing, but for now it will let you "catch up" on some old updates that
 occurred while the library was offline, and brings some new features and bug
 fixes.
@@ -2887,8 +2887,8 @@ Additions
 ~~~~~~~~~
 
 - Add ``search``, ``filter`` and ``from_user`` parameters to
-  `telethon.telegram_client.TelegramClient.iter_messages`.
-- `telethon.telegram_client.TelegramClient.download_file` now
+  `splusthon.telegram_client.SoroushClient.iter_messages`.
+- `splusthon.telegram_client.SoroushClient.download_file` now
   supports a `None` path to return the file in memory and
   return its `bytes`.
 - Events now have a ``.original_update`` field.
@@ -2907,11 +2907,11 @@ Enhancements
 
 - Retry automatically on ``RpcCallFailError``. This error happened a lot
   when iterating over many messages, and retrying often fixes it.
-- Faster `telethon.telegram_client.TelegramClient.iter_messages` by
+- Faster `splusthon.telegram_client.SoroushClient.iter_messages` by
   sleeping only as much as needed.
-- `telethon.telegram_client.TelegramClient.edit_message` now supports
+- `splusthon.telegram_client.SoroushClient.edit_message` now supports
   omitting the entity if you pass a :tl:`Message`.
-- `telethon.events.raw.Raw` can now be filtered by type.
+- `splusthon.events.raw.Raw` can now be filtered by type.
 
 Internal changes
 ~~~~~~~~~~~~~~~~
@@ -2934,20 +2934,20 @@ Now you can use Python's ``pickle`` module to serialize ``RPCError`` and
 any other ``TLObject`` thanks to **@vegeta1k95**! A fix that was fairly
 simple, but still might be useful for many people.
 
-As a side note, the documentation at https://tl.telethon.dev
+As a side note, the documentation at https://tl.splusthon.dev
 now lists known ``RPCError`` for all requests, so you know what to expect.
 This required a major rewrite, but it was well worth it!
 
 Breaking changes
 ~~~~~~~~~~~~~~~~
 
-- `telethon.telegram_client.TelegramClient.forward_messages` now returns
+- `splusthon.telegram_client.SoroushClient.forward_messages` now returns
   a single item instead of a list if the input was also a single item.
 
 Additions
 ~~~~~~~~~
 
-- New `telethon.events.messageread.MessageRead` event, to find out when
+- New `splusthon.events.messageread.MessageRead` event, to find out when
   and who read which messages as soon as it happens.
 - Now you can access ``.chat_id`` on all events and ``.sender_id`` on some.
 
@@ -2960,18 +2960,18 @@ Bug fixes
 - ``AUTH_KEY_DUPLICATED`` is handled automatically on connection.
 - Markdown parser's offset uses ``match.start()`` to allow custom regex.
 - Some filter types (as a type) were not supported by
-  `telethon.telegram_client.TelegramClient.iter_participants`.
-- `telethon.telegram_client.TelegramClient.remove_event_handler` works.
-- `telethon.telegram_client.TelegramClient.start` works on all terminals.
+  `splusthon.telegram_client.SoroushClient.iter_participants`.
+- `splusthon.telegram_client.SoroushClient.remove_event_handler` works.
+- `splusthon.telegram_client.SoroushClient.start` works on all terminals.
 - :tl:`InputPeerSelf` case was missing from
-  `telethon.telegram_client.TelegramClient.get_input_entity`.
+  `splusthon.telegram_client.SoroushClient.get_input_entity`.
 
 Enhancements
 ~~~~~~~~~~~~
 
 - The ``parse_mode`` for messages now accepts a callable.
-- `telethon.telegram_client.TelegramClient.download_media` accepts web previews.
-- `telethon.tl.custom.dialog.Dialog` instances can now be casted into
+- `splusthon.telegram_client.SoroushClient.download_media` accepts web previews.
+- `splusthon.tl.custom.dialog.Dialog` instances can now be casted into
   :tl:`InputPeer`.
 - Better logging when reading packages "breaks".
 - Better and more powerful ``setup.py gen`` command.
@@ -3023,7 +3023,7 @@ Iterator methods (v0.18.1)
 
 *Published at 2018/03/17*
 
-All the ``.get_`` methods in the ``TelegramClient`` now have a ``.iter_``
+All the ``.get_`` methods in the ``SoroushClient`` now have a ``.iter_``
 counterpart, so you can do operations while retrieving items from them.
 For instance, you can ``client.iter_dialogs()`` and ``break`` once you
 find what you're looking for instead fetching them all at once.
@@ -3226,7 +3226,7 @@ Primarily bug fixing and a few welcomed additions.
 Additions
 ~~~~~~~~~
 
-- New convenience ``.edit_message()`` method on the ``TelegramClient``.
+- New convenience ``.edit_message()`` method on the ``SoroushClient``.
 - New ``.edit()`` and ``.delete()`` shorthands on the ``NewMessage`` event.
 - Default to markdown parsing when sending and editing messages.
 - Support for inline mentions when sending and editing messages. They work
@@ -3258,7 +3258,7 @@ Updates as Events (v0.17.1)
 
 Of course there was more work to be done regarding updates, and it's here!
 The library comes with a new ``events`` module (which you will often import
-as ``from telethon import TelegramClient, events``). This are pretty much
+as ``from splusthon import SoroushClient, events``). This are pretty much
 all the additions that come with this version change, but they are a nice
 addition. Refer to *(removed broken link)* to get started with events.
 
@@ -3293,7 +3293,7 @@ Enhancements
 - ``client.send_file()`` now accepts ``Message``'s and
   ``MessageMedia``'s as the ``file`` parameter.
 - Some documentation updates and fixed to clarify certain things.
-- New exact match feature on https://tl.telethon.dev.
+- New exact match feature on https://tl.splusthon.dev.
 - Return as early as possible from ``.get_input_entity()`` and similar,
   to avoid penalizing you for doing this right.
 
@@ -3438,7 +3438,7 @@ Additions
    API calls as possible if you feed it ``InputPeer`` types. Usernames
    will always be resolved, since they may have changed.
 -  ``.set_proxy()`` method, to avoid having to create a new
-   ``TelegramClient``.
+   ``SoroushClient``.
 -  More ``date`` types supported to represent a date parameter.
 
 Bug fixes
@@ -3483,10 +3483,10 @@ IPv6 support (v0.15.5)
 +-----------------------+
 
 It's here, it has come! The library now **supports IPv6**! Just pass
-``use_ipv6=True`` when creating a ``TelegramClient``. Note that I could
+``use_ipv6=True`` when creating a ``SoroushClient``. Note that I could
 *not* test this feature because my machine doesn't have IPv6 setup. If
 you know IPv6 works in your machine but the library doesn't, please
-refer to `#425 <https://github.com/LonamiWebs/Telethon/issues/425>`_.
+refer to `#425 <https://github.com/shayanheidari01/SPlusthon/issues/425>`_.
 
 Additions
 ~~~~~~~~~
@@ -3589,11 +3589,11 @@ things again! A lot of updates were being dropped (all those gzipped),
 and this has been fixed too.
 
 More bug fixes include a `correct
-parsing <https://github.com/LonamiWebs/Telethon/commit/ee01724cdb7027c1e38625d31446ba1ea7bade92>`__
+parsing <https://github.com/shayanheidari01/SPlusthon/commit/ee01724cdb7027c1e38625d31446ba1ea7bade92>`__
 of certain TLObjects thanks to @stek29, and
-`some <https://github.com/LonamiWebs/Telethon/commit/ed77ba6f8ff115ac624f02f691c9991e5b37be60>`__
+`some <https://github.com/shayanheidari01/SPlusthon/commit/ed77ba6f8ff115ac624f02f691c9991e5b37be60>`__
 `wrong
-calls <https://github.com/LonamiWebs/Telethon/commit/16cf94c9add5e94d70c4eee2ac142d8e76af48b9>`__
+calls <https://github.com/shayanheidari01/SPlusthon/commit/16cf94c9add5e94d70c4eee2ac142d8e76af48b9>`__
 that would cause the library to crash thanks to @andr-04, and the
 ``ReadThread`` not re-starting if you were already authorized.
 
@@ -3658,7 +3658,7 @@ Custom Entity Database (v0.15.1)
 
 *Published at 2017/10/05*
 
-The main feature of this release is that Telethon now has a custom
+The main feature of this release is that SPlusthon now has a custom
 database for all the entities you encounter, instead depending on
 ``@lru_cache`` on the ``.get_entity()`` method.
 
@@ -3726,7 +3726,7 @@ Enhancements
 -  You can also change the number of workers at any given time.
 -  The library can now run **in a single thread** again, if you don't
    need to spawn any at all. Simply set ``spawn_read_thread=False`` when
-   creating the ``TelegramClient``!
+   creating the ``SoroushClient``!
 -  You can specify ``limit=None`` on ``.get_dialogs()`` to get **all**
    of them[1].
 -  **Updates are expanded**, so you don't need to check if the update
@@ -3741,7 +3741,7 @@ Enhancements
 -  Phone numbers can have dashes, spaces, or parenthesis. They'll be
    removed before making the request.
 -  You can override the phone and its hash on ``.sign_in()``, if you're
-   creating a new ``TelegramClient`` on two different places.
+   creating a new ``SoroushClient`` on two different places.
 
 Bug fixes
 ~~~~~~~~~
@@ -3763,10 +3763,10 @@ Bug fixes
 Internal changes
 ~~~~~~~~~~~~~~~~
 
--  ``TelegramClient`` is now only an abstraction over the
+-  ``SoroushClient`` is now only an abstraction over the
    ``TelegramBareClient``, which can only do basic things, such as
    invoking requests, working with files, etc. If you don't need any of
-   the abstractions the ``TelegramClient``, you can now use the
+   the abstractions the ``SoroushClient``, you can now use the
    ``TelegramBareClient`` in a much more comfortable way.
 -  ``MtProtoSender`` is not thread-safe, but it doesn't need to be since
    a new connection will be spawned when needed.
@@ -3777,7 +3777,7 @@ Internal changes
 
 **[1]:** Broken due to a condition which should had been the opposite
 (sigh), fixed 4 commits ahead on
-https://github.com/LonamiWebs/Telethon/commit/62ea77cbeac7c42bfac85aa8766a1b5b35e3a76c.
+https://github.com/shayanheidari01/SPlusthon/commit/62ea77cbeac7c42bfac85aa8766a1b5b35e3a76c.
 
 --------------
 
@@ -3954,7 +3954,7 @@ More bug fixes and enhancements (v0.13.4)
 Additions
 ~~~~~~~~~
 
--  ``TelegramClient`` now exposes a ``.is_connected()`` method.
+-  ``SoroushClient`` now exposes a ``.is_connected()`` method.
 -  Initial authorization on a new data center will retry up to 5 times
    by default.
 -  Errors that couldn't be handled on the background thread will be
@@ -4018,7 +4018,7 @@ Enhancements
 -  **Request will be retried** up to 5 times by default rather than
    failing on the first attempt.
 -  ``InvalidChecksumError``\ 's are now **ignored** by the library.
--  ``TelegramClient.get_entity()`` is now **public**, and uses the
+-  ``SoroushClient.get_entity()`` is now **public**, and uses the
    ``@lru_cache()`` decorator.
 -  New method to **``.send_voice_note()``**\ 's.
 -  Methods to send message and media now support a **``reply_to``
@@ -4035,7 +4035,7 @@ This update brings a new way to work with updates, and it's begging for
 your **feedback**, or better names or ways to do what you can do now.
 
 Please refer to the `wiki/Usage
-Modes <https://github.com/LonamiWebs/Telethon/wiki/Usage-Modes>`__ for
+Modes <https://github.com/shayanheidari01/SPlusthon/wiki/Usage-Modes>`__ for
 an in-depth description on how to work with updates now. Notice that you
 cannot invoke requests from within handlers anymore, only the
 ``v.0.13.1`` patch allowed you to do so.
@@ -4088,9 +4088,9 @@ Connection modes (v0.13)
 
 The purpose of this release is to denote a big change, now you can
 connect to Telegram through different `**connection
-modes** <https://github.com/LonamiWebs/Telethon/blob/v0.13/telethon/network/connection.py>`__.
+modes** <https://github.com/shayanheidari01/SPlusthon/blob/v0.13/splusthon/network/connection.py>`__.
 Also, a **second thread** will *always* be started when you connect a
-``TelegramClient``, despite whether you'll be handling updates or
+``SoroushClient``, despite whether you'll be handling updates or
 ignoring them, whose sole purpose is to constantly read from the
 network.
 
@@ -4107,7 +4107,7 @@ Additions
 
 -  The mentioned different connection modes, and a new thread.
 -  You can modify the ``Session`` attributes through the
-   ``TelegramClient`` constructor (using ``**kwargs``).
+   ``SoroushClient`` constructor (using ``**kwargs``).
 -  ``RPCError``\ 's now belong to some request you've made, which makes
    more sense.
 -  ``get_input_*`` now handles `None` (default) parameters more
@@ -4121,7 +4121,7 @@ Enhancements
 -  The low-level socket doesn't use a handcrafted timeout anymore, which
    should benefit by avoiding the arbitrary ``sleep(0.1)`` that there
    used to be.
--  ``TelegramClient.sign_in`` will call ``.send_code_request`` if no
+-  ``SoroushClient.sign_in`` will call ``.send_code_request`` if no
    ``code`` was provided.
 
 Deprecation
@@ -4150,7 +4150,7 @@ Besides this. ``TLObject.stringify()`` was showing bytes as lists (now
 fixed) and RPC errors are reported by default:
 
     In an attempt to help everyone who works with the Telegram API,
-    Telethon will by default report all Remote Procedure Call errors to
+    SPlusthon will by default report all Remote Procedure Call errors to
     `PWRTelegram <https://pwrtelegram.xyz/>`__, a public database anyone can
     query, made by `Daniil <https://github.com/danog>`__. All the information
     sent is a GET request with the error code, error message and method used.
@@ -4187,7 +4187,7 @@ public keys now uses a different module instead the old strange
 hand-crafted version.
 
 Hope the new, super simple ``README.rst`` encourages people to use
-Telethon and make it better with either suggestions, or pull request.
+SPlusthon and make it better with either suggestions, or pull request.
 Pull requests are *super* appreciated, but showing some support by
 leaving a star also feels nice ⭐️.
 
@@ -4200,14 +4200,14 @@ Newbie friendly update (v0.12)
 | Scheme layer used: 70 |
 +-----------------------+
 
-This update is overall an attempt to make Telethon a bit more user
+This update is overall an attempt to make SPlusthon a bit more user
 friendly, along with some other stability enhancements, although it
 brings quite a few changes.
 
 Breaking changes
 ~~~~~~~~~~~~~~~~
 
--  The ``TelegramClient`` methods ``.send_photo_file()``,
+-  The ``SoroushClient`` methods ``.send_photo_file()``,
    ``.send_document_file()`` and ``.send_media_file()`` are now a
    **single method** called ``.send_file()``. It's also important to
    note that the **order** of the parameters has been **swapped**: first
@@ -4231,7 +4231,7 @@ Additions
    and downloading files.
 -  You can use a **phone number** or an **username** for methods like
    ``.send_message()``, ``.send_file()``, and all the other quick-access
-   methods provided by the ``TelegramClient``.
+   methods provided by the ``SoroushClient``.
 
 .. bug-fixes-5:
 
@@ -4277,26 +4277,26 @@ get_input_* everywhere (v0.11.4)
 *Published at 2017/07/10*
 
 For some reason, Telegram doesn't have enough with the
-`InputPeer <https://tl.telethon.dev/types/input_peer.html>`__.
+`InputPeer <https://tl.splusthon.dev/types/input_peer.html>`__.
 There also exist
-`InputChannel <https://tl.telethon.dev/types/input_channel.html>`__
+`InputChannel <https://tl.splusthon.dev/types/input_channel.html>`__
 and
-`InputUser <https://tl.telethon.dev/types/input_user.html>`__!
+`InputUser <https://tl.splusthon.dev/types/input_user.html>`__!
 You don't have to worry about those anymore, it's handled internally
 now.
 
 Besides this, every Telegram object now features a new default
 ``.__str__`` look, and also a `.stringify()
-method <https://github.com/LonamiWebs/Telethon/commit/8fd0d7eadd944ff42e18aaf06228adc7aba794b5>`__
+method <https://github.com/shayanheidari01/SPlusthon/commit/8fd0d7eadd944ff42e18aaf06228adc7aba794b5>`__
 to pretty format them, if you ever need to inspect them.
 
 The library now uses `the DEBUG
-level <https://github.com/LonamiWebs/Telethon/commit/1f7ac7118750ed84e2165dce9c6aca2e6ea0c6a4>`__
+level <https://github.com/shayanheidari01/SPlusthon/commit/1f7ac7118750ed84e2165dce9c6aca2e6ea0c6a4>`__
 everywhere, so no more warnings or information messages if you had
 logging enabled.
 
 The ``no_webpage`` parameter from ``.send_message`` `has been
-renamed <https://github.com/LonamiWebs/Telethon/commit/0119a006585acd1a1a9a8901a21bb2f193142cfe>`__
+renamed <https://github.com/shayanheidari01/SPlusthon/commit/0119a006585acd1a1a9a8901a21bb2f193142cfe>`__
 to ``link_preview`` for clarity, so now it does the opposite (but has a
 clearer intention).
 
@@ -4308,7 +4308,7 @@ Quick .send_message() fix (v0.11.3)
 A very quick follow-up release to fix a tiny bug with
 ``.send_message()``, no new features.
 
-Callable TelegramClient (v0.11.2)
+Callable SoroushClient (v0.11.2)
 =================================
 
 *Published at 2017/07/04*
@@ -4340,7 +4340,7 @@ anymore.
 Bugs fixes
 ~~~~~~~~~~
 
--  Fixed some errors when installing Telethon via ``pip`` (for those
+-  Fixed some errors when installing SPlusthon via ``pip`` (for those
    using either source distributions or a Python version ≤ 3.5).
 -  ``ConnectionResetError`` didn't flag sockets as closed, but now it
    does.
@@ -4357,7 +4357,7 @@ are back again so it should work on the long run.
 
 On a different order of things, ``.connect()`` also features a timeout.
 Notice that the ``timeout=`` is **not** passed as a **parameter**
-anymore, and is instead specified when creating the ``TelegramClient``.
+anymore, and is instead specified when creating the ``SoroushClient``.
 
 Bug fixes
 ~~~~~~~~~
@@ -4380,11 +4380,11 @@ Breaking changes
 
 -  Every Telegram error has now its **own class**, so it's easier to
    fine-tune your ``except``\ 's.
--  Markdown parsing is **not part** of Telethon itself anymore, although
+-  Markdown parsing is **not part** of SPlusthon itself anymore, although
    there are plans to support it again through a some external module.
 -  The ``.list_sessions()`` has been moved to the ``Session`` class
    instead.
--  The ``InteractiveTelegramClient`` is **not** shipped with ``pip``
+-  The ``InteractiveSoroushClient`` is **not** shipped with ``pip``
    anymore.
 
 Additions
@@ -4392,7 +4392,7 @@ Additions
 
 -  A new, more **lightweight class** has been added. The
    ``TelegramBareClient`` is now the base of the normal
-   ``TelegramClient``, and has the most basic features.
+   ``SoroushClient``, and has the most basic features.
 -  New method to ``.create_new_connection()``, which can be ran **in
    parallel** with the original connection. This will return the
    previously mentioned ``TelegramBareClient`` already connected.
@@ -4446,7 +4446,7 @@ resistant to upgrades.
 .. warning::
 
     You **must** upgrade to this version before any higher one if you've
-    used Telethon ≤ v0.10. If you happen to upgrade to an higher version,
+    used SPlusthon ≤ v0.10. If you happen to upgrade to an higher version,
     that's okay, but you will have to manually delete the ``*.session`` file,
     and logout from that session from an official client.
 
@@ -4455,7 +4455,7 @@ Additions
 
 - New ``.get_me()`` function to get the **current** user.
 - ``.is_user_authorized()`` is now more reliable.
-- New nice button to copy the ``from telethon.tl.xxx.yyy import Yyy``
+- New nice button to copy the ``from splusthon.tl.xxx.yyy import Yyy``
   on the online documentation.
 - **More error codes** added to the ``errors`` file.
 
@@ -4473,7 +4473,7 @@ Full support for different DCs and ++stable (v0.10)
 
 Working with **different data centers** finally *works*! On a different
 order of things, **reconnection** is now performed automatically every
-time Telegram decides to kick us off their servers, so now Telethon can
+time Telegram decides to kick us off their servers, so now SPlusthon can
 really run **forever and ever**! In theory.
 
 Enhancements
@@ -4490,7 +4490,7 @@ Enhancements
    and other internal improvements (which affect the **updates
    thread**), such as using ``logger`` instead a bare ``print()`` too.
 
-This brings Telethon a whole step closer to ``v1.0``, though more things
+This brings SPlusthon a whole step closer to ``v1.0``, though more things
 should preferably be changed.
 
 Stability improvements (v0.9.1)
@@ -4498,7 +4498,7 @@ Stability improvements (v0.9.1)
 
 *Published at 2017/05/23*
 
-Telethon used to crash a lot when logging in for the very first time.
+SPlusthon used to crash a lot when logging in for the very first time.
 The reason for this was that the reconnection (or dead connections) were
 not handled properly. Now they are, so you should be able to login
 directly, without needing to delete the ``*.session`` file anymore.
@@ -4512,7 +4512,7 @@ Enhancements
   proper permissions.
 - In-code documentation now shows the returning type.
 - **Relative import** is now used everywhere, so you can rename
-  ``telethon`` to anything else.
+  ``splusthon`` to anything else.
 - **Dead connections** are now **detected** instead entering an infinite loop.
 - **Sockets** can now be **closed** (and re-opened) properly.
 - Telegram decided to update the layer 66 without increasing the number.
@@ -4531,9 +4531,9 @@ Additions
 ~~~~~~~~~
 
 - The **documentation**, available online
-  `here <https://tl.telethon.dev/>`__, has a new search bar.
+  `here <https://tl.splusthon.dev/>`__, has a new search bar.
 - Better **cross-thread safety** by using ``threading.Event``.
-- More improvements for running Telethon during a **long period of time**.
+- More improvements for running SPlusthon during a **long period of time**.
 
 Bug fixes
 ~~~~~~~~~
@@ -4562,7 +4562,7 @@ Additions
 -  **Bot login**, thanks to @JuanPotato for hinting me about how to do
    it.
 -  **Proxy support**, thanks to @exzhawk for implementing it.
--  **Logging support**, used by passing ``--telethon-log=DEBUG`` (or
+-  **Logging support**, used by passing ``--splusthon-log=DEBUG`` (or
    ``INFO``) as a command line argument.
 
 Bug fixes
@@ -4579,7 +4579,7 @@ Long-run bug fix (v0.7.1)
 
 *Published at 2017/02/19*
 
-If you're one of those who runs Telethon for a long time (more than 30
+If you're one of those who runs SPlusthon for a long time (more than 30
 minutes), this update by @strayge will be great for you. It sends
 periodic pings to the Telegram servers so you don't get disconnected and
 you can still send and receive updates!
@@ -4594,7 +4594,7 @@ Two factor authentication (v0.7)
 +-----------------------+
 
 If you're one of those who love security the most, these are good news.
-You can now use two factor authentication with Telethon too! As internal
+You can now use two factor authentication with SPlusthon too! As internal
 changes, the coding style has been improved, and you can easily use
 custom session objects, and various little bugs have been fixed.
 
@@ -4608,8 +4608,8 @@ Updated pip version (v0.6)
 +-----------------------+
 
 This release has no new major features. However, it contains some small
-changes that make using Telethon a little bit easier. Now those who have
-installed Telethon via ``pip`` can also take advantage of changes, such
+changes that make using SPlusthon a little bit easier. Now those who have
+installed SPlusthon via ``pip`` can also take advantage of changes, such
 as less bugs, creating empty instances of ``TLObjects``, specifying a
 timeout and more!
 
@@ -4618,8 +4618,8 @@ Ready, pip, go! (v0.5)
 
 *Published at 2016/09/18*
 
-Telethon is now available as a **`Python
-package <https://pypi.python.org/pypi?name=Telethon>`__**! Those are
+SPlusthon is now available as a **`Python
+package <https://pypi.python.org/pypi?name=SPlusthon>`__**! Those are
 really exciting news (except, sadly, the project structure had to change
 *a lot* to be able to do that; but hopefully it won't need to change
 much more, any more!)
@@ -4627,9 +4627,9 @@ much more, any more!)
 Not only that, but more improvements have also been made: you're now
 able to both **sign up** and **logout**, watch a pretty
 "Uploading/Downloading… x%" progress, and other minor changes which make
-using Telethon **easier**.
+using SPlusthon **easier**.
 
-Made InteractiveTelegramClient cool (v0.4)
+Made InteractiveSoroushClient cool (v0.4)
 ==========================================
 
 *Published at 2016/09/12*
@@ -4637,7 +4637,7 @@ Made InteractiveTelegramClient cool (v0.4)
 Yes, really cool! I promise. Even though this is meant to be a
 *library*, that doesn't mean it can't have a good *interactive client*
 for you to try the library out. This is why now you can do many, many
-things with the ``InteractiveTelegramClient``:
+things with the ``InteractiveSoroushClient``:
 
 - **List dialogs** (chats) and pick any you wish.
 - **Send any message** you like, text, photos or even documents.

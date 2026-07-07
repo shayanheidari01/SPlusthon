@@ -4,7 +4,7 @@
 Compatibility and Convenience
 =============================
 
-Telethon is an `asyncio` library. Compatibility is an important concern,
+SPlusthon is an `asyncio` library. Compatibility is an important concern,
 and while it can't always be kept and mistakes happens, the :ref:`changelog`
 is there to tell you when these important changes happen.
 
@@ -17,11 +17,11 @@ Compatibility
 Some decisions when developing will inevitable be proven wrong in the future.
 One of these decisions was using threads. Now that Python 3.4 is reaching EOL
 and using `asyncio` is usable as of Python 3.5 it makes sense for a library
-like Telethon to make a good use of it.
+like SPlusthon to make a good use of it.
 
 If you have old code, **just use old versions** of the library! There is
 nothing wrong with that other than not getting new updates or fixes, but
-using a fixed version with ``pip install telethon==0.19.1.6`` is easy
+using a fixed version with ``pip install splusthon==0.19.1.6`` is easy
 enough to do.
 
 You might want to consider using `Virtual Environments
@@ -39,8 +39,8 @@ need to start migrating really old code:
 
 .. code-block:: python
 
-    # 1. Import the client from telethon.sync
-    from telethon.sync import TelegramClient
+    # 1. Import the client from splusthon.sync
+    from splusthon.sync import SoroushClient
 
     # 2. Change this monster...
     try:
@@ -84,9 +84,9 @@ Convenience
 
     .. code-block:: python
 
-        from telethon import TelegramClient, sync
+        from splusthon import SoroushClient, sync
         # or
-        from telethon.sync import TelegramClient
+        from splusthon.sync import SoroushClient
 
     This makes the examples shorter and easier to think about.
 
@@ -96,10 +96,10 @@ to be a powerful hybrid for running under the Python REPL too.
 
 .. code-block:: python
 
-    from telethon.sync import TelegramClient
+    from splusthon.sync import SoroushClient
     #            ^~~~~ note this part; it will manage the asyncio loop for you
 
-    with TelegramClient(...) as client:
+    with SoroushClient(...) as client:
         print(client.get_me().username)
         #     ^ notice the lack of await, or loop.run_until_complete().
         #       Since there is no loop running, this is done behind the scenes.
@@ -112,7 +112,7 @@ to be a powerful hybrid for running under the Python REPL too.
         # You can also have an hybrid between a synchronous
         # part and asynchronous event handlers.
         #
-        from telethon import events
+        from splusthon import events
         @client.on(events.NewMessage(pattern='(?i)hi|hello'))
         async def handler(event):
             await event.reply('hey')
@@ -138,15 +138,15 @@ Speed
 
 When you're ready to micro-optimize your application, or if you simply
 don't need to call any non-basic methods from a synchronous context,
-just get rid of ``telethon.sync`` and work inside an ``async def``:
+just get rid of ``splusthon.sync`` and work inside an ``async def``:
 
 .. code-block:: python
 
     import asyncio
-    from telethon import TelegramClient, events
+    from splusthon import SoroushClient, events
 
     async def main():
-        async with TelegramClient(...) as client:
+        async with SoroushClient(...) as client:
             print((await client.get_me()).username)
             #     ^_____________________^ notice these parenthesis
             #     You want to ``await`` the call, not the username.
@@ -164,7 +164,7 @@ just get rid of ``telethon.sync`` and work inside an ``async def``:
     asyncio.run(main())
 
 
-The ``telethon.sync`` magic module essentially wraps every method behind:
+The ``splusthon.sync`` magic module essentially wraps every method behind:
 
 .. code-block:: python
 
@@ -178,7 +178,7 @@ Learning
 
 You know the library uses `asyncio` everywhere, and you want to learn
 how to do things right. Even though `asyncio` is its own topic, the
-documentation wants you to learn how to use Telethon correctly, and for
+documentation wants you to learn how to use SPlusthon correctly, and for
 that, you need to use `asyncio` correctly too. For this reason, there
 is a section called :ref:`mastering-asyncio` that will introduce you to
 the `asyncio` world, with links to more resources for learning how to

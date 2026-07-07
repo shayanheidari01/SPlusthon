@@ -23,12 +23,12 @@ Technically, both :tl:`Chat` and :tl:`Channel` are a form of the `Chat type`_.
 chats*. When you create a group through an official application, this is the
 type that you get. Official applications refer to these as "Group".
 
-Both the bot API and Telethon will add a minus sign (negate) the real chat ID
+Both the bot API and SPlusthon will add a minus sign (negate) the real chat ID
 so that you can tell at a glance, with just a number, the entity type.
 
 For example, if you create a chat with :tl:`CreateChatRequest`, the real chat
 ID might be something like `123`. If you try printing it from a
-`message.chat_id` you will see `-123`. This ID helps Telethon know you're
+`message.chat_id` you will see `-123`. This ID helps SPlusthon know you're
 talking about a :tl:`Chat`.
 
 
@@ -61,12 +61,12 @@ The API refers to the different types of :tl:`Channel` with certain attributes:
   want to transform it into something where only they can post messages.
 
 
-Both the bot API and Telethon will "concatenate" ``-100`` to the real chat ID
+Both the bot API and SPlusthon will "concatenate" ``-100`` to the real chat ID
 so that you can tell at a glance, with just a number, the entity type.
 
 For example, if you create a new broadcast channel, the real channel ID might
 be something like `456`. If you try printing it from a `message.chat_id` you
-will see `-1000000000456`. This ID helps Telethon know you're talking about a
+will see `-1000000000456`. This ID helps SPlusthon know you're talking about a
 :tl:`Channel`.
 
 
@@ -79,11 +79,11 @@ real ID, and the peer type (the class):
 
 .. code-block:: python
 
-    from telethon import utils
+    from splusthon import utils
     real_id, peer_type = utils.resolve_id(-1000000000456)
 
     print(real_id)  # 456
-    print(peer_type)  # <class 'telethon.tl.types.PeerChannel'>
+    print(peer_type)  # <class 'splusthon.tl.types.PeerChannel'>
 
     peer = peer_type(real_id)
     print(peer)  # PeerChannel(channel_id=456)
@@ -108,13 +108,13 @@ API calls to find out the identifier, you can use ``client.get_peer_id``:
     print(await client.get_peer_id('me'))  # your id
 
 
-If there is no "mark" (no minus sign), Telethon will assume your identifier
+If there is no "mark" (no minus sign), SPlusthon will assume your identifier
 refers to a :tl:`User`. If this is **not** the case, you can manually fix it:
 
 
 .. code-block:: python
 
-    from telethon import types
+    from splusthon import types
     await client.send_message(types.PeerChannel(456), 'hello')
     #                         ^^^^^^^^^^^^^^^^^ explicit peer type
 
@@ -140,7 +140,7 @@ use :tl:`GetFullChannelRequest` to obtain this:
 
 .. code-block:: python
 
-    from telethon import functions
+    from splusthon import functions
     full = await client(functions.channels.GetFullChannelRequest(your_channel))
     full_channel = full.full_chat
     # full_channel is a ChannelFull
@@ -166,4 +166,4 @@ They are in the ``full.chats`` attribute:
         linked_group = next(c for c in full.chats if c.id == full_channel.linked_chat_id)
         print(linked_group.username)
 
-.. _Chat type: https://tl.telethon.dev/types/chat.html
+.. _Chat type: https://tl.splusthon.dev/types/chat.html

@@ -3,11 +3,11 @@ Test Servers
 ============
 
 
-To run Telethon on a test server, use the following code:
+To run SPlusthon on a test server, use the following code:
 
 .. code-block:: python
 
-    client = TelegramClient(None, api_id, api_hash)
+    client = SoroushClient(None, api_id, api_hash)
     client.session.set_dc(dc_id, '149.154.167.40', 80)
 
 You can check your ``'test ip'`` on https://my.telegram.org.
@@ -30,7 +30,7 @@ times, in this case, ``22222`` so we can hardcode that:
 
 .. code-block:: python
 
-    client = TelegramClient(None, api_id, api_hash)
+    client = SoroushClient(None, api_id, api_hash)
     client.session.set_dc(2, '149.154.167.40', 80)
     client.start(
         phone='9996621234', code_callback=lambda: '22222'

@@ -1,4 +1,4 @@
-.. _telethon-utils:
+.. _splusthon-utils:
 
 =========
 Utilities
@@ -6,7 +6,7 @@ Utilities
 
 These are the utilities that the library has to offer.
 
-.. automodule:: telethon.utils
+.. automodule:: splusthon.utils
     :members:
     :undoc-members:
     :show-inheritance:

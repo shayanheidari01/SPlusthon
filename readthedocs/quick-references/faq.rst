@@ -43,7 +43,7 @@ You can use all errors from the API by importing:
 
 .. code-block:: python
 
-    from telethon import errors
+    from splusthon import errors
 
 And except them as such:
 
@@ -60,14 +60,14 @@ And except them as such:
 My account was deleted/limited when using the library
 =====================================================
 
-First and foremost, **this is not a problem exclusive to Telethon.
+First and foremost, **this is not a problem exclusive to SPlusthon.
 Any third-party library is prone to cause the accounts to appear banned.**
 Even official applications can make Telegram ban an account under certain
-circumstances. Third-party libraries such as Telethon are a lot easier to
+circumstances. Third-party libraries such as SPlusthon are a lot easier to
 use, and as such, they are misused to spam, which causes Telegram to learn
 certain patterns and ban suspicious activity.
 
-There is no point in Telethon trying to circumvent this. Even if it succeeded,
+There is no point in SPlusthon trying to circumvent this. Even if it succeeded,
 spammers would then abuse the library again, and the cycle would repeat.
 
 The library will only do things that you tell it to do. If you use
@@ -150,7 +150,7 @@ You either forgot to:
 
 .. code-block:: python
 
-    import telethon.sync
+    import splusthon.sync
     #              ^^^^^ import sync
 
 Or:
@@ -203,10 +203,10 @@ File download is slow or sending files takes too long
 
 The communication with Telegram is encrypted. Encryption requires a lot of
 math, and doing it in pure Python is very slow. ``cryptg`` is a library which
-containns the encryption functions used by Telethon. If it is installed (via
+containns the encryption functions used by SPlusthon. If it is installed (via
 ``pip install cryptg``), it will automatically be used and should provide
 a considerable speed boost. You can know whether it's used by configuring
-``logging`` (at ``INFO`` level or lower) *before* importing ``telethon``.
+``logging`` (at ``INFO`` level or lower) *before* importing ``splusthon``.
 
 Note that the library does *not* download or upload files in parallel, which
 can also help with the speed of downloading or uploading a single file. There
@@ -220,7 +220,7 @@ What does "Server sent a very new message with ID" mean?
 
 You may also see this error as "Server sent a very old message with ID".
 
-This is a security feature from Telethon that cannot be disabled and is
+This is a security feature from SPlusthon that cannot be disabled and is
 meant to protect you against replay attacks.
 
 When this message is incorrectly reported as a "bug",
@@ -228,8 +228,8 @@ the most common patterns seem to be:
 
 * Your system time is incorrect.
 * The proxy you're using may be interfering somehow.
-* The Telethon session is being used or has been used from somewhere else.
-  Make sure that you created the session from Telethon, and are not using the
+* The SPlusthon session is being used or has been used from somewhere else.
+  Make sure that you created the session from SPlusthon, and are not using the
   same session anywhere else. If you need to use the same account from
   multiple places, login and use a different session for each place you need.
 
@@ -237,14 +237,14 @@ the most common patterns seem to be:
 What does "Server replied with a wrong session ID" mean?
 ========================================================
 
-This is a security feature from Telethon that cannot be disabled and is
+This is a security feature from SPlusthon that cannot be disabled and is
 meant to protect you against unwanted session reuse.
 
 When this message is reported as a "bug", the most common patterns seem to be:
 
 * The proxy you're using may be interfering somehow.
-* The Telethon session is being used or has been used from somewhere else.
-  Make sure that you created the session from Telethon, and are not using the
+* The SPlusthon session is being used or has been used from somewhere else.
+  Make sure that you created the session from SPlusthon, and are not using the
   same session anywhere else. If you need to use the same account from
   multiple places, login and use a different session for each place you need.
 * You may be using multiple connections to the Telegram server, which seems
@@ -264,16 +264,16 @@ What does "Could not find a matching Constructor ID for the TLObject" mean?
 ===========================================================================
 
 Telegram uses "layers", which you can think of as "versions" of the API they
-offer. When Telethon reads responses that the Telegram servers send, these
-need to be deserialized (into what Telethon calls "TLObjects").
+offer. When SPlusthon reads responses that the Telegram servers send, these
+need to be deserialized (into what SPlusthon calls "TLObjects").
 
-Every Telethon version understands a single Telegram layer. When Telethon
+Every SPlusthon version understands a single Telegram layer. When SPlusthon
 connects to Telegram, both agree on the layer to use. If the layers don't
-match, Telegram may send certain objects which Telethon no longer understands.
+match, Telegram may send certain objects which SPlusthon no longer understands.
 
 When this message is reported as a "bug", the most common patterns seem to be
-that the Telethon session is being used or has been used from somewhere else.
-Make sure that you created the session from Telethon, and are not using the
+that the SPlusthon session is being used or has been used from somewhere else.
+Make sure that you created the session from SPlusthon, and are not using the
 same session anywhere else. If you need to use the same account from
 multiple places, login and use a different session for each place you need.
 
@@ -292,7 +292,7 @@ call ``await client.disconnect()`` (by e.g. using a ``try/finally``).
 What does "The asyncio event loop must not change after connection" mean?
 =========================================================================
 
-Telethon uses ``asyncio``, and makes use of things like tasks and queues
+SPlusthon uses ``asyncio``, and makes use of things like tasks and queues
 internally to manage the connection to the server and match responses to the
 requests you make. Most of them are initialized after the client is connected.
 
@@ -313,7 +313,7 @@ call other ``async def`` without having to touch ``asyncio.run`` again:
 .. code-block:: python
 
     # It's fine to create the client outside as long as you don't connect
-    client = TelegramClient(...)
+    client = SoroushClient(...)
 
     async def main():
         # Now the client will connect, so the loop must not change from now on.
@@ -336,10 +336,10 @@ In Python, classes can base others. This is called `inheritance
 <https://ddg.gg/python%20inheritance>`_. What it means is that
 "if a class bases another, you can use the other's methods too".
 
-For example, `Message <telethon.tl.custom.message.Message>` *bases*
-`ChatGetter <telethon.tl.custom.chatgetter.ChatGetter>`. In turn,
-`ChatGetter <telethon.tl.custom.chatgetter.ChatGetter>` defines
-things like `obj.chat_id <telethon.tl.custom.chatgetter.ChatGetter>`.
+For example, `Message <splusthon.tl.custom.message.Message>` *bases*
+`ChatGetter <splusthon.tl.custom.chatgetter.ChatGetter>`. In turn,
+`ChatGetter <splusthon.tl.custom.chatgetter.ChatGetter>` defines
+things like `obj.chat_id <splusthon.tl.custom.chatgetter.ChatGetter>`.
 
 So if you have a message, you can access that too:
 
@@ -378,7 +378,7 @@ The second type of "`file ID <https://core.telegram.org/bots/api#inputfile>`_"
 people refer to is a concept from the HTTP Bot API. It's a custom format which
 encodes enough information to use the media.
 
-Telethon provides an old version of these HTTP Bot API-style file IDs via
+SPlusthon provides an old version of these HTTP Bot API-style file IDs via
 ``message.file.id``, however, this feature is no longer maintained, so it may
 not work. It will be removed in future versions. Nonetheless, it is possible
 to find a different Python package (or write your own) to parse these file IDs
@@ -399,18 +399,18 @@ Can I use Anaconda/Spyder/IPython with the library?
 ===================================================
 
 Yes, but these interpreters run the asyncio event loop implicitly,
-which interferes with the ``telethon.sync`` magic module.
+which interferes with the ``splusthon.sync`` magic module.
 
 If you use them, you should **not** import ``sync``:
 
 .. code-block:: python
 
     # Change any of these...:
-    from telethon import TelegramClient, sync, ...
-    from telethon.sync import TelegramClient, ...
+    from splusthon import SoroushClient, sync, ...
+    from splusthon.sync import SoroushClient, ...
 
     # ...with this:
-    from telethon import TelegramClient, ...
+    from splusthon import SoroushClient, ...
 
 You are also more likely to get "sqlite3.OperationalError: database is locked"
 with them. If they cause too much trouble, just write your code in a ``.py``
@@ -418,6 +418,6 @@ file and run that, or use the normal ``python`` interpreter.
 
 .. _logging: https://docs.python.org/3/library/logging.html
 .. _@SpamBot: https://t.me/SpamBot
-.. _issue 297: https://github.com/LonamiWebs/Telethon/issues/297
-.. _issue 3759: https://github.com/LonamiWebs/Telethon/issues/3759
-.. _quart_login.py: https://github.com/LonamiWebs/Telethon/tree/v1/telethon_examples#quart_loginpy
+.. _issue 297: https://github.com/shayanheidari01/SPlusthon/issues/297
+.. _issue 3759: https://github.com/shayanheidari01/SPlusthon/issues/3759
+.. _quart_login.py: https://github.com/shayanheidari01/SPlusthon/tree/v1/splusthon_examples#quart_loginpy

@@ -18,9 +18,9 @@ in response to certain methods, such as :tl:`GetUsersRequest`.
 
     To "encounter" an ID, you would have to "find it" like you would in the
     normal app. If the peer is in your dialogs, you would need to
-    `client.get_dialogs() <telethon.client.dialogs.DialogMethods.get_dialogs>`.
+    `client.get_dialogs() <splusthon.client.dialogs.DialogMethods.get_dialogs>`.
     If the peer is someone in a group, you would similarly
-    `client.get_participants(group) <telethon.client.chats.ChatMethods.get_participants>`.
+    `client.get_participants(group) <splusthon.client.chats.ChatMethods.get_participants>`.
 
     Once you have encountered an ID, the library will (by default) have saved
     their ``access_hash`` for you, which is needed to invoke most methods.
@@ -51,9 +51,9 @@ use any of those when you see an "entity" is needed.
 You should use, **from better to worse**:
 
 1. Input entities. For example, `event.input_chat
-   <telethon.tl.custom.chatgetter.ChatGetter.input_chat>`,
+   <splusthon.tl.custom.chatgetter.ChatGetter.input_chat>`,
    `message.input_sender
-   <telethon.tl.custom.sendergetter.SenderGetter.input_sender>`,
+   <splusthon.tl.custom.sendergetter.SenderGetter.input_sender>`,
    or caching an entity you will use a lot with
    ``entity = await client.get_input_entity(...)``.
 
@@ -66,7 +66,7 @@ You should use, **from better to worse**:
 
 4. Usernames, phone numbers and links. The cache will be
    used too (unless you force a `client.get_entity()
-   <telethon.client.users.UserMethods.get_entity>`),
+   <splusthon.client.users.UserMethods.get_entity>`),
    but may make a request if the username, phone or link
    has not been found yet.
 
@@ -126,7 +126,7 @@ you're able to just do this:
 
     # You can be more explicit about the type for said ID by wrapping
     # it inside a Peer instance. This is recommended but not necessary.
-    from telethon.tl.types import PeerUser, PeerChat, PeerChannel
+    from splusthon.tl.types import PeerUser, PeerChat, PeerChannel
 
     my_user    = await client.get_entity(PeerUser(some_id))
     my_chat    = await client.get_entity(PeerChat(some_id))
@@ -139,11 +139,11 @@ you're able to just do this:
     library do its job. Use a phone from your contacts, username, ID or
     input entity (preferred but not necessary), whatever you already have.
 
-All methods in the :ref:`telethon-client` call `.get_input_entity()
-<telethon.client.users.UserMethods.get_input_entity>` prior
+All methods in the :ref:`splusthon-client` call `.get_input_entity()
+<splusthon.client.users.UserMethods.get_input_entity>` prior
 to sending the request to save you from the hassle of doing so manually.
 That way, convenience calls such as `client.send_message('username', 'hi!')
-<telethon.client.messages.MessageMethods.send_message>`
+<splusthon.client.messages.MessageMethods.send_message>`
 become possible.
 
 Every entity the library encounters (in any response to any call) will by
@@ -190,26 +190,26 @@ be in your dialogs, participants, message forwards, etc.
 
 As we just mentioned, API calls don't need to know the whole information
 about the entities, only their ID and hash. For this reason, another method,
-`client.get_input_entity() <telethon.client.users.UserMethods.get_input_entity>`
+`client.get_input_entity() <splusthon.client.users.UserMethods.get_input_entity>`
 is available. This will always use the cache while possible, making zero API
 calls most of the time. When a request is made, if you provided the full
 entity, e.g. an :tl:`User`, the library will convert it to the required
 :tl:`InputPeer` automatically for you.
 
 **You should always favour**
-`client.get_input_entity() <telethon.client.users.UserMethods.get_input_entity>`
+`client.get_input_entity() <splusthon.client.users.UserMethods.get_input_entity>`
 **over**
-`client.get_entity() <telethon.client.users.UserMethods.get_entity>`
+`client.get_entity() <splusthon.client.users.UserMethods.get_entity>`
 for this reason! Calling the latter will always make an API call to get
 the most recent information about said entity, but invoking requests don't
 need this information, just the :tl:`InputPeer`. Only use
-`client.get_entity() <telethon.client.users.UserMethods.get_entity>`
+`client.get_entity() <splusthon.client.users.UserMethods.get_entity>`
 if you need to get actual information, like the username, name, title, etc.
 of the entity.
 
 To further simplify the workflow, since the version ``0.16.2`` of the
 library, the raw requests you make to the API are also able to call
-`client.get_input_entity() <telethon.client.users.UserMethods.get_input_entity>`
+`client.get_input_entity() <splusthon.client.users.UserMethods.get_input_entity>`
 wherever needed, so you can even do things like:
 
 .. code-block:: python
@@ -243,17 +243,17 @@ Accessing Entities
 ==================
 
 Although it's explicitly noted in the documentation that messages
-*subclass* `ChatGetter <telethon.tl.custom.chatgetter.ChatGetter>`
-and `SenderGetter <telethon.tl.custom.sendergetter.SenderGetter>`,
+*subclass* `ChatGetter <splusthon.tl.custom.chatgetter.ChatGetter>`
+and `SenderGetter <splusthon.tl.custom.sendergetter.SenderGetter>`,
 some people still don't get inheritance.
 
-When the documentation says "Bases: `telethon.tl.custom.chatgetter.ChatGetter`"
+When the documentation says "Bases: `splusthon.tl.custom.chatgetter.ChatGetter`"
 it means that the class you're looking at, *also* can act as the class it
-bases. In this case, `ChatGetter <telethon.tl.custom.chatgetter.ChatGetter>`
+bases. In this case, `ChatGetter <splusthon.tl.custom.chatgetter.ChatGetter>`
 knows how to get the *chat* where a thing belongs to.
 
-So, a `Message <telethon.tl.custom.message.Message>` is a
-`ChatGetter <telethon.tl.custom.chatgetter.ChatGetter>`.
+So, a `Message <splusthon.tl.custom.message.Message>` is a
+`ChatGetter <splusthon.tl.custom.chatgetter.ChatGetter>`.
 That means you can do this:
 
 .. code-block:: python
@@ -263,7 +263,7 @@ That means you can do this:
     await message.get_chat()
     # ...etc
 
-`SenderGetter <telethon.tl.custom.sendergetter.SenderGetter>` is similar:
+`SenderGetter <splusthon.tl.custom.sendergetter.SenderGetter>` is similar:
 
 .. code-block:: python
 
@@ -274,7 +274,7 @@ That means you can do this:
 
 Quite a few things implement them, so it makes sense to reuse the code.
 For example, all events (except raw updates) implement `ChatGetter
-<telethon.tl.custom.chatgetter.ChatGetter>` since all events occur
+<splusthon.tl.custom.chatgetter.ChatGetter>` since all events occur
 in some chat.
 
 

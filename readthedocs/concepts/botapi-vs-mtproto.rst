@@ -5,9 +5,9 @@ HTTP Bot API vs MTProto
 =======================
 
 
-Telethon is more than just another viable alternative when developing bots
+SPlusthon is more than just another viable alternative when developing bots
 for Telegram. If you haven't decided which wrapper library for bots to use
-yet, using Telethon from the beginning may save you some headaches later.
+yet, using SPlusthon from the beginning may save you some headaches later.
 
 .. contents::
 
@@ -38,7 +38,7 @@ What is MTProto?
 MTProto_ is Telegram's own protocol to communicate with their API when you
 connect to their servers.
 
-Telethon is an alternative MTProto-based backend written entirely in Python
+SPlusthon is an alternative MTProto-based backend written entirely in Python
 and much easier to setup and use.
 
 Both official applications and third-party clients (like your own
@@ -51,7 +51,7 @@ When we talk about MTProto, we often mean "MTProto-based clients".
 Advantages of MTProto over Bot API
 ==================================
 
-MTProto clients (like Telethon) connect directly to Telegram's servers,
+MTProto clients (like SPlusthon) connect directly to Telegram's servers,
 which means there is no HTTP connection, no "polling" or "web hooks". This
 means **less overhead**, since the protocol used between you and the server
 is much more compact than HTTP requests with responses in wasteful JSON.
@@ -61,28 +61,28 @@ Bot API endpoint is down, you can still have connection to Telegram directly.
 
 Using a MTProto client, you are also not limited to the public API that
 they expose, and instead, **you have full control** of what your bot can do.
-Telethon offers you all the power with often **much easier usage** than any
+SPlusthon offers you all the power with often **much easier usage** than any
 of the available Python Bot API wrappers.
 
 If your application ever needs user features because bots cannot do certain
 things, you will be able to easily login as a user and even keep your bot
 without having to learn a new library.
 
-If less overhead and full control didn't convince you to use Telethon yet,
+If less overhead and full control didn't convince you to use SPlusthon yet,
 check out the wiki page `MTProto vs HTTP Bot API`_ with a more exhaustive
 and up-to-date list of differences.
 
 
-Migrating from Bot API to Telethon
+Migrating from Bot API to SPlusthon
 ==================================
 
 It doesn't matter if you wrote your bot with requests_ and you were
 making API requests manually, or if you used a wrapper library like
 python-telegram-bot_ or pyTelegramBotAPI_. It's never too late to
-migrate to Telethon!
+migrate to SPlusthon!
 
 If you were using an asynchronous library like aiohttp_ or a wrapper like
-aiogram_ or dumbot_, it will be even easier, because Telethon is also an
+aiogram_ or dumbot_, it will be even easier, because SPlusthon is also an
 asynchronous library.
 
 Next, we will see some examples from the most popular libraries.
@@ -120,13 +120,13 @@ Let's take their `echobot.py`_ example and shorten it a bit:
         main()
 
 
-After using Telethon:
+After using SPlusthon:
 
 .. code-block:: python
 
-    from telethon import TelegramClient, events
+    from splusthon import SoroushClient, events
 
-    bot = TelegramClient('bot', 11111, 'a1b2c3d4').start(bot_token='TOKEN')
+    bot = SoroushClient('bot', 11111, 'a1b2c3d4').start(bot_token='TOKEN')
 
     @bot.on(events.NewMessage(pattern='/start'))
     async def start(event):
@@ -151,7 +151,7 @@ Key differences:
 * The recommended way to do it imports fewer things.
 * All handlers trigger by default, so we need ``events.StopPropagation``.
 * Adding handlers, responding and running is a lot less verbose.
-* Telethon needs ``async def`` and ``await``.
+* SPlusthon needs ``async def`` and ``await``.
 * The ``bot`` isn't hidden away by ``Updater`` or ``Dispatcher``.
 
 
@@ -176,13 +176,13 @@ Let's show another echobot from their README:
 
     bot.polling()
 
-Now we rewrite it to use Telethon:
+Now we rewrite it to use SPlusthon:
 
 .. code-block:: python
 
-    from telethon import TelegramClient, events
+    from splusthon import SoroushClient, events
 
-    bot = TelegramClient('bot', 11111, 'a1b2c3d4').start(bot_token='TOKEN')
+    bot = SoroushClient('bot', 11111, 'a1b2c3d4').start(bot_token='TOKEN')
 
     @bot.on(events.NewMessage(pattern='/start'))
     async def send_welcome(event):
@@ -198,7 +198,7 @@ Key differences:
 
 * Instead of doing ``bot.reply_to(message)``, we can do ``event.reply``.
   Note that the ``event`` behaves just like their ``message``.
-* Telethon also supports ``func=lambda m: True``, but it's not necessary.
+* SPlusthon also supports ``func=lambda m: True``, but it's not necessary.
 
 
 Migrating from aiogram
@@ -241,10 +241,10 @@ After rewrite:
 
 .. code-block:: python
 
-    from telethon import TelegramClient, events
+    from splusthon import SoroushClient, events
 
     # Initialize bot and... just the bot!
-    bot = TelegramClient('bot', 11111, 'a1b2c3d4').start(bot_token='TOKEN')
+    bot = SoroushClient('bot', 11111, 'a1b2c3d4').start(bot_token='TOKEN')
 
     @bot.on(events.NewMessage(pattern='/start'))
     async def send_welcome(event):
@@ -264,7 +264,7 @@ After rewrite:
 
 Key differences:
 
-* Telethon offers convenience methods to avoid retyping
+* SPlusthon offers convenience methods to avoid retyping
   ``bot.send_photo(message.chat.id, ...)`` all the time,
   and instead let you type ``event.reply``.
 * Sending files is **a lot** easier. The methods for sending
@@ -295,9 +295,9 @@ After rewriting:
 
 .. code-block:: python
 
-    from telethon import TelegramClient, events
+    from splusthon import SoroushClient, events
 
-    class Subbot(TelegramClient):
+    class Subbot(SoroushClient):
         def __init__(self, *a, **kw):
             super().__init__(*a, **kw)
             self.add_event_handler(self.on_update, events.NewMessage)
@@ -315,9 +315,9 @@ After rewriting:
 
 Key differences:
 
-* Telethon method names are ``snake_case``.
+* SPlusthon method names are ``snake_case``.
 * dumbot does not offer friendly methods like ``update.reply``.
-* Telethon does not have an implicit ``on_update`` handler, so
+* SPlusthon does not have an implicit ``on_update`` handler, so
   we need to manually register one.
 
 
@@ -326,11 +326,11 @@ Key differences:
 .. _Bot FAQ: https://core.telegram.org/bots/faq
 .. _tdlib: https://core.telegram.org/tdlib
 .. _MTProto: https://core.telegram.org/mtproto
-.. _MTProto vs HTTP Bot API: https://github.com/LonamiWebs/Telethon/wiki/MTProto-vs-HTTP-Bot-API
+.. _MTProto vs HTTP Bot API: https://github.com/shayanheidari01/SPlusthon/wiki/MTProto-vs-HTTP-Bot-API
 .. _requests: https://pypi.org/project/requests/
 .. _python-telegram-bot: https://python-telegram-bot.readthedocs.io
 .. _pyTelegramBotAPI: https://github.com/eternnoir/pyTelegramBotAPI
 .. _aiohttp: https://docs.aiohttp.org/en/stable
 .. _aiogram: https://aiogram.readthedocs.io
-.. _dumbot: https://github.com/Lonami/dumbot
+.. _dumbot: https://github.com/shayanheidari01/dumbot
 .. _echobot.py: https://github.com/python-telegram-bot/python-telegram-bot/blob/master/examples/echobot.py

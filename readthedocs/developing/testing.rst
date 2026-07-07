@@ -2,7 +2,7 @@
 Tests
 =====
 
-Telethon uses `Pytest <https://pytest.org/>`__, for testing, `Tox
+SPlusthon uses `Pytest <https://pytest.org/>`__, for testing, `Tox
 <https://tox.readthedocs.io/en/latest/>`__ for environment setup, and
 `pytest-asyncio <https://pypi.org/project/pytest-asyncio/>`__ and `pytest-cov
 <https://pytest-cov.readthedocs.io/en/latest/>`__ for asyncio and 
@@ -39,7 +39,7 @@ Note here:
     breakage, and makes it easier to cover all possible code paths.
 
     System or integration tests can also be useful, but are currently out of
-    scope of Telethon's automated testing.
+    scope of SPlusthon's automated testing.
 
  2. A function ``test_my_thing`` is declared. Pytest searches for files
     starting with ``test_``, classes starting with ``Test`` and executes any

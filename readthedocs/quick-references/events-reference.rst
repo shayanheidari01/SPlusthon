@@ -13,7 +13,7 @@ its **attributes** (the properties will be shown here).
 .. important::
 
     Remember that **all events base** `ChatGetter
-    <telethon.tl.custom.chatgetter.ChatGetter>`! Please see :ref:`faq`
+    <splusthon.tl.custom.chatgetter.ChatGetter>`! Please see :ref:`faq`
     if you don't know what this means or the implications of it.
 
 .. contents::
@@ -27,30 +27,30 @@ Occurs whenever a new text message or a message with media arrives.
 .. note::
 
     The new message event **should be treated as** a
-    normal `Message <telethon.tl.custom.message.Message>`, with
+    normal `Message <splusthon.tl.custom.message.Message>`, with
     the following exceptions:
 
     * ``pattern_match`` is the match object returned by ``pattern=``.
     * ``message`` is **not** the message string. It's the `Message
-      <telethon.tl.custom.message.Message>` object.
+      <splusthon.tl.custom.message.Message>` object.
 
     Remember, this event is just a proxy over the message, so while
     you won't see its attributes and properties, you can still access
     them. Please see the full documentation for examples.
 
 Full documentation for the `NewMessage
-<telethon.events.newmessage.NewMessage>`.
+<splusthon.events.newmessage.NewMessage>`.
 
 
 MessageEdited
 =============
 
 Occurs whenever a message is edited. Just like `NewMessage
-<telethon.events.newmessage.NewMessage>`, you should treat
-this event as a `Message <telethon.tl.custom.message.Message>`.
+<splusthon.events.newmessage.NewMessage>`, you should treat
+this event as a `Message <splusthon.tl.custom.message.Message>`.
 
 Full documentation for the `MessageEdited
-<telethon.events.messageedited.MessageEdited>`.
+<splusthon.events.messageedited.MessageEdited>`.
 
 
 MessageDeleted
@@ -64,7 +64,7 @@ It only has the ``deleted_id`` and ``deleted_ids`` attributes
 (in addition to the chat if the deletion happened in a channel).
 
 Full documentation for the `MessageDeleted
-<telethon.events.messagedeleted.MessageDeleted>`.
+<splusthon.events.messagedeleted.MessageDeleted>`.
 
 
 MessageRead
@@ -73,9 +73,9 @@ MessageRead
 Occurs whenever one or more messages are read in a chat.
 
 Full documentation for the `MessageRead
-<telethon.events.messageread.MessageRead>`.
+<splusthon.events.messageread.MessageRead>`.
 
-.. currentmodule:: telethon.events.messageread.MessageRead.Event
+.. currentmodule:: splusthon.events.messageread.MessageRead.Event
 
 .. autosummary::
     :nosignatures:
@@ -94,9 +94,9 @@ Occurs on certain chat actions, such as chat title changes,
 user join or leaves, pinned messages, photo changes, etc.
 
 Full documentation for the `ChatAction
-<telethon.events.chataction.ChatAction>`.
+<splusthon.events.chataction.ChatAction>`.
 
-.. currentmodule:: telethon.events.chataction.ChatAction.Event
+.. currentmodule:: splusthon.events.chataction.ChatAction.Event
 
 .. autosummary::
     :nosignatures:
@@ -128,9 +128,9 @@ UserUpdate
 Occurs whenever a user goes online, starts typing, etc.
 
 Full documentation for the `UserUpdate
-<telethon.events.userupdate.UserUpdate>`.
+<splusthon.events.userupdate.UserUpdate>`.
 
-.. currentmodule:: telethon.events.userupdate.UserUpdate.Event
+.. currentmodule:: splusthon.events.userupdate.UserUpdate.Event
 
 .. autosummary::
     :nosignatures:
@@ -169,9 +169,9 @@ Occurs whenever you sign in as a bot and a user
 clicks one of the inline buttons on your messages.
 
 Full documentation for the `CallbackQuery
-<telethon.events.callbackquery.CallbackQuery>`.
+<splusthon.events.callbackquery.CallbackQuery>`.
 
-.. currentmodule:: telethon.events.callbackquery.CallbackQuery.Event
+.. currentmodule:: splusthon.events.callbackquery.CallbackQuery.Event
 
 .. autosummary::
     :nosignatures:
@@ -196,9 +196,9 @@ Occurs whenever you sign in as a bot and a user
 sends an inline query such as ``@bot query``.
 
 Full documentation for the `InlineQuery
-<telethon.events.inlinequery.InlineQuery>`.
+<splusthon.events.inlinequery.InlineQuery>`.
 
-.. currentmodule:: telethon.events.inlinequery.InlineQuery.Event
+.. currentmodule:: splusthon.events.inlinequery.InlineQuery.Event
 
 .. autosummary::
     :nosignatures:
@@ -217,9 +217,9 @@ Album
 Occurs whenever you receive an entire album.
 
 Full documentation for the `Album
-<telethon.events.album.Album>`.
+<splusthon.events.album.Album>`.
 
-.. currentmodule:: telethon.events.album.Album.Event
+.. currentmodule:: splusthon.events.album.Album.Event
 
 .. autosummary::
     :nosignatures:

@@ -1,12 +1,12 @@
-.. _telethon-client:
+.. _splusthon-client:
 
 ==============
-TelegramClient
+SoroushClient
 ==============
 
-.. currentmodule:: telethon.client
+.. currentmodule:: splusthon.client
 
-The `TelegramClient <telegramclient.TelegramClient>` aggregates several mixin
+The `SoroushClient <telegramclient.SoroushClient>` aggregates several mixin
 classes to provide all the common functionality in a nice, Pythonic interface.
 Each mixin has its own methods, which you all can use.
 
@@ -14,9 +14,9 @@ Each mixin has its own methods, which you all can use.
 
 .. code-block:: python
 
-    from telethon import TelegramClient
+    from splusthon import SoroushClient
 
-    client = TelegramClient(name, api_id, api_hash)
+    client = SoroushClient(name, api_id, api_hash)
 
     async def main():
         # Now you can use all client methods listed below, like for example...
@@ -27,77 +27,77 @@ Each mixin has its own methods, which you all can use.
 
 
 You **don't** need to import these `AuthMethods`, `MessageMethods`, etc.
-Together they are the `TelegramClient <telegramclient.TelegramClient>` and
+Together they are the `SoroushClient <telegramclient.SoroushClient>` and
 you can access all of their methods.
 
 See :ref:`client-ref` for a short summary.
 
-.. automodule:: telethon.client.telegramclient
+.. automodule:: splusthon.client.soroushclient
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.telegrambaseclient
+.. automodule:: splusthon.client.telegrambaseclient
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.account
+.. automodule:: splusthon.client.account
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.auth
+.. automodule:: splusthon.client.auth
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.bots
+.. automodule:: splusthon.client.bots
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.buttons
+.. automodule:: splusthon.client.buttons
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.chats
+.. automodule:: splusthon.client.chats
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.dialogs
+.. automodule:: splusthon.client.dialogs
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.downloads
+.. automodule:: splusthon.client.downloads
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.messageparse
+.. automodule:: splusthon.client.messageparse
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.messages
+.. automodule:: splusthon.client.messages
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.updates
+.. automodule:: splusthon.client.updates
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.uploads
+.. automodule:: splusthon.client.uploads
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.client.users
+.. automodule:: splusthon.client.users
     :members:
     :undoc-members:
     :show-inheritance:

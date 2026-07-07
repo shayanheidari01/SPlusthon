@@ -74,7 +74,7 @@ the ``year`` value. It's inside ``date``:
     channel_year = entity.date.year
 
 You don't need to print everything to see what all the possible values
-can be. You can just search in http://tl.telethon.dev/.
+can be. You can just search in http://tl.splusthon.dev/.
 
 Remember that you can use Python's `isinstance
 <https://docs.python.org/3/library/functions.html#isinstance>`_
@@ -82,7 +82,7 @@ to check the type of something. For example:
 
 .. code-block:: python
 
-    from telethon import types
+    from splusthon import types
 
     if isinstance(entity.photo, types.ChatPhotoEmpty):
         print('Channel has no photo')

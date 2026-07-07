@@ -4,6 +4,11 @@
 /telethon/tl/alltlobjects.py
 /telethon/errors/rpcerrorlist.py
 
+/splusthon/tl/functions/
+/splusthon/tl/types/
+/splusthon/tl/alltlobjects.py
+/splusthon/errors/rpcerrorlist.py
+
 # User session
 *.session
 /usermedia/
@@ -21,3 +26,11 @@ __pycache__/
 
 # File used to manually test new changes, contains sensitive data
 /example.py
+/test.py
+
+# Temp scripts
+/find_mismatches.py
+/main.js
+
+# Tool directories
+.mimocode/

@@ -16,24 +16,24 @@ The Full API
 Introduction
 ============
 
-The :ref:`telethon-client` doesn't offer a method for every single request
+The :ref:`splusthon-client` doesn't offer a method for every single request
 the Telegram API supports. However, it's very simple to *call* or *invoke*
 any request defined in Telegram's API.
 
-This section will teach you how to use what Telethon calls the `TL reference`_.
+This section will teach you how to use what SPlusthon calls the `TL reference`_.
 The linked page contains a list and a way to search through *all* types
 generated from the definition of Telegram's API (in ``.tl`` file format,
 hence the name). These types include requests and constructors.
 
 .. note::
 
-    The reason to keep both https://tl.telethon.dev and this
+    The reason to keep both https://tl.splusthon.dev and this
     documentation alive is that the former allows instant search results
     as you type, and a "Copy import" button. If you like namespaces, you
-    can also do ``from telethon.tl import types, functions``. Both work.
+    can also do ``from splusthon.tl import types, functions``. Both work.
 
 Telegram makes these ``.tl`` files public, which other implementations, such
-as Telethon, can also use to generate code. These files are versioned under
+as SPlusthon, can also use to generate code. These files are versioned under
 what's called "layers". ``.tl`` files consist of thousands of definitions,
 and newer layers often add, change, or remove them. Each definition refers
 to either a Remote Procedure Call (RPC) function, or a type (which the
@@ -57,7 +57,7 @@ requests have an associated return type. These can be invoked ("called"):
 
 .. code-block:: python
 
-    client = TelegramClient(...)
+    client = SoroushClient(...)
     function_instance = SomeRequest(...)
 
     # Invoke the request
@@ -96,7 +96,7 @@ navigate to those to learn what those contain or need.
 Types
 -----
 
-"Types" as understood by TL are not actually generated in Telethon.
+"Types" as understood by TL are not actually generated in SPlusthon.
 They would be the "abstract base class" of the constructors, but since Python
 is duck-typed, there is hardly any need to generate mostly unnecessary code.
 The page for a type contains:
@@ -136,7 +136,7 @@ tweak it to your needs.
 
 If you want to do it from scratch, first, make sure to import the request into
 your code (either using the "Copy import" button near the top, or by manually
-spelling out the package under ``telethon.tl.functions.*``).
+spelling out the package under ``splusthon.tl.functions.*``).
 
 Then, start reading the parameters one by one. If the parameter cannot be
 omitted, you **will** need to specify it, so make sure to spell it out as
@@ -145,7 +145,7 @@ an input parameter when constructing the request instance. Let's look at
 
 .. code-block:: python
 
-    from telethon.tl.functions import PingRequest
+    from splusthon.tl.functions import PingRequest
 
 Then, we look at the parameters:
 
@@ -221,7 +221,7 @@ Example walkthrough
 ===================
 
 Say `client.send_message()
-<telethon.client.messages.MessageMethods.send_message>` didn't exist,
+<splusthon.client.messages.MessageMethods.send_message>` didn't exist,
 we could `use the search`_ to look for "message". There we would find
 :tl:`SendMessageRequest`, which we can work with.
 
@@ -232,13 +232,13 @@ clipboard", or your script won't be aware of this class! Now we have:
 
 .. code-block:: python
 
-    from telethon.tl.functions.messages import SendMessageRequest
+    from splusthon.tl.functions.messages import SendMessageRequest
 
 If you're going to use a lot of these, you may do:
 
 .. code-block:: python
 
-    from telethon.tl import types, functions
+    from splusthon.tl import types, functions
     # We now have access to 'functions.messages.SendMessageRequest'
 
 We see that this request must take at least two parameters, a ``peer``
@@ -250,16 +250,16 @@ construct one, for instance:
 
 .. code-block:: python
 
-    from telethon.tl.types import InputPeerUser
+    from splusthon.tl.types import InputPeerUser
 
     peer = InputPeerUser(user_id, user_hash)
 
 Or we call `client.get_input_entity()
-<telethon.client.users.UserMethods.get_input_entity>`:
+<splusthon.client.users.UserMethods.get_input_entity>`:
 
 .. code-block:: python
 
-    import telethon
+    import splusthon
 
     async def main():
         peer = await client.get_input_entity('someone')
@@ -274,10 +274,10 @@ Or we call `client.get_input_entity()
 
 When you're going to invoke an API method, most require you to pass an
 :tl:`InputUser`, :tl:`InputChat`, or so on, this is why using
-`client.get_input_entity() <telethon.client.users.UserMethods.get_input_entity>`
+`client.get_input_entity() <splusthon.client.users.UserMethods.get_input_entity>`
 is more straightforward (and often immediate, if you've seen the user before,
 know their ID, etc.). If you also **need** to have information about the whole
-user, use `client.get_entity() <telethon.client.users.UserMethods.get_entity>`
+user, use `client.get_entity() <splusthon.client.users.UserMethods.get_entity>`
 instead:
 
 .. code-block:: python
@@ -287,11 +287,11 @@ instead:
 In the later case, when you use the entity, the library will cast it to
 its "input" version for you. If you already have the complete user and
 want to cache its input version so the library doesn't have to do this
-every time its used, simply call `telethon.utils.get_input_peer`:
+every time its used, simply call `splusthon.utils.get_input_peer`:
 
 .. code-block:: python
 
-    from telethon import utils
+    from splusthon import utils
     peer = utils.get_input_peer(entity)
 
 
@@ -299,12 +299,12 @@ every time its used, simply call `telethon.utils.get_input_peer`:
 
     Since ``v0.16.2`` this is further simplified. The ``Request`` itself
     will call `client.get_input_entity
-    <telethon.client.users.UserMethods.get_input_entity>` for you when
+    <splusthon.client.users.UserMethods.get_input_entity>` for you when
     required, but it's good to remember what's happening.
 
 After this small parenthesis about `client.get_entity
-<telethon.client.users.UserMethods.get_entity>` versus
-`client.get_input_entity() <telethon.client.users.UserMethods.get_input_entity>`,
+<splusthon.client.users.UserMethods.get_entity>` versus
+`client.get_input_entity() <splusthon.client.users.UserMethods.get_input_entity>`,
 we have everything we need. To invoke our
 request we do:
 
@@ -394,12 +394,12 @@ knows all requests directly:
 
 If any of the requests fails with a Telegram error (not connection
 errors or any other unexpected events), the library will raise
-`telethon.errors.common.MultiError`. You can ``except`` this
+`splusthon.errors.common.MultiError`. You can ``except`` this
 and still access the successful results:
 
 .. code-block:: python
 
-    from telethon.errors import MultiError
+    from splusthon.errors import MultiError
 
     try:
         await client([
@@ -414,7 +414,7 @@ and still access the successful results:
         # The second request failed.
         second = e.exceptions[1]
 
-.. _TL reference: https://tl.telethon.dev
-.. _TL diff: https://diff.telethon.dev
-.. _PingRequest: https://tl.telethon.dev/methods/ping.html
-.. _use the search: https://tl.telethon.dev/?q=message&redirect=no
+.. _TL reference: https://tl.splusthon.dev
+.. _TL diff: https://diff.splusthon.dev
+.. _PingRequest: https://tl.splusthon.dev/methods/ping.html
+.. _use the search: https://tl.splusthon.dev/?q=message&redirect=no

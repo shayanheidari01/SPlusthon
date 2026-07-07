@@ -9,11 +9,11 @@ a ``RPCError``, it's because you have invoked some of the API
 methods incorrectly (wrong parameters, wrong permissions, or even
 something went wrong on Telegram's server).
 
-You should import the errors from ``telethon.errors`` like so:
+You should import the errors from ``splusthon.errors`` like so:
 
 .. code-block:: python
 
-    from telethon import errors
+    from splusthon import errors
 
     try:
         async with client.takeout() as takeout:
@@ -42,7 +42,7 @@ and find it has 24 known RPC errors at the time of writing.
 Base Errors
 ===========
 
-All the "base" errors are listed in :ref:`telethon-errors`.
+All the "base" errors are listed in :ref:`splusthon-errors`.
 Any other more specific error will be a subclass of these.
 
 If the library isn't aware of a specific error just yet, it will instead
@@ -50,7 +50,7 @@ raise one of these superclasses. This means you may find stuff like this:
 
 .. code-block:: text
 
-    telethon.errors.rpcbaseerrors.BadRequestError: RPCError 400: MESSAGE_POLL_CLOSED (caused by SendVoteRequest)
+    splusthon.errors.rpcbaseerrors.BadRequestError: RPCError 400: MESSAGE_POLL_CLOSED (caused by SendVoteRequest)
 
 If you do, make sure to open an issue or send a pull request to update the
 `list of known errors`_.
@@ -67,7 +67,7 @@ These are some of the errors you may normally need to deal with:
    .. code-block:: python
 
        ...
-       from telethon import errors
+       from splusthon import errors
 
        try:
            messages = await client.get_messages(chat)
@@ -93,7 +93,7 @@ The generic classes for different error codes are:
 
 If the error is not recognised, it will only be an ``RPCError``.
 
-You can refer to all errors from Python through the ``telethon.errors``
+You can refer to all errors from Python through the ``splusthon.errors``
 module. If you don't know what attributes they have, try printing their
 dir (like ``print(dir(e))``).
 
@@ -140,7 +140,7 @@ You can also except it and act as you prefer:
 
 .. code-block:: python
 
-    from telethon.errors import FloodWaitError
+    from splusthon.errors import FloodWaitError
     try:
         ...
     except FloodWaitError as e:
@@ -150,6 +150,6 @@ You can also except it and act as you prefer:
 VoIP numbers are very limited, and some countries are more limited too.
 
 
-.. _list of known errors: https://github.com/LonamiWebs/Telethon/blob/v1/telethon_generator/data/errors.csv
-.. _raw API page: https://tl.telethon.dev/
-.. _messages.sendMessage: https://tl.telethon.dev/methods/messages/send_message.html
+.. _list of known errors: https://github.com/shayanheidari01/SPlusthon/blob/v1/splusthon_generator/data/errors.csv
+.. _raw API page: https://tl.splusthon.dev/
+.. _messages.sendMessage: https://tl.splusthon.dev/methods/messages/send_message.html

@@ -1,12 +1,12 @@
 ========================
-Telethon's Documentation
+SPlusthon's Documentation
 ========================
 
 .. code-block:: python
 
-   from telethon.sync import TelegramClient, events
+   from splusthon.sync import SoroushClient, events
 
-   with TelegramClient('name', api_id, api_hash) as client:
+   with SoroushClient('name', api_id, api_hash) as client:
       client.send_message('me', 'Hello, myself!')
       print(client.download_profile_photo('me'))
 
@@ -20,9 +20,9 @@ Telethon's Documentation
 * Are you new here? Jump straight into :ref:`installation`!
 * Looking for the method reference? See :ref:`client-ref`.
 * Did you upgrade the library? Please read :ref:`changelog`.
-* Used Telethon before v1.0? See :ref:`compatibility-and-convenience`.
+* Used SPlusthon before v1.0? See :ref:`compatibility-and-convenience`.
 * Coming from Bot API or want to create new bots? See :ref:`botapi`.
-* Need the full API reference? https://tl.telethon.dev/.
+* Need the full API reference? https://tl.splusthon.dev/.
 
 
 What is this?
@@ -107,7 +107,7 @@ You can also use the menu on the left to quickly skip over sections.
 
 .. toctree::
     :hidden:
-    :caption: Telethon Modules
+    :caption: SPlusthon Modules
 
     modules/client
     modules/events

@@ -1,70 +1,70 @@
-.. _telethon-events:
+.. _splusthon-events:
 
 =============
 Update Events
 =============
 
-.. currentmodule:: telethon.events
+.. currentmodule:: splusthon.events
 
 Every event (builder) subclasses `common.EventBuilder`,
 so all the methods in it can be used from any event builder/event instance.
 
-.. automodule:: telethon.events.common
+.. automodule:: splusthon.events.common
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.newmessage
+.. automodule:: splusthon.events.newmessage
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.chataction
+.. automodule:: splusthon.events.chataction
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.userupdate
+.. automodule:: splusthon.events.userupdate
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.messageedited
+.. automodule:: splusthon.events.messageedited
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.messagedeleted
+.. automodule:: splusthon.events.messagedeleted
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.messageread
+.. automodule:: splusthon.events.messageread
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.callbackquery
+.. automodule:: splusthon.events.callbackquery
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.inlinequery
+.. automodule:: splusthon.events.inlinequery
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.album
+.. automodule:: splusthon.events.album
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events.raw
+.. automodule:: splusthon.events.raw
     :members:
     :undoc-members:
     :show-inheritance:
 
-.. automodule:: telethon.events
+.. automodule:: splusthon.events
     :members:
     :undoc-members:
     :show-inheritance:

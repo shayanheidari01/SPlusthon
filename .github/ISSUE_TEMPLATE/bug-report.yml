@@ -9,7 +9,7 @@ body:
       description: Provide a code example that reproduces the problem. Try to keep it short without other dependencies.
       placeholder: |
         ```python
-        from telethon.sync import TelegramClient
+        from splusthon.sync import SoroushClient
         ...
 
         ```
@@ -50,10 +50,10 @@ body:
         ```
 
   - type: input
-    id: telethon-version
+    id: splusthon-version
     attributes:
-      label: Telethon version
-      description: The output of `python -c "import telethon; print(telethon.__version__)"`.
+      label: SPlusthon version
+      description: The output of `python -c "import splusthon; print(splusthon.__version__)"`.
       placeholder: "1.x"
     validations:
       required: true
@@ -92,5 +92,5 @@ body:
           required: true
         - label: I have searched for this issue before posting it and there isn't an open duplicate.
           required: true
-        - label: I ran `pip install -U https://github.com/LonamiWebs/Telethon/archive/v1.zip` and triggered the bug in the latest version.
+        - label: I ran `pip install -U https://github.com/shayanheidari01/SPlusthon/archive/v1.zip` and triggered the bug in the latest version.
           required: true
