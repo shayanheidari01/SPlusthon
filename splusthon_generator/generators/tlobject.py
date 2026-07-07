@@ -93,7 +93,9 @@ def _write_modules(
 
             # Find all the types in this file and generate type definitions
             # based on the types. The type definitions are written to the
-            # file at the end.
+            # file at the end. Only include constructors from this namespace
+            # to avoid referencing undefined classes from other namespaces.
+            ns_class_names = {t.class_name for t in tlobjects if not t.is_function}
             for t in tlobjects:
                 if not t.is_function:
                     type_name = t.result
@@ -102,7 +104,8 @@ def _write_modules(
                     if type_name in type_names:
                         continue
                     type_names.add(type_name)
-                    constructors = type_constructors[type_name]
+                    constructors = [c for c in type_constructors[type_name]
+                                    if c.class_name in ns_class_names]
                     if not constructors:
                         pass
                     elif len(constructors) == 1:
