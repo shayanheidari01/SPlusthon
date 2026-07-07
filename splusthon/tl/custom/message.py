@@ -5,6 +5,7 @@ from .sendergetter import SenderGetter
 from .messagebutton import MessageButton
 from .forward import Forward
 from .file import File
+from .types import FactCheck, SuggestedPost
 from .. import TLObject, types, functions, alltlobjects
 from ... import utils, errors
 
@@ -215,10 +216,10 @@ class Message(ChatGetter, SenderGetter, TLObject):
         ttl_period: Optional[int] = None,
         quick_reply_shortcut_id: Optional[int] = None,
         effect: Optional[int] = None,
-        factcheck: Optional[types.TypeFactCheck] = None,
+        factcheck: Optional[FactCheck] = None,
         report_delivery_until_date: Optional[datetime] = None,
         paid_message_stars: Optional[int] = None,
-        suggested_post: Optional[types.TypeSuggestedPost] = None,
+        suggested_post: Optional[SuggestedPost] = None,
         schedule_repeat_period: Optional[int] = None,
         summary_from_language: Optional[str] = None,
         # Copied from MessageService.__init__ signature
