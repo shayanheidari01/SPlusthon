@@ -12,3 +12,4 @@ git add constructors/ types/ methods/ index.html js/search.js css/ img/
 git commit --amend -m "Update documentation"
 git push --force
 git checkout v1
+
