@@ -772,10 +772,11 @@ class MessageBox:
             self.map[entry].pts = diff.pts
             return [], [], []
         elif isinstance(diff, tl.updates.ChannelDifferenceTooLong):
-            assert diff.final
             self.map[entry].pts = diff.dialog.pts
             chat_hashes.extend(diff.users, diff.chats)
             self.reset_channel_deadline(entry, diff.timeout)
+            if diff.final:
+                self.end_get_diff(entry)
             # This `diff` has the "latest messages and corresponding chats", but it would
             # be strange to give the user only partial changes of these when they would
             # expect all updates to be fetched. Instead, nothing is returned.

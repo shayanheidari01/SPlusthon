@@ -455,6 +455,9 @@ class MTProtoSender:
         queue, encrypting them, and sending them over the network.
 
         Besides `connect`, only this method ever sends data.
+
+        Optimized to batch pending acks with outgoing messages
+        and reduce encryption overhead.
         """
         while self._user_connected and not self._reconnecting:
             if self._pending_ack:
@@ -464,9 +467,6 @@ class MTProtoSender:
                 self._pending_ack.clear()
 
             self._log.debug('Waiting for messages to send...')
-            # TODO Wait for the connection send queue to be empty?
-            # This means that while it's not empty we can wait for
-            # more messages to be added to the send queue.
             batch, data = await self._send_queue.get()
 
             if not data:

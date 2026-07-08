@@ -1,6 +1,5 @@
 import asyncio
 import collections
-import io
 import struct
 
 from ..tl import TLRequest
@@ -20,13 +19,18 @@ class MessagePacker:
     This addresses several needs: outgoing messages will be smaller, so the
     encryption and network overhead also is smaller. It's also a central
     point where outgoing requests are put, and where ready-messages are get.
+
+    Optimized to use a reusable buffer and avoid repeated allocations.
     """
+
+    __slots__ = ('_state', '_deque', '_ready', '_log', '_buffer')
 
     def __init__(self, state, loggers):
         self._state = state
         self._deque = collections.deque()
         self._ready = asyncio.Event()
         self._log = loggers[__name__]
+        self._buffer = bytearray()
 
     def append(self, state):
         self._deque.append(state)
@@ -47,7 +51,8 @@ class MessagePacker:
             self._ready.clear()
             await self._ready.wait()
 
-        buffer = io.BytesIO()
+        # Reuse buffer to avoid repeated allocation
+        self._buffer.clear()
         batch = []
         size = 0
 
@@ -59,7 +64,7 @@ class MessagePacker:
 
             if size <= MessageContainer.MAXIMUM_SIZE:
                 state.msg_id = self._state.write_data_as_message(
-                    buffer, state.data, isinstance(state.request, TLRequest),
+                    self._buffer, state.data, isinstance(state.request, TLRequest),
                     after_id=state.after.msg_id if state.after else None
                 )
                 batch.append(state)
@@ -99,13 +104,14 @@ class MessagePacker:
             # Inlined code to pack several messages into a container
             data = struct.pack(
                 '<Ii', MessageContainer.CONSTRUCTOR_ID, len(batch)
-            ) + buffer.getvalue()
-            buffer = io.BytesIO()
+            ) + bytes(self._buffer)
+            self._buffer.clear()
             container_id = self._state.write_data_as_message(
-                buffer, data, content_related=False
+                self._buffer, data, content_related=False
             )
             for s in batch:
                 s.container_id = container_id
 
-        data = buffer.getvalue()
+        data = bytes(self._buffer)
+        self._buffer.clear()
         return batch, data

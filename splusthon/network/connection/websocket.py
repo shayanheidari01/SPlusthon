@@ -20,9 +20,11 @@ class WebSocketReader:
     Adapter that wraps a websockets connection to expose
     the ``readexactly(n)`` interface expected by ``PacketCodec``.
 
-    Uses a deque of received chunks to avoid repeated slicing of a
-    single bytearray, which improves throughput under high message rates.
+    Uses a deque of received chunks and memoryview for zero-copy slicing
+    to minimize memory allocations under high message rates.
     """
+    __slots__ = ('_ws', '_chunks', '_chunk_offset', '_total_len')
+
     def __init__(self, ws):
         self._ws = ws
         self._chunks = collections.deque()
@@ -56,21 +58,29 @@ class WebSocketReader:
             return result
 
         # Slow path: read spans multiple chunks
-        parts = []
+        # Pre-allocate buffer for known size to avoid list growing
+        parts = bytearray(n)
+        offset = 0
         remaining = n
+
         if self._chunk_offset > 0:
-            parts.append(first[self._chunk_offset:])
-            remaining -= len(first) - self._chunk_offset
+            chunk = self._chunks[0]
+            avail = len(chunk) - self._chunk_offset
+            parts[offset:offset + avail] = memoryview(chunk)[self._chunk_offset:]
+            offset += avail
+            remaining -= avail
             self._chunks.popleft()
             self._chunk_offset = 0
 
         while remaining > 0:
             chunk = self._chunks.popleft()
-            if len(chunk) <= remaining:
-                parts.append(chunk)
-                remaining -= len(chunk)
+            chunk_len = len(chunk)
+            if chunk_len <= remaining:
+                parts[offset:offset + chunk_len] = chunk
+                offset += chunk_len
+                remaining -= chunk_len
             else:
-                parts.append(chunk[:remaining])
+                parts[offset:offset + remaining] = memoryview(chunk)[:remaining]
                 self._chunks.appendleft(chunk)
                 self._chunk_offset = remaining
                 remaining = 0
@@ -78,7 +88,7 @@ class WebSocketReader:
         self._total_len -= n
         if not self._chunks:
             self._chunk_offset = 0
-        return b''.join(parts)
+        return bytes(parts)
 
 
 class WebSocketWriter:
@@ -86,7 +96,12 @@ class WebSocketWriter:
     Adapter that wraps a websockets connection to expose
     the ``write(data)`` / ``drain()`` / ``close()`` interface
     expected by ``Connection``.
+
+    Buffers pending data in a bytearray and sends in bulk on drain()
+    to reduce syscall overhead.
     """
+    __slots__ = ('_ws', '_pending')
+
     def __init__(self, ws):
         self._ws = ws
         self._pending = bytearray()
@@ -101,7 +116,7 @@ class WebSocketWriter:
             await self._ws.send(data)
 
     def close(self):
-        self._closed = True
+        pass
 
     async def wait_closed(self):
         if self._ws is not None:
@@ -188,10 +203,11 @@ class ConnectionWebSocket(ObfuscatedConnection):
                 url,
                 additional_headers=extra_headers,
                 subprotocols=["binary"],
-                max_size=2 ** 32,
-                ping_interval=None,
+                max_size=2 ** 24,       # 16 MB - sufficient for Telegram messages
+                ping_interval=None,     # MTProto keepalive is used instead
                 close_timeout=5,
-                max_queue=2 ** 16,
+                max_queue=2 ** 14,      # 16384 - reduced from 65536 to limit memory
+                open_timeout=timeout,   # Timeout for connection establishment
             ),
             timeout=timeout
         )
@@ -199,13 +215,32 @@ class ConnectionWebSocket(ObfuscatedConnection):
         self._reader = WebSocketReader(self._ws)
         self._writer = WebSocketWriter(self._ws)
 
-        # Enable TCP_NODELAY for lower latency (reduces Nagle buffering)
+        # Optimize underlying socket for low latency
         try:
             transport = self._ws.transport
             if hasattr(transport, 'get_extra_info'):
                 sock = transport.get_extra_info('socket')
                 if sock is not None:
+                    # Disable Nagle's algorithm for lower latency
                     sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+
+                    # Enable TCP keepalive to detect dead connections
+                    sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
+
+                    # Reduce send/recv buffer sizes for lower memory usage
+                    # Default is often 128KB+, 64KB is sufficient for MTProto
+                    try:
+                        sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 65536)
+                        sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 65536)
+                    except OSError:
+                        pass  # Some systems restrict buffer size changes
+
+                    # Enable TCP Quick ACK on Linux for faster response
+                    try:
+                        TCP_QUICKACK = 12  # Linux-specific
+                        sock.setsockopt(socket.IPPROTO_TCP, TCP_QUICKACK, 1)
+                    except (OSError, AttributeError):
+                        pass  # Not available on all platforms
         except Exception:
             pass
 

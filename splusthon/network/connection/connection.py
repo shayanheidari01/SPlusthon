@@ -62,7 +62,7 @@ class Connection(abc.ABC):
             sock,
             do_handshake_on_connect=True,
             ssl_version=ssl_mod.PROTOCOL_SSLv23,
-            ciphers='ADH-AES256-SHA')
+            ciphers='ECDHE-RSA-AES128-GCM-SHA256:ECDHE-RSA-AES256-GCM-SHA384:AES128-GCM-SHA256')
 
     @staticmethod
     def _parse_proxy(proxy_type, addr, port, rdns=True, username=None, password=None):
@@ -316,10 +316,25 @@ class Connection(abc.ABC):
     async def _send_loop(self):
         """
         This loop is constantly popping items off the queue to send them.
+
+        Optimized to batch multiple sends before draining to reduce
+        the number of system calls and improve throughput.
         """
         try:
             while self._connected:
-                self._send(await self._send_queue.get())
+                # Wait for first item
+                data = await self._send_queue.get()
+                self._send(data)
+
+                # Try to drain the queue without waiting to batch sends
+                while not self._send_queue.empty():
+                    try:
+                        data = self._send_queue.get_nowait()
+                        self._send(data)
+                    except asyncio.QueueEmpty:
+                        break
+
+                # Drain once after batch
                 await self._writer.drain()
         except asyncio.CancelledError:
             pass

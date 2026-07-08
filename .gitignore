@@ -63,11 +63,9 @@ Thumbs.db
 # Documentation
 docs/site/
 
-# Session
 *.session
 *.session-journal
-
-# ReadTheDocs
 readthedocs/
 .readthedocs.yaml
 tests/readthedocs/
+.mimocode/
