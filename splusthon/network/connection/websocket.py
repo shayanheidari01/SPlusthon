@@ -1,4 +1,6 @@
 import asyncio
+import collections
+import socket
 
 try:
     import websockets
@@ -17,26 +19,66 @@ class WebSocketReader:
     """
     Adapter that wraps a websockets connection to expose
     the ``readexactly(n)`` interface expected by ``PacketCodec``.
+
+    Uses a deque of received chunks to avoid repeated slicing of a
+    single bytearray, which improves throughput under high message rates.
     """
     def __init__(self, ws):
         self._ws = ws
-        self._buffer = bytearray()
+        self._chunks = collections.deque()
+        self._chunk_offset = 0
+        self._total_len = 0
 
     async def readexactly(self, n):
-        while len(self._buffer) < n:
+        while self._total_len < n:
             try:
                 msg = await self._ws.recv()
             except Exception:
-                # WebSocket closed — check if buffer has enough
                 break
             if isinstance(msg, str):
                 msg = msg.encode()
-            self._buffer.extend(msg)
-        if len(self._buffer) < n:
+            self._chunks.append(msg)
+            self._total_len += len(msg)
+
+        if self._total_len < n:
             raise IOError('WebSocket closed while reading')
-        result = bytes(self._buffer[:n])
-        self._buffer = self._buffer[n:]
-        return result
+
+        # Fast path: entire read is within the first chunk
+        first = self._chunks[0]
+        first_avail = len(first) - self._chunk_offset
+        if first_avail >= n:
+            result = first[self._chunk_offset:self._chunk_offset + n]
+            self._chunk_offset += n
+            self._total_len -= n
+            if self._chunk_offset >= len(first):
+                self._chunks.popleft()
+                self._chunk_offset = 0
+            return result
+
+        # Slow path: read spans multiple chunks
+        parts = []
+        remaining = n
+        if self._chunk_offset > 0:
+            parts.append(first[self._chunk_offset:])
+            remaining -= len(first) - self._chunk_offset
+            self._chunks.popleft()
+            self._chunk_offset = 0
+
+        while remaining > 0:
+            chunk = self._chunks.popleft()
+            if len(chunk) <= remaining:
+                parts.append(chunk)
+                remaining -= len(chunk)
+            else:
+                parts.append(chunk[:remaining])
+                self._chunks.appendleft(chunk)
+                self._chunk_offset = remaining
+                remaining = 0
+
+        self._total_len -= n
+        if not self._chunks:
+            self._chunk_offset = 0
+        return b''.join(parts)
 
 
 class WebSocketWriter:
@@ -148,12 +190,24 @@ class ConnectionWebSocket(ObfuscatedConnection):
                 subprotocols=["binary"],
                 max_size=2 ** 32,
                 ping_interval=None,
+                close_timeout=5,
+                max_queue=2 ** 16,
             ),
             timeout=timeout
         )
 
         self._reader = WebSocketReader(self._ws)
         self._writer = WebSocketWriter(self._ws)
+
+        # Enable TCP_NODELAY for lower latency (reduces Nagle buffering)
+        try:
+            transport = self._ws.transport
+            if hasattr(transport, 'get_extra_info'):
+                sock = transport.get_extra_info('socket')
+                if sock is not None:
+                    sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
+        except Exception:
+            pass
 
         self._codec = self.packet_codec(self)
         self._init_conn()

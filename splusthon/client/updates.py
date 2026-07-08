@@ -477,10 +477,29 @@ class UpdateMethods:
                     updates_to_dispatch.extend(_preprocess_updates)
                     continue
 
+                # Drain the update queue aggressively before sleeping
+                got_update = False
+                try:
+                    updates = self._updates_queue.get_nowait()
+                    got_update = True
+                except asyncio.QueueEmpty:
+                    pass
+
+                if got_update:
+                    processed = []
+                    try:
+                        users, chats = self._message_box.process_updates(updates, self._mb_entity_cache, processed)
+                    except GapError:
+                        continue  # get(_channel)_difference will start returning requests
+
+                    _preprocess_updates = await self._preprocess_updates(processed, users, chats)
+                    updates_to_dispatch.extend(_preprocess_updates)
+                    continue
+
+                # Wait for next update or deadline
                 deadline = self._message_box.check_deadlines()
                 deadline_delay = deadline - get_running_loop().time()
                 if deadline_delay > 0:
-                    # Don't bother sleeping and timing out if the delay is already 0 (pollutes the logs).
                     try:
                         updates = await asyncio.wait_for(self._updates_queue.get(), deadline_delay)
                     except asyncio.TimeoutError:
@@ -519,7 +538,7 @@ class UpdateMethods:
         while self.is_connected():
             try:
                 await asyncio.wait_for(
-                    self.disconnected, timeout=60
+                    self.disconnected, timeout=30
                 )
                 continue  # We actually just want to act upon timeout
             except asyncio.TimeoutError:

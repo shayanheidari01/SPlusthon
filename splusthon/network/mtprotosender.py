@@ -458,7 +458,7 @@ class MTProtoSender:
         """
         while self._user_connected and not self._reconnecting:
             if self._pending_ack:
-                ack = RequestState(MsgsAck(list(self._pending_ack)))
+                ack = RequestState(MsgsAck(self._pending_ack))
                 self._send_queue.append(ack)
                 self._last_acks.append(ack)
                 self._pending_ack.clear()
