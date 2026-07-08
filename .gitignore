@@ -19,11 +19,35 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.pyi
 
 # Virtual Environment
 venv/
+.venv/
 env/
 ENV/
+
+# Package managers
+poetry.lock
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Linting / Type checking
+.mypy_cache/
+.ruff_cache/
+
+# Environment variables
+.env
+.env.*
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
 
 # IDE
 .vscode/
@@ -36,13 +60,9 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Testing
-.pytest_cache/
-.coverage
-htmlcov/
-
 # Documentation
 docs/site/
 
+# Session
 *.session
 *.session-journal
