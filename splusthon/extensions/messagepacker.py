@@ -1,5 +1,6 @@
 import asyncio
 import collections
+import io
 import struct
 
 from ..tl import TLRequest
@@ -30,7 +31,11 @@ class MessagePacker:
         self._deque = collections.deque()
         self._ready = asyncio.Event()
         self._log = loggers[__name__]
-        self._buffer = bytearray()
+        self._buffer = io.BytesIO()
+
+    def _reset_buffer(self):
+        self._buffer.seek(0)
+        self._buffer.truncate()
 
     def append(self, state):
         self._deque.append(state)
@@ -52,7 +57,7 @@ class MessagePacker:
             await self._ready.wait()
 
         # Reuse buffer to avoid repeated allocation
-        self._buffer.clear()
+        self._reset_buffer()
         batch = []
         size = 0
 
@@ -104,14 +109,14 @@ class MessagePacker:
             # Inlined code to pack several messages into a container
             data = struct.pack(
                 '<Ii', MessageContainer.CONSTRUCTOR_ID, len(batch)
-            ) + bytes(self._buffer)
-            self._buffer.clear()
+            ) + self._buffer.getvalue()
+            self._reset_buffer()
             container_id = self._state.write_data_as_message(
                 self._buffer, data, content_related=False
             )
             for s in batch:
                 s.container_id = container_id
 
-        data = bytes(self._buffer)
-        self._buffer.clear()
+        data = self._buffer.getvalue()
+        self._reset_buffer()
         return batch, data
