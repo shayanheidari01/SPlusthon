@@ -43,7 +43,7 @@ can create a client without obtaining your own keys:
     from splusthon.sessions import StringSession
 
     # No api_id or api_hash needed - defaults are included
-    client = SoroushClient(StringSession(), session_string=None)
+    client = SoroushClient(StringSession())
     client.start()
 
 
