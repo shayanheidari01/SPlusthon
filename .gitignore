@@ -26,9 +26,6 @@ __pycache__/
 /.mypy_cache/
 /.ruff_cache/
 
-# API reference docs
-/docs/
-
 # File used to manually test new changes, contains sensitive data
 /example.py
 /test.py
