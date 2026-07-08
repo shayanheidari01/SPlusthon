@@ -11,6 +11,7 @@
 
 # User session
 *.session
+*.session-journal
 /usermedia/
 
 # Builds and testing
@@ -20,6 +21,10 @@ __pycache__/
 /*.egg-info/
 /readthedocs/_build/
 /.tox/
+/.pytest_cache/
+/.coverage
+/.mypy_cache/
+/.ruff_cache/
 
 # API reference docs
 /docs/
@@ -34,3 +39,19 @@ __pycache__/
 
 # Tool directories
 .mimocode/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
