@@ -1,0 +1,1993 @@
+
+<!doctype html>
+<html lang="fa" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="مستندات کتابخانه UserBot برای سروش‌پلاس">
+      
+      
+      
+        <link rel="canonical" href="https://shayanheidari01.github.io/SPlusthon/concepts/events/">
+      
+      
+        <link rel="prev" href="../sessions/">
+      
+      
+        <link rel="next" href="../string-sessions/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>رویدادها (Events) - مستندات SPlusthon</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Vazirmatn:300,300i,400,400i,700,700i%7CVazirmatn:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Vazirmatn";--md-code-font:"Vazirmatn"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="rtl" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#events" class="md-skip">
+          پرش به محتویات
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="سرتیتر">
+    <a href="../.." title="مستندات SPlusthon" class="md-header__button md-logo" aria-label="مستندات SPlusthon" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            مستندات SPlusthon
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              رویدادها (Events)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="حالت تاریک"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="حالت تاریک" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="حالت روشن"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="حالت روشن" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="جستجو" placeholder="جستجو" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="جستجو">
+        
+        <button type="reset" class="md-search__icon md-icon" title="بازنشانی" aria-label="بازنشانی" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            راه‌اندازی جستجو
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/shayanheidari01/SPlusthon" title="رفتن به مخزن" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SPlusthon
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="زبانه‌ها" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  خانه
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../quick-start/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  شروع سریع
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../installation/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  نصب و راه‌اندازی
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+  مفاهیم پایه
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/" class="md-tabs__link">
+          
+  
+  
+  مثال‌ها
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../api-reference/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  مرجع API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../faq/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  سوالات متداول
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="هدایت" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="مستندات SPlusthon" class="md-nav__button md-logo" aria-label="مستندات SPlusthon" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    مستندات SPlusthon
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/shayanheidari01/SPlusthon" title="رفتن به مخزن" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SPlusthon
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    خانه
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    شروع سریع
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    نصب و راه‌اندازی
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    مفاهیم پایه
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    مفاهیم پایه
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    مفاهیم پایه
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../entities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Entity (موجودیت)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../sessions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Session (نشست)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    رویدادها (Events)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    رویدادها (Events)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="فهرست موضوعات">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      فهرست موضوعات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        شروع کار
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="شروع کار">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ایجاد کلاینت
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decorator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        decorator رویداد
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        handler رویداد
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        انواع رویدادهای اصلی
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="انواع رویدادهای اصلی">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#newmessage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NewMessage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#newmessage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NewMessage با فیلتر
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#messageedited" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MessageEdited
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#messagedeleted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MessageDeleted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#callbackquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CallbackQuery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chataction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ChatAction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inlinequery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InlineQuery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UserUpdate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        مثال‌های بیشتر
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="مثال‌های بیشتر">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        حذف پیام‌های حاوی کلمه خاص
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        پاسخ به پیام خاص
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ارسال پیام به کانال خاص
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        فیلتر پیام‌های خروجی و ورودی
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        دسترسی به Entity‌ها در رویدادها
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        نکات مهم
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        خلاصه
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        مرحله بعدی
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../string-sessions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    String Sessions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../errors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    مدیریت خطاها
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../full-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API کامل
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../botapi-vs-mtproto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    مقایسه Bot API و MTProto
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../asyncio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Mastering asyncio
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    مثال‌ها
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    مثال‌ها
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    مثال‌ها
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/users/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    کاربران
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/chats-and-channels/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    چت‌ها و کانال‌ها
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/working-with-messages/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    کار با پیام‌ها
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../examples/word-of-warning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    هشدار مهم
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    مرجع API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    سوالات متداول
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="فهرست موضوعات">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      فهرست موضوعات
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        شروع کار
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="شروع کار">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ایجاد کلاینت
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decorator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        decorator رویداد
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        handler رویداد
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        انواع رویدادهای اصلی
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="انواع رویدادهای اصلی">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#newmessage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NewMessage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#newmessage_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NewMessage با فیلتر
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#messageedited" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MessageEdited
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#messagedeleted" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MessageDeleted
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#callbackquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CallbackQuery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chataction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ChatAction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inlinequery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InlineQuery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#userupdate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UserUpdate
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        مثال‌های بیشتر
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="مثال‌های بیشتر">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        حذف پیام‌های حاوی کلمه خاص
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        پاسخ به پیام خاص
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ارسال پیام به کانال خاص
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        فیلتر پیام‌های خروجی و ورودی
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#entity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        دسترسی به Entity‌ها در رویدادها
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        نکات مهم
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        خلاصه
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        مرحله بعدی
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+  
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="هدایت" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  <span class="md-ellipsis">
+    خانه
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      <li class="md-path__item">
+        <a href="../" class="md-path__link">
+          
+  <span class="md-ellipsis">
+    مفاهیم پایه
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+  
+  
+
+
+<h1 id="events">رویدادها (Events)<a class="headerlink" href="#events" title="Permanent link">&para;</a></h1>
+<p>رویدادها موضوع مهمی در یک پلتفرم پیام‌رسان مانند سروش‌پلاس هستند. در نهایت، می‌خواهید هنگام رسیدن پیام جدید، عضویت عضو جدید، تایپ کردن و غیره نوتیفیکیشن دریافت کنید. برای این کار می‌توانید از <strong>رویدادها</strong> استفاده کنید.</p>
+<hr />
+<h2 id="_1">شروع کار<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>بیایید با یک مثال برای پاسخ خودکار شروع کنیم:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">splusthon</span><span class="w"> </span><span class="kn">import</span> <span class="n">SoroushClient</span><span class="p">,</span> <span class="n">events</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">SoroushClient</span><span class="p">(</span><span class="s1">&#39;anon&#39;</span><span class="p">,</span> <span class="n">api_id</span><span class="p">,</span> <span class="n">api_hash</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">my_event_handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">if</span> <span class="s1">&#39;hello&#39;</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">:</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s1">&#39;hi!&#39;</span><span class="p">)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">client</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="n">client</span><span class="o">.</span><span class="n">run_until_disconnected</span><span class="p">()</span>
+</span></code></pre></div>
+<p>این کد زیاد نیست، اما ممکن است برخی چیزها نامفهوم باشد. بیایید آن را تجزیه کنیم:</p>
+<h3 id="_2">ایجاد کلاینت<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">splusthon</span><span class="w"> </span><span class="kn">import</span> <span class="n">SoroushClient</span><span class="p">,</span> <span class="n">events</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">client</span> <span class="o">=</span> <span class="n">SoroushClient</span><span class="p">(</span><span class="s1">&#39;anon&#39;</span><span class="p">,</span> <span class="n">api_id</span><span class="p">,</span> <span class="n">api_hash</span><span class="p">)</span>
+</span></code></pre></div>
+<p>ایجاد عادی است (البته نام session، API ID و hash را پاس دهید). چیزی نیست که قبلاً ندانیم.</p>
+<h3 id="decorator">decorator رویداد<a class="headerlink" href="#decorator" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">)</span>
+</span></code></pre></div>
+<p>این decorator پایتون خود را به تعریف <code>my_event_handler</code> متصل می‌کند و به طور اساسی به این معنی است که <em>در</em> یک رویداد <code>NewMessage</code>، تابع callback که قرار است تعریف کنید فراخوانی خواهد شد:</p>
+<h3 id="handler">handler رویداد<a class="headerlink" href="#handler" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">my_event_handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="k">if</span> <span class="s1">&#39;hello&#39;</span> <span class="ow">in</span> <span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">reply</span><span class="p">(</span><span class="s1">&#39;hi!&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<p>اگر رویداد <code>NewMessage</code> رخ دهد و <code>'hello'</code> در متن پیام باشد، ما به رویداد با پیام <code>'hi!'</code> پاسخ می‌دهیم.</p>
+<div class="admonition note">
+<p class="admonition-title">یادداشت</p>
+<p>handler‌های رویداد <strong>باید</strong> <code>async def</code> باشند. در نهایت، SPlusthon یک کتابخانه ناهمگام بر پایه asyncio است که رویکرد ایمن‌تر و اغلب سریع‌تری نسبت به threads است.</p>
+</div>
+<blockquote>
+<p><strong>باید</strong> تمام فراخوانی‌های متدی که از درخواست شبکه استفاده می‌کنند را <code>await</code> کنید، که بیشتر آنها هستند.</p>
+</blockquote>
+<hr />
+<h2 id="_3">انواع رویدادهای اصلی<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="newmessage">NewMessage<a class="headerlink" href="#newmessage" title="Permanent link">&para;</a></h3>
+<p>وقتی پیام جدیدی دریافت می‌شود:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">)</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="newmessage_1">NewMessage با فیلتر<a class="headerlink" href="#newmessage_1" title="Permanent link">&para;</a></h3>
+<p>فیلتر کردن پیام‌های خروجی:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">(</span><span class="n">outgoing</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="c1"># فقط پیام‌هایی که شما ارسال کرده‌اید</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+</span></code></pre></div>
+<p>فیلتر کردن با regex:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;\.save&#39;</span><span class="p">))</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="c1"># فقط پیام‌هایی که با &quot;.save&quot; شروع می‌شوند</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">is_reply</span><span class="p">:</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="n">replied</span> <span class="o">=</span> <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">get_reply_message</span><span class="p">()</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="n">sender</span> <span class="o">=</span> <span class="n">replied</span><span class="o">.</span><span class="n">sender</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>        <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">download_profile_photo</span><span class="p">(</span><span class="n">sender</span><span class="p">)</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>        <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;عکس شما ذخیره شد </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sender</span><span class="o">.</span><span class="n">username</span><span class="p">))</span>
+</span></code></pre></div>
+<h3 id="messageedited">MessageEdited<a class="headerlink" href="#messageedited" title="Permanent link">&para;</a></h3>
+<p>وقتی پیامی ویرایش می‌شود:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">MessageEdited</span><span class="p">)</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;پیام ویرایش شد:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="messagedeleted">MessageDeleted<a class="headerlink" href="#messagedeleted" title="Permanent link">&para;</a></h3>
+<p>وقتی پیامی حذف می‌شود:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">MessageDeleted</span><span class="p">)</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;پیام حذف شد:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">message_id</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="callbackquery">CallbackQuery<a class="headerlink" href="#callbackquery" title="Permanent link">&para;</a></h3>
+<p>وقتی روی دکمه اینلاین کلیک می‌شود:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">CallbackQuery</span><span class="p">)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;کلیک روی دکمه:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">answer</span><span class="p">(</span><span class="s1">&#39;شما روی دکمه کلیک کردید!&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="chataction">ChatAction<a class="headerlink" href="#chataction" title="Permanent link">&para;</a></h3>
+<p>وقتی عضو جدید وارد چت می‌شود یا خارج می‌شود:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">ChatAction</span><span class="p">)</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">user_joined</span><span class="p">:</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;عضو جدید وارد شد:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="k">if</span> <span class="n">event</span><span class="o">.</span><span class="n">user_left</span><span class="p">:</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;عضو خارج شد:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="inlinequery">InlineQuery<a class="headerlink" href="#inlinequery" title="Permanent link">&para;</a></h3>
+<p>وقتی کوئری اینلاین دریافت می‌شود:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">InlineQuery</span><span class="p">)</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="c1"># پاسخ به کوئری اینلاین</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">answer</span><span class="p">([</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>        <span class="n">event</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">article</span><span class="p">(</span><span class="s1">&#39;نتیجه ۱&#39;</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">&#39;متن نتیجه ۱&#39;</span><span class="p">)</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="p">])</span>
+</span></code></pre></div>
+<h3 id="userupdate">UserUpdate<a class="headerlink" href="#userupdate" title="Permanent link">&para;</a></h3>
+<p>وقتی اطلاعات کاربر تغییر می‌کند:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">UserUpdate</span><span class="p">)</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;کاربر به روز شد:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">status</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="_4">مثال‌های بیشتر<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="_5">حذف پیام‌های حاوی کلمه خاص<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>بیایید پیام‌هایی حاوی "heck" را حذف کنیم. اینجا فحش مجاز نیست:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;(?i).*heck&#39;</span><span class="p">))</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">delete</span><span class="p">()</span>
+</span></code></pre></div>
+<p>با regex <code>r'(?i).*heck'</code>، "heck" را به صورت حساس به حرف بزرگ/کوچک در هر جای پیام تطبیق می‌دهیم. Regex بسیار قدرتمند است و می‌توانید در https://regexone.com/ بیشتر یاد بگیرید.</p>
+<h3 id="_6">پاسخ به پیام خاص<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;(?i)hi|hello&#39;</span><span class="p">))</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">respond</span><span class="p">(</span><span class="s1">&#39;سلام! چطور می‌توانم کمک کنم؟&#39;</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="_7">ارسال پیام به کانال خاص<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">(</span><span class="n">chats</span><span class="o">=</span><span class="s1">&#39;channel_username&#39;</span><span class="p">))</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    <span class="c1"># فقط پیام‌های کانال خاصی</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="_8">فیلتر پیام‌های خروجی و ورودی<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1"># فقط پیام‌های خروجی (پیام‌هایی که شما ارسال کرده‌اید)</span>
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">(</span><span class="n">outgoing</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler_outgoing</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;شما ارسال کردید:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1"># فقط پیام‌های ورودی (پیام‌هایی که دیگران ارسال کرده‌اید)</span>
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="nd">@client</span><span class="o">.</span><span class="n">on</span><span class="p">(</span><span class="n">events</span><span class="o">.</span><span class="n">NewMessage</span><span class="p">(</span><span class="n">incoming</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler_incoming</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;شما دریافت کردید:&#39;</span><span class="p">,</span> <span class="n">event</span><span class="o">.</span><span class="n">raw_text</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="entity">دسترسی به Entity‌ها در رویدادها<a class="headerlink" href="#entity" title="Permanent link">&para;</a></h2>
+<p>وقتی نیاز به کاربر یا چتی دارید که رویداد در آن رخ داده است، <strong>حتماً</strong> از متدهای زیر استفاده کنید:</p>
+<div class="highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">handler</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    <span class="c1"># درست</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    <span class="n">chat</span> <span class="o">=</span> <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">get_chat</span><span class="p">()</span>
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>    <span class="n">sender</span> <span class="o">=</span> <span class="k">await</span> <span class="n">event</span><span class="o">.</span><span class="n">get_sender</span><span class="p">()</span>
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>    <span class="n">chat_id</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">chat_id</span>
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>    <span class="n">sender_id</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">sender_id</span>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>    <span class="c1"># اشتباه - این کار را نکنید</span>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>    <span class="n">chat</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">chat</span>
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>    <span class="n">sender</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">sender</span>
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a>    <span class="n">chat_id</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">id</span>
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a>    <span class="n">sender_id</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">sender</span><span class="o">.</span><span class="n">id</span>
+</span></code></pre></div>
+<p>رویدادها مانند پیام‌ها هستند اما تمام اطلاعات پیام را ندارند! وقتی به صورت دستی پیامی را دریافت می‌کنید، تمام اطلاعات لازم را دارد. اما وقتی آپدیتی درباره پیام دریافت می‌کنید، <strong>تمام اطلاعات را ندارد</strong>، بنابراین باید از <strong>متدها</strong> استفاده کنید، نه ویژگی‌ها.</p>
+<hr />
+<h2 id="_9">نکات مهم<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<div class="admonition important">
+<p class="admonition-title">مهم</p>
+<p>فراموش نکنید که logging را هنگام کار با رویدادها فعال کنید، زیرا خطاها در handler‌های رویداد به طور پیش‌فرض پنهان هستند. لطفاً قطعه کد زیر را در بالای فایل خود اضافه کنید:</p>
+</div>
+<div class="highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;[</span><span class="si">%(levelname) %</span><span class="s1">(asctime)s] </span><span class="si">%(name)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">&#39;</span><span class="p">,</span>
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>                    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="_10">خلاصه<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p>رویدادها به شما امکان می‌دهند به پیام‌ها و اتفاقات مختلف در سروش‌پلاس پاسخ دهید. با استفاده از decorator‌های <code>@client.on()</code> می‌توانید handler‌های مختلفی برای انواع رویدادها ثبت کنید.</p>
+<hr />
+<h2 id="_11">مرحله بعدی<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>برای یادگیری بیشتر درباره String Sessions، بخش <a href="../string-sessions/">String Sessions</a> را مطالعه کنید.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  برگشت به بالا
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/shayanheidari01/SPlusthon" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://web.splus.ir" target="_blank" rel="noopener" title="web.splus.ir" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M256 8a248 248 0 1 0 0 496 248 248 0 1 0 0-496m115 168.7c-3.7 39.2-19.9 134.4-28.1 178.3-3.5 18.6-10.3 24.8-16.9 25.4-14.4 1.3-25.3-9.5-39.3-18.7-21.8-14.3-34.2-23.2-55.3-37.2-24.5-16.1-8.6-25 5.3-39.5 3.7-3.8 67.1-61.5 68.3-66.7.2-.7.3-3.1-1.2-4.4s-3.6-.8-5.1-.5c-2.2.5-37.1 23.5-104.6 69.1-9.9 6.8-18.9 10.1-26.9 9.9-8.9-.2-25.9-5-38.6-9.1-15.5-5-27.9-7.7-26.8-16.3.6-4.5 6.7-9 18.4-13.7 72.3-31.5 120.5-52.3 144.6-62.3 68.9-28.6 83.2-33.6 92.5-33.8 2.1 0 6.6.5 9.6 2.9 2 1.7 3.2 4.1 3.5 6.7.5 3.2.6 6.5.4 9.8z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.path", "navigation.top", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u06a9\u067e\u06cc \u0634\u062f", "clipboard.copy": "\u06a9\u067e\u06cc \u06a9\u0631\u062f\u0646", "search.result.more.one": "1 \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.more.other": "# \u0645\u0648\u0631\u062f \u062f\u06cc\u06af\u0631 \u062f\u0631 \u0627\u06cc\u0646 \u0635\u0641\u062d\u0647", "search.result.none": "\u0633\u0646\u062f\u06cc \u06cc\u0627\u0641\u062a \u0646\u0634\u062f", "search.result.one": "1 \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.other": "# \u0633\u0646\u062f \u06cc\u0627\u0641\u062a \u0634\u062f", "search.result.placeholder": "\u0628\u0631\u0627\u06cc \u0634\u0631\u0648\u0639 \u062c\u0633\u062a\u062c\u0648 \u062a\u0627\u06cc\u067e \u06a9\u0646\u06cc\u062f", "search.result.term.missing": "\u0645\u0648\u062c\u0648\u062f \u0646\u06cc\u0633\u062a", "select.version": "\u0627\u0646\u062a\u062e\u0627\u0628 \u0648\u06cc\u0631\u0627\u06cc\u0634"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
