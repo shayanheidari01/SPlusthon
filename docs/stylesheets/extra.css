@@ -1,0 +1,654 @@
+/* RTL Support */
+.md-header {
+    direction: rtl;
+}
+
+.md-nav {
+    direction: rtl;
+}
+
+.md-content {
+    direction: rtl;
+}
+
+/* Custom Code Block Styling */
+.md-typeset code {
+    direction: ltr;
+    display: inline-block;
+}
+
+.md-typeset pre code {
+    direction: ltr;
+    text-align: left;
+}
+
+/* Persian Font */
+body {
+    font-family: 'Vazirmatn', 'Tahoma', 'Arial', sans-serif;
+}
+
+/* Custom Admonition Styling */
+.md-typeset .note {
+    border-right-color: #0066cc;
+}
+
+.md-typeset .warning {
+    border-right-color: #ffc107;
+}
+
+.md-typeset .important {
+    border-right-color: #dc3545;
+}
+
+.md-typeset .tip {
+    border-right-color: #28a745;
+}
+
+/* Custom Table Styling */
+.md-typeset table:not([class]) {
+    direction: rtl;
+}
+
+.md-typeset table:not([class]) th {
+    text-align: right;
+}
+
+.md-typeset table:not([class]) td {
+    text-align: right;
+}
+
+/* Navigation Styling */
+.md-nav__link {
+    direction: rtl;
+}
+
+/* Search Styling */
+.md-search__input {
+    direction: rtl;
+}
+
+/* Footer Styling */
+.md-footer {
+    direction: rtl;
+}
+
+/* Code Block Direction */
+.highlight {
+    direction: ltr;
+}
+
+.highlight pre {
+    direction: ltr;
+    text-align: left;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 76.1875em) {
+    .md-nav--primary .md-nav__title[for="__drawer"] {
+        background-color: var(--md-primary-fg-color);
+    }
+}
+
+/* Custom Button Styling */
+.md-typeset .md-button {
+    direction: rtl;
+}
+
+/* Task List Styling */
+.md-typeset .task-list-item {
+    direction: rtl;
+}
+
+/* Admonition Icons */
+.md-typeset .admonition-title::before {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* Custom Header Styling */
+.md-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Logo Styacing */
+.md-header__topic {
+    font-weight: bold;
+}
+
+/* Navigation Tabs */
+.md-tabs {
+    background-color: var(--md-primary-fg-color);
+}
+
+/* Content Width */
+.md-grid {
+    max-width: 1200px;
+}
+
+/* Custom Link Styling */
+.md-typeset a {
+    color: var(--md-accent-fg-color);
+}
+
+.md-typeset a:hover {
+    color: var(--md-primary-fg-color);
+}
+
+/* Code Block Annotations */
+.md-typeset .annotation {
+    direction: rtl;
+}
+
+/* Tabbed Content */
+.md-typeset .tabbed-labels {
+    direction: rtl;
+}
+
+/* Task List Checkboxes */
+.md-typeset .task-list-indicator::before {
+    margin-left: 0.5rem;
+    margin-right: 0;
+}
+
+/* Custom Footer Links */
+.md-footer-meta__links {
+    direction: rtl;
+}
+
+/* Search Results */
+.md-search-result {
+    direction: rtl;
+}
+
+/* Custom Sidebar Styling */
+.md-sidebar--primary {
+    direction: rtl;
+}
+
+.md-sidebar--secondary {
+    direction: rtl;
+}
+
+/* Content Navigation */
+.md-footer-nav {
+    direction: rtl;
+}
+
+/* Custom Typography */
+.md-typeset h1 {
+    font-weight: bold;
+}
+
+.md-typeset h2 {
+    font-weight: bold;
+}
+
+/* Code Copy Button */
+.md-clipboard {
+    direction: rtl;
+}
+
+/* Custom Alert Styling */
+.md-typeset .admonition {
+    direction: rtl;
+}
+
+/* Mermaid Diagrams */
+.mermaid {
+    direction: ltr;
+    text-align: center;
+}
+
+/* Custom List Styling */
+.md-typeset ul {
+    direction: rtl;
+}
+
+.md-typeset ol {
+    direction: rtl;
+}
+
+/* Custom Quote Styling */
+.md-typeset blockquote {
+    direction: rtl;
+    border-right: 4px solid var(--md-accent-fg-color);
+}
+
+/* Custom Horizontal Rule */
+.md-typeset hr {
+    direction: rtl;
+}
+
+/* Custom Image Styling */
+.md-typeset img {
+    direction: ltr;
+}
+
+/* Custom Video Styling */
+.md-typeset video {
+    direction: ltr;
+}
+
+/* Custom Audio Styling */
+.md-typeset audio {
+    direction: ltr;
+}
+
+/* Custom Details Styling */
+.md-typeset details {
+    direction: rtl;
+}
+
+/* Custom Summary Styling */
+.md-typeset summary {
+    direction: rtl;
+}
+
+/* Custom Keyboard Styling */
+.md-typeset kbd {
+    direction: ltr;
+}
+
+/* Custom Abbreviation Styling */
+.md-typeset abbr {
+    direction: rtl;
+}
+
+/* Custom Definition List Styling */
+.md-typeset dl {
+    direction: rtl;
+}
+
+.md-typeset dt {
+    direction: rtl;
+}
+
+.md-typeset dd {
+    direction: rtl;
+}
+
+/* Custom Table of Contents */
+.md-typeset .toc {
+    direction: rtl;
+}
+
+/* Custom Navigation Links */
+.md-nav__link--active {
+    font-weight: bold;
+}
+
+/* Custom Search Input */
+.md-search__input::placeholder {
+    direction: rtl;
+}
+
+/* Custom Button Groups */
+.md-typeset .button-group {
+    direction: rtl;
+}
+
+/* Custom Grid Layout */
+.md-typeset .grid {
+    direction: rtl;
+}
+
+/* Custom Card Styling */
+.md-typeset .card {
+    direction: rtl;
+}
+
+/* Custom Badge Styling */
+.md-typeset .badge {
+    direction: rtl;
+}
+
+/* Custom Tooltip Styling */
+.md-typeset .tooltip {
+    direction: rtl;
+}
+
+/* Custom Modal Styling */
+.md-typeset .modal {
+    direction: rtl;
+}
+
+/* Custom Dropdown Styling */
+.md-typeset .dropdown {
+    direction: rtl;
+}
+
+/* Custom Accordion Styling */
+.md-typeset .accordion {
+    direction: rtl;
+}
+
+/* Custom Tab Styling */
+.md-typeset .tab {
+    direction: rtl;
+}
+
+/* Custom Alert Styling */
+.md-typeset .alert {
+    direction: rtl;
+}
+
+/* Custom Notification Styling */
+.md-typeset .notification {
+    direction: rtl;
+}
+
+/* Custom Progress Bar Styling */
+.md-typeset .progress {
+    direction: rtl;
+}
+
+/* Custom Slider Styling */
+.md-typeset .slider {
+    direction: rtl;
+}
+
+/* Custom Carousel Styling */
+.md-typeset .carousel {
+    direction: rtl;
+}
+
+/* Custom Gallery Styling */
+.md-typeset .gallery {
+    direction: rtl;
+}
+
+/* Custom Lightbox Styling */
+.md-typeset .lightbox {
+    direction: rtl;
+}
+
+/* Custom Timeline Styling */
+.md-typeset .timeline {
+    direction: rtl;
+}
+
+/* Custom Pricing Table Styling */
+.md-typeset .pricing {
+    direction: rtl;
+}
+
+/* Custom FAQ Styling */
+.md-typeset .faq {
+    direction: rtl;
+}
+
+/* Custom Testimonial Styling */
+.md-typeset .testimonial {
+    direction: rtl;
+}
+
+/* Custom Feature Styling */
+.md-typeset .feature {
+    direction: rtl;
+}
+
+/* Custom CTA Styling */
+.md-typeset .cta {
+    direction: rtl;
+}
+
+/* Custom Newsletter Styling */
+.md-typeset .newsletter {
+    direction: rtl;
+}
+
+/* Custom Contact Form Styling */
+.md-typeset .contact-form {
+    direction: rtl;
+}
+
+/* Custom Map Styling */
+.md-typeset .map {
+    direction: rtl;
+}
+
+/* Custom Social Media Styling */
+.md-typeset .social-media {
+    direction: rtl;
+}
+
+/* Custom Footer Widget Styling */
+.md-typeset .footer-widget {
+    direction: rtl;
+}
+
+/* Custom Copyright Styling */
+.md-typeset .copyright {
+    direction: rtl;
+}
+
+/* Custom Back to Top Button Styling */
+.md-typeset .back-to-top {
+    direction: rtl;
+}
+
+/* Custom Loading Spinner Styling */
+.md-typeset .loading-spinner {
+    direction: rtl;
+}
+
+/* Custom Skeleton Styling */
+.md-typeset .skeleton {
+    direction: rtl;
+}
+
+/* Custom Empty State Styling */
+.md-typeset .empty-state {
+    direction: rtl;
+}
+
+/* Custom Error State Styling */
+.md-typeset .error-state {
+    direction: rtl;
+}
+
+/* Custom Success State Styling */
+.md-typeset .success-state {
+    direction: rtl;
+}
+
+/* Custom Warning State Styling */
+.md-typeset .warning-state {
+    direction: rtl;
+}
+
+/* Custom Info State Styling */
+.md-typeset .info-state {
+    direction: rtl;
+}
+
+/* Custom Help State Styling */
+.md-typeset .help-state {
+    direction: rtl;
+}
+
+/* Custom Debug State Styling */
+.md-typeset .debug-state {
+    direction: rtl;
+}
+
+/* Custom Trace State Styling */
+.md-typeset .trace-state {
+    direction: rtl;
+}
+
+/* Custom Log State Styling */
+.md-typeset .log-state {
+    direction: rtl;
+}
+
+/* Custom Monitor State Styling */
+.md-typeset .monitor-state {
+    direction: rtl;
+}
+
+/* Custom Analytics State Styling */
+.md-typeset .analytics-state {
+    direction: rtl;
+}
+
+/* Custom Report State Styling */
+.md-typeset .report-state {
+    direction: rtl;
+}
+
+/* Custom Dashboard Styling */
+.md-typeset .dashboard {
+    direction: rtl;
+}
+
+/* Custom Widget Styling */
+.md-typeset .widget {
+    direction: rtl;
+}
+
+/* Custom Chart Styling */
+.md-typeset .chart {
+    direction: rtl;
+}
+
+/* Custom Graph Styling */
+.md-typeset .graph {
+    direction: rtl;
+}
+
+/* Custom Diagram Styling */
+.md-typeset .diagram {
+    direction: rtl;
+}
+
+/* Custom Flowchart Styling */
+.md-typeset .flowchart {
+    direction: rtl;
+}
+
+/* Custom Mindmap Styling */
+.md-typeset .mindmap {
+    direction: rtl;
+}
+
+/* Custom Orgchart Styling */
+.md-typeset .orgchart {
+    direction: rtl;
+}
+
+/* Custom Gantt Chart Styling */
+.md-typeset .gantt {
+    direction: rtl;
+}
+
+/* Custom Kanban Board Styling */
+.md-typeset .kanban {
+    direction: rtl;
+}
+
+/* Custom Trello Board Styling */
+.md-typeset .trello {
+    direction: rtl;
+}
+
+/* Custom Asana Board Styling */
+.md-typeset .asana {
+    direction: rtl;
+}
+
+/* Custom Jira Board Styling */
+.md-typeset .jira {
+    direction: rtl;
+}
+
+/* Custom GitHub Board Styling */
+.md-typeset .github-board {
+    direction: rtl;
+}
+
+/* Custom GitLab Board Styling */
+.md-typeset .gitlab-board {
+    direction: rtl;
+}
+
+/* Custom Bitbucket Board Styling */
+.md-typeset .bitbucket-board {
+    direction: rtl;
+}
+
+/* Custom Azure DevOps Board Styling */
+.md-typeset .azure-devops-board {
+    direction: rtl;
+}
+
+/* Custom Linear Board Styling */
+.md-typeset .linear-board {
+    direction: rtl;
+}
+
+/* Custom Clubhouse Board Styling */
+.md-typeset .clubhouse-board {
+    direction: rtl;
+}
+
+/* Custom Shortcut Board Styling */
+.md-typeset .shortcut-board {
+    direction: rtl;
+}
+
+/* Custom Notion Board Styling */
+.md-typeset .notion-board {
+    direction: rtl;
+}
+
+/* Custom Coda Board Styling */
+.md-typeset .coda-board {
+    direction: rtl;
+}
+
+/* Custom Airtable Board Styling */
+.md-typeset .airtable-board {
+    direction: rtl;
+}
+
+/* Custom Google Sheets Styling */
+.md-typeset .google-sheets {
+    direction: rtl;
+}
+
+/* Custom Microsoft Excel Styling */
+.md-typeset .microsoft-excel {
+    direction: rtl;
+}
+
+/* Custom Apple Numbers Styling */
+.md-typeset .apple-numbers {
+    direction: rtl;
+}
+
+/* Custom LibreOffice Calc Styling */
+.md-typeset .libreoffice-calc {
+    direction: rtl;
+}
+
+<!-- end -->

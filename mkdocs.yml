@@ -1,0 +1,110 @@
+site_name: مستندات SPlusthon
+site_description: مستندات کتابخانه UserBot برای سروش‌پلاس
+site_url: https://shayanheidari01.github.io/SPlusthon/
+repo_url: https://github.com/shayanheidari01/SPlusthon
+repo_name: SPlusthon
+
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  language: fa
+  direction: rtl
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: حالت تاریک
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: حالت روشن
+  font:
+    text: Vazirmatn
+    code: Vazirmatn
+  icon:
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+plugins:
+  - search
+
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - md_in_html
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - def_list
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/shayanheidari01/SPlusthon
+    - icon: fontawesome/brands/telegram
+      link: https://web.splus.ir
+  generator: false
+
+nav:
+  - خانه: index.md
+  - شروع سریع: quick-start.md
+  - نصب و راه‌اندازی: installation.md
+  - مفاهیم پایه:
+      - concepts/index.md
+      - "Entity (موجودیت)": concepts/entities.md
+      - "Session (نشست)": concepts/sessions.md
+      - "رویدادها (Events)": concepts/events.md
+      - String Sessions: concepts/string-sessions.md
+      - مدیریت خطاها: concepts/errors.md
+      - API کامل: concepts/full-api.md
+      - مقایسه Bot API و MTProto: concepts/botapi-vs-mtproto.md
+      - Mastering asyncio: concepts/asyncio.md
+  - مثال‌ها:
+      - examples/index.md
+      - کاربران: examples/users.md
+      - چت‌ها و کانال‌ها: examples/chats-and-channels.md
+      - کار با پیام‌ها: examples/working-with-messages.md
+      - هشدار مهم: examples/word-of-warning.md
+  - مرجع API: api-reference.md
+  - سوالات متداول: faq.md
+
+extra_css:
+  - stylesheets/extra.css
