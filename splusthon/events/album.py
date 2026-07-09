@@ -16,7 +16,7 @@ _IGNORE_MAX_AGE = 5  # seconds
 _IGNORE_DICT = {}
 
 
-_HACK_DELAY = 0.5
+_HACK_DELAY = 0.2
 
 
 class AlbumHack:
@@ -58,6 +58,8 @@ class AlbumHack:
                 # We've hit our due time, deliver event. It won't respect
                 # sequential updates but fixing that would just worsen this.
                 await client._dispatch_event(self._event)
+                # Clean up our entry from the albums dict to prevent unbounded growth.
+                client._albums.pop(self._event.grouped_id, None)
                 return
 
             del client  # Clear ref and sleep until our due time

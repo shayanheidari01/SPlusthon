@@ -81,7 +81,8 @@ class UserMethods:
                             exceptions.append(e)
                             results.append(None)
                             continue
-                        await utils.maybe_async(self.session.process_entities(result))
+                        # Run process_entities in a task to avoid blocking the event loop
+                        self.loop.create_task(utils.maybe_async(self.session.process_entities(result)))
                         exceptions.append(None)
                         results.append(result)
                         request_index += 1
@@ -91,7 +92,8 @@ class UserMethods:
                         return results
                 else:
                     result = await future
-                    await utils.maybe_async(self.session.process_entities(result))
+                    # Run process_entities in a task to avoid blocking the event loop
+                    self.loop.create_task(utils.maybe_async(self.session.process_entities(result)))
                     return result
             except (errors.ServerError, errors.RpcCallFailError,
                     errors.RpcMcgetFailError, errors.InterdcCallErrorError,

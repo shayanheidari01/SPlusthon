@@ -407,9 +407,8 @@ class TelegramBaseClient(abc.ABC):
         # different Updates when being sent from a different data center.
         # {grouped_id: AlbumHack}
         #
-        # FIXME: We don't bother cleaning this up because it's not really
-        #        worth it, albums are pretty rare and this only holds them
-        #        for a second at most.
+        # Entries are added in album.py (_set_client) and removed by
+        # AlbumHack.deliver_event() once the album has been dispatched.
         self._albums = {}
 
         # Default parse mode
@@ -430,6 +429,7 @@ class TelegramBaseClient(abc.ABC):
         self._message_box = MessageBox(self._log['messagebox'])
         self._mb_entity_cache = MbEntityCache()  # required for proper update handling (to know when to getDifference)
         self._entity_cache_limit = entity_cache_limit
+        self._pending_entity_flush = []  # deferred entity persistence buffer
 
         self._sender = MTProtoSender(
             self.session.auth_key,

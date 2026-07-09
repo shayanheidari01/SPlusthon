@@ -3,9 +3,9 @@ import collections
 import socket
 
 try:
-    import websockets
+    import aiohttp
 except ImportError:
-    websockets = None
+    aiohttp = None
 
 from .tcpabridged import AbridgedPacketCodec
 from .connection import ObfuscatedConnection
@@ -17,7 +17,7 @@ import os
 
 class WebSocketReader:
     """
-    Adapter that wraps a websockets connection to expose
+    Adapter that wraps an aiohttp WebSocket connection to expose
     the ``readexactly(n)`` interface expected by ``PacketCodec``.
 
     Uses a deque of received chunks and memoryview for zero-copy slicing
@@ -34,13 +34,19 @@ class WebSocketReader:
     async def readexactly(self, n):
         while self._total_len < n:
             try:
-                msg = await self._ws.recv()
+                msg = await self._ws.receive()
             except Exception:
                 break
-            if isinstance(msg, str):
-                msg = msg.encode()
-            self._chunks.append(msg)
-            self._total_len += len(msg)
+            if msg.type in (aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSING,
+                            aiohttp.WSMsgType.CLOSED):
+                break
+            if msg.type == aiohttp.WSMsgType.ERROR:
+                break
+            data = msg.data
+            if isinstance(data, str):
+                data = data.encode()
+            self._chunks.append(data)
+            self._total_len += len(data)
 
         if self._total_len < n:
             raise IOError('WebSocket closed while reading')
@@ -93,7 +99,7 @@ class WebSocketReader:
 
 class WebSocketWriter:
     """
-    Adapter that wraps a websockets connection to expose
+    Adapter that wraps an aiohttp WebSocket connection to expose
     the ``write(data)`` / ``drain()`` / ``close()`` interface
     expected by ``Connection``.
 
@@ -113,7 +119,7 @@ class WebSocketWriter:
         if self._pending:
             data = bytes(self._pending)
             self._pending.clear()
-            await self._ws.send(data)
+            await self._ws.send_bytes(data)
 
     def close(self):
         pass
@@ -183,12 +189,15 @@ class ConnectionWebSocket(ObfuscatedConnection):
     """
     obfuscated_io = WebSocketObfuscatedIO
     packet_codec = AbridgedPacketCodec
+    # Class-level session cache to reuse across reconnections
+    _cached_session = None
+    _cached_session_key = None
 
     async def _connect(self, timeout=None, ssl=None):
-        if websockets is None:
+        if aiohttp is None:
             raise ImportError(
-                'ConnectionWebSocket requires the "websockets" package. '
-                'Install it with: pip install websockets'
+                'ConnectionWebSocket requires the "aiohttp" package. '
+                'Install it with: pip install aiohttp'
             )
 
         protocol = 'wss' if self._port == 443 else 'ws'
@@ -198,27 +207,49 @@ class ConnectionWebSocket(ObfuscatedConnection):
             'Origin': 'https://web.splus.ir'
         }
 
-        self._ws = await asyncio.wait_for(
-            websockets.connect(
-                url,
-                additional_headers=extra_headers,
-                subprotocols=["binary"],
-                max_size=2 ** 24,       # 16 MB - sufficient for Telegram messages
-                ping_interval=None,     # MTProto keepalive is used instead
-                close_timeout=5,
-                max_queue=2 ** 14,      # 16384 - reduced from 65536 to limit memory
-                open_timeout=timeout,   # Timeout for connection establishment
-            ),
-            timeout=timeout
-        )
+        connect_timeout = aiohttp.ClientTimeout(total=timeout) if timeout else None
+        # Reuse cached session if connection parameters haven't changed
+        session_key = (self._ip, self._port, self._proxy, getattr(self, '_local_addr', None))
+        if ConnectionWebSocket._cached_session is not None and ConnectionWebSocket._cached_session_key == session_key:
+            session = ConnectionWebSocket._cached_session
+        else:
+            if ConnectionWebSocket._cached_session is not None:
+                try:
+                    await asyncio.wait_for(ConnectionWebSocket._cached_session.close(), timeout=5)
+                except Exception:
+                    pass
+            session = aiohttp.ClientSession(timeout=connect_timeout)
+            ConnectionWebSocket._cached_session = session
+            ConnectionWebSocket._cached_session_key = session_key
 
+        try:
+            self._ws = await asyncio.wait_for(
+                session.ws_connect(
+                    url,
+                    headers=extra_headers,
+                    protocols=["binary"],
+                    max_msg_size=2 ** 24,  # 16 MB
+                    heartbeat=None,        # MTProto keepalive is used instead
+                ),
+                timeout=timeout
+            )
+        except Exception:
+            # Only close session if it's not cached
+            if session is not ConnectionWebSocket._cached_session:
+                await session.close()
+            raise
+
+        self._session = session
         self._reader = WebSocketReader(self._ws)
         self._writer = WebSocketWriter(self._ws)
 
         # Optimize underlying socket for low latency
         try:
-            transport = self._ws.transport
-            if hasattr(transport, 'get_extra_info'):
+            transport = None
+            writer_obj = getattr(self._ws, '_writer', None)
+            if writer_obj is not None:
+                transport = getattr(writer_obj, '_transport', None)
+            if transport is not None and hasattr(transport, 'get_extra_info'):
                 sock = transport.get_extra_info('socket')
                 if sock is not None:
                     # Disable Nagle's algorithm for lower latency
@@ -228,19 +259,18 @@ class ConnectionWebSocket(ObfuscatedConnection):
                     sock.setsockopt(socket.SOL_SOCKET, socket.SO_KEEPALIVE, 1)
 
                     # Reduce send/recv buffer sizes for lower memory usage
-                    # Default is often 128KB+, 64KB is sufficient for MTProto
                     try:
                         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 65536)
                         sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 65536)
                     except OSError:
-                        pass  # Some systems restrict buffer size changes
+                        pass
 
                     # Enable TCP Quick ACK on Linux for faster response
                     try:
-                        TCP_QUICKACK = 12  # Linux-specific
+                        TCP_QUICKACK = 12
                         sock.setsockopt(socket.IPPROTO_TCP, TCP_QUICKACK, 1)
                     except (OSError, AttributeError):
-                        pass  # Not available on all platforms
+                        pass
         except Exception:
             pass
 
@@ -273,3 +303,11 @@ class ConnectionWebSocket(ObfuscatedConnection):
                 self._log.info(
                     '%s during disconnect: %s', type(e), e
                 )
+
+        if hasattr(self, '_session') and self._session:
+            # Don't close session if it's cached for reuse
+            if self._session is not ConnectionWebSocket._cached_session:
+                try:
+                    await asyncio.wait_for(self._session.close(), timeout=5)
+                except Exception:
+                    pass

@@ -563,10 +563,29 @@ class MTProtoSender:
                 self._start_reconnect(e)
                 return
 
-            try:
-                await self._process_message(message)
-            except Exception:
-                self._log.exception('Unhandled error while processing msgs')
+            # Batch-drain available receives to reduce event-loop overhead
+            batch = [message]
+            while True:
+                try:
+                    next_data = self._connection._recv_queue.get_nowait()
+                    if next_data[1] is not None:
+                        # Error — re-queue and stop batching
+                        await self._connection._recv_queue.put(next_data)
+                        break
+                    next_body = next_data[0]
+                    next_msg = self._state.decrypt_message_data(next_body)
+                    if next_msg is not None:
+                        batch.append(next_msg)
+                except asyncio.QueueEmpty:
+                    break
+                except Exception:
+                    break
+
+            for msg in batch:
+                try:
+                    await self._process_message(msg)
+                except Exception:
+                    self._log.exception('Unhandled error while processing msgs')
 
     # Response Handlers
 

@@ -34,7 +34,8 @@ BOT_CHANNEL_DIFF_LIMIT = 100000
 USER_CHANNEL_DIFF_LIMIT = 100
 
 # > It may be useful to wait up to 0.5 seconds
-POSSIBLE_GAP_TIMEOUT = 0.5
+# Reduced to 100ms for faster gap resolution in Soroush
+POSSIBLE_GAP_TIMEOUT = 0.1
 
 # After how long without updates the client will "timeout".
 #

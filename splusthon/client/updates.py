@@ -284,31 +284,18 @@ class UpdateMethods:
                     if self._sequential_updates:
                         await self._dispatch_update(updates_to_dispatch.popleft())
                     else:
-                        while updates_to_dispatch:
-                            # TODO if _dispatch_update fails for whatever reason, it's not logged! this should be fixed
-                            task = self.loop.create_task(self._dispatch_update(updates_to_dispatch.popleft()))
-                            self._event_handler_tasks.add(task)
-                            task.add_done_callback(self._event_handler_tasks.discard)
+                        # Spawn one task per loop iteration instead of draining the entire
+                        # deque in a tight while-loop. Draining all at once creates O(n) tasks
+                        # before the event loop gets a chance to run any of them, causing task
+                        # count (and scheduling overhead) to grow unboundedly under high load.
+                        # TODO if _dispatch_update fails for whatever reason, it's not logged! this should be fixed
+                        task = self.loop.create_task(self._dispatch_update(updates_to_dispatch.popleft()))
+                        self._event_handler_tasks.add(task)
+                        task.add_done_callback(self._event_handler_tasks.discard)
 
                     continue
 
-                if len(self._mb_entity_cache) >= self._entity_cache_limit:
-                    self._log[__name__].info(
-                        'In-memory entity cache limit reached (%s/%s), flushing to session',
-                        len(self._mb_entity_cache),
-                        self._entity_cache_limit
-                    )
-                    await self._save_states_and_entities()
-                    self._mb_entity_cache.retain(lambda id: id == self._mb_entity_cache.self_id or id in self._message_box.map)
-                    if len(self._mb_entity_cache) >= self._entity_cache_limit:
-                        warnings.warn('in-memory entities exceed entity_cache_limit after flushing; consider setting a larger limit')
-
-                    self._log[__name__].info(
-                        'In-memory entity cache at %s/%s after flushing to session',
-                        len(self._mb_entity_cache),
-                        self._entity_cache_limit
-                    )
-
+                # Entity cache flush deferred to keepalive_loop to avoid blocking update processing
 
                 get_diff = self._message_box.get_difference()
                 if get_diff:
@@ -477,23 +464,25 @@ class UpdateMethods:
                     updates_to_dispatch.extend(_preprocess_updates)
                     continue
 
-                # Drain the update queue aggressively before sleeping
-                got_update = False
+                # Drain all pending updates from the queue in one pass
+                got_updates = []
                 try:
-                    updates = self._updates_queue.get_nowait()
-                    got_update = True
+                    got_updates.append(self._updates_queue.get_nowait())
+                    while True:
+                        got_updates.append(self._updates_queue.get_nowait())
                 except asyncio.QueueEmpty:
                     pass
 
-                if got_update:
-                    processed = []
-                    try:
-                        users, chats = self._message_box.process_updates(updates, self._mb_entity_cache, processed)
-                    except GapError:
-                        continue  # get(_channel)_difference will start returning requests
+                if got_updates:
+                    for update in got_updates:
+                        processed = []
+                        try:
+                            users, chats = self._message_box.process_updates(update, self._mb_entity_cache, processed)
+                        except GapError:
+                            continue  # get(_channel)_difference will start returning requests
 
-                    _preprocess_updates = await self._preprocess_updates(processed, users, chats)
-                    updates_to_dispatch.extend(_preprocess_updates)
+                        _preprocess_updates = await self._preprocess_updates(processed, users, chats)
+                        updates_to_dispatch.extend(_preprocess_updates)
                     continue
 
                 # Wait for next update or deadline
@@ -525,7 +514,10 @@ class UpdateMethods:
 
     async def _preprocess_updates(self, updates, users, chats):
         self._mb_entity_cache.extend(users, chats)
-        await utils.maybe_async(self.session.process_entities(types.contacts.ResolvedPeer(None, users, chats)))
+        # Defer SQLite persistence — buffer for flush in keepalive_loop
+        self._pending_entity_flush.append(
+            types.contacts.ResolvedPeer(None, users, chats)
+        )
         entities = {utils.get_peer_id(x): x
                     for x in itertools.chain(users, chats)}
         for u in updates:
@@ -538,7 +530,7 @@ class UpdateMethods:
         while self.is_connected():
             try:
                 await asyncio.wait_for(
-                    self.disconnected, timeout=30
+                    self.disconnected, timeout=3
                 )
                 continue  # We actually just want to act upon timeout
             except asyncio.TimeoutError:
@@ -563,6 +555,17 @@ class UpdateMethods:
                 self._sender._keepalive_ping(rnd())
             except (ConnectionError, asyncio.CancelledError):
                 return
+
+            # Flush deferred entity persistence from the update loop
+            if self._pending_entity_flush:
+                batch = self._pending_entity_flush
+                self._pending_entity_flush = []
+                for peer in batch:
+                    await utils.maybe_async(self.session.process_entities(peer))
+
+            # Flush entity cache if it exceeds the limit
+            if len(self._mb_entity_cache) >= self._entity_cache_limit:
+                self._mb_entity_cache.retain(lambda id: id == self._mb_entity_cache.self_id or id in self._message_box.map)
 
             # Entities and cached files are not saved when they are
             # inserted because this is a rather expensive operation
@@ -589,22 +592,25 @@ class UpdateMethods:
                 pass  # might not have connection
 
         built = EventBuilderDict(self, update, others)
-        for conv_set in self._conversations.values():
-            for conv in conv_set:
-                ev = built[events.NewMessage]
-                if ev:
-                    conv._on_new_message(ev)
 
-                ev = built[events.MessageEdited]
-                if ev:
-                    conv._on_edit(ev)
+        # Skip conversation check if no conversations are registered
+        if self._conversations:
+            for conv_set in self._conversations.values():
+                for conv in conv_set:
+                    ev = built[events.NewMessage]
+                    if ev:
+                        conv._on_new_message(ev)
 
-                ev = built[events.MessageRead]
-                if ev:
-                    conv._on_read(ev)
+                    ev = built[events.MessageEdited]
+                    if ev:
+                        conv._on_edit(ev)
 
-                if conv._custom:
-                    await conv._check_custom(built)
+                    ev = built[events.MessageRead]
+                    if ev:
+                        conv._on_read(ev)
+
+                    if conv._custom:
+                        await conv._check_custom(built)
 
         for builder, callback in self._event_builders:
             event = built[type(builder)]
@@ -681,11 +687,9 @@ class UpdateMethods:
                     self._log[__name__].exception('Unhandled exception on %s', name)
 
     async def _handle_auto_reconnect(self: 'SoroushClient'):
-        # TODO Catch-up
-        # For now we make a high-level request to let Telegram
-        # know we are still interested in receiving more updates.
+        # Use lightweight get_me to let Telegram know we want updates
         try:
-            await self.get_me()
+            await self.get_me(input_peer=True)
         except Exception as e:
             self._log[__name__].warning('Error executing high-level request '
                                         'after reconnect: %s: %s', type(e), e)

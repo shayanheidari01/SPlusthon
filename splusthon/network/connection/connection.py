@@ -47,8 +47,8 @@ class Connection(abc.ABC):
         self._recv_task = None
         self._codec = None
         self._obfuscation = None  # TcpObfuscated and MTProxy
-        self._send_queue = asyncio.Queue(32)
-        self._recv_queue = asyncio.Queue(32)
+        self._send_queue = asyncio.Queue(500)
+        self._recv_queue = asyncio.Queue(500)
 
     @staticmethod
     def _wrap_socket_ssl(sock):

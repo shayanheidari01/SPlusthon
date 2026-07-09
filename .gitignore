@@ -63,6 +63,10 @@ Thumbs.db
 # Documentation
 docs/site/
 
+# Testing scripts
+speedtest.py
+test.py
+
 *.session
 *.session-journal
 readthedocs/
