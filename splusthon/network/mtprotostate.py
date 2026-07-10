@@ -93,7 +93,7 @@ class MTProtoState:
     @staticmethod
     def _calc_key(auth_key, msg_key, client):
         """
-        Calculate the key based on Telegram guidelines for MTProto 2,
+        Calculate the key based on SoroushPlus guidelines for MTProto 2,
         specifying whether it's the client or not. See
         https://core.telegram.org/mtproto/description#defining-aes-key-and-initialization-vector
         """

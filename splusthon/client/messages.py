@@ -1,11 +1,14 @@
 import inspect
 import itertools
+import logging
 import typing
 import warnings
 
 from .. import helpers, utils, errors, hints
 from ..requestiter import RequestIter
 from ..tl import types, functions
+
+_log = logging.getLogger(__name__)
 
 _MAX_CHUNK_SIZE = 100
 
@@ -30,7 +33,7 @@ class _MessagesIter(RequestIter):
             if self.reverse:
                 raise ValueError('Cannot reverse global search')
 
-        # Telegram doesn't like min_id/max_id. If these IDs are low enough
+        # SoroushPlus doesn't like min_id/max_id. If these IDs are low enough
         # (starting from last_id - 100), the request will return nothing.
         #
         # We can emulate their behaviour locally by setting offset = max_id
@@ -103,7 +106,7 @@ class _MessagesIter(RequestIter):
                 hash=0
             )
         elif search is not None or not isinstance(filter, types.InputMessagesFilterEmpty) or from_user:
-            # Telegram completely ignores `from_id` in private chats
+            # SoroushPlus completely ignores `from_id` in private chats
             ty = helpers._entity_type(self.entity)
             if ty == helpers._EntityType.USER:
                 # Don't bother sending `from_user` (it's ignored anyway),
@@ -130,7 +133,7 @@ class _MessagesIter(RequestIter):
             )
 
             # Workaround issue #1124 until a better solution is found.
-            # Telegram seemingly ignores `max_date` if `filter` (and
+            # SoroushPlus seemingly ignores `max_date` if `filter` (and
             # nothing else) is specified, so we have to rely on doing
             # a first request to offset from the ID instead.
             #
@@ -232,7 +235,7 @@ class _MessagesIter(RequestIter):
         else:
             # There are some cases where all the messages we get start
             # being empty. This can happen on migrated mega-groups if
-            # the history was cleared, and we're using search. Telegram
+            # the history was cleared, and we're using search. SoroushPlus
             # acts incredibly weird sometimes. Messages are returned but
             # only "empty", not their contents. If this is the case we
             # should just give up since there won't be any new Message.
@@ -306,8 +309,9 @@ class _IDsIter(RequestIter):
             try:
                 r = await self.client(
                     functions.channels.GetMessagesRequest(self._entity, ids))
-            except errors.MessageIdsEmptyError:
+            except errors.MessageIdsEmptyError as e:
                 # All IDs were invalid, use a dummy result
+                _log.debug('MessageIdsEmptyError for channel messages: %s', e)
                 r = types.messages.MessagesNotModified(len(ids))
         else:
             r = await self.client(functions.messages.GetMessagesRequest(ids))
@@ -321,9 +325,9 @@ class _IDsIter(RequestIter):
         entities = {utils.get_peer_id(x): x
                     for x in itertools.chain(r.users, r.chats)}
 
-        # Telegram seems to return the messages in the order in which
+        # SoroushPlus seems to return the messages in the order in which
         # we asked them for, so we don't need to check it ourselves,
-        # unless some messages were invalid in which case Telegram
+        # unless some messages were invalid in which case SoroushPlus
         # may decide to not send them at all.
         #
         # The passed message IDs may not belong to the desired entity
@@ -374,7 +378,7 @@ class MessageMethods:
 
         .. note::
 
-            Telegram's flood wait limit for :tl:`GetHistoryRequest` seems to
+            SoroushPlus's flood wait limit for :tl:`GetHistoryRequest` seems to
             be around 30 seconds per 10 requests, therefore a sleep of 1
             second is the default for this limit (or above).
 
@@ -450,7 +454,7 @@ class MessageMethods:
 
                 .. note::
 
-                    At the time of writing, Telegram will **not** return
+                    At the time of writing, SoroushPlus will **not** return
                     :tl:`MessageEmpty` for :tl:`InputMessageReplyTo` IDs that
                     failed (i.e. the message is not replying to any, or is
                     replying to a deleted message). This means that it is
@@ -478,7 +482,7 @@ class MessageMethods:
                 will result in ``splusthon.errors.PeerIdInvalidError`` to occur.
 
                 When using this parameter, the ``filter`` and ``search``
-                parameters have no effect, since Telegram's API doesn't
+                parameters have no effect, since SoroushPlus's API doesn't
                 support searching messages in replies.
 
                 .. note::
@@ -702,12 +706,12 @@ class MessageMethods:
                 video, audio or document). The ``message`` may be empty.
 
             thumb (`str` | `bytes` | `file`, optional):
-                Optional JPEG thumbnail (for documents). **Telegram will
+                Optional JPEG thumbnail (for documents). **SoroushPlus will
                 ignore this parameter** unless you pass a ``.jpg`` file!
                 The file must also be small in dimensions and in disk size.
                 Successful thumbnails were files below 20kB and 320x320px.
                 Width/height and dimensions/size ratios may be important.
-                For Telegram to accept a thumbnail, you must provide the
+                For SoroushPlus to accept a thumbnail, you must provide the
                 dimensions of the underlying media through ``attributes=``
                 with :tl:`DocumentAttributeVideo` or by installing the
                 optional ``hachoir`` dependency.
@@ -742,7 +746,7 @@ class MessageMethods:
 
             supports_streaming (`bool`, optional):
                 Whether the sent video supports streaming or not. Note that
-                Telegram only recognizes as streamable some formats like MP4,
+                SoroushPlus only recognizes as streamable some formats like MP4,
                 and others like AVI or MKV will not work. You should convert
                 these to MP4 before sending if you want them to be streamable.
                 Unsupported formats will result in ``VideoContentTypeError``.
@@ -763,7 +767,7 @@ class MessageMethods:
             nosound_video (`bool`, optional):
                 Only applicable when sending a video file without an audio
                 track. If set to ``True``, the video will be displayed in
-                Telegram as a video. If set to ``False``, Telegram will attempt
+                SoroushPlus as a video. If set to ``False``, SoroushPlus will attempt
                 to display the video as an animated gif. (It may still display
                 as a video due to other factors.) The value is ignored if set
                 on non-video files. This is set to ``True`` for albums, as gifs
@@ -1145,12 +1149,12 @@ class MessageMethods:
                 in the message.
 
             thumb (`str` | `bytes` | `file`, optional):
-                Optional JPEG thumbnail (for documents). **Telegram will
+                Optional JPEG thumbnail (for documents). **SoroushPlus will
                 ignore this parameter** unless you pass a ``.jpg`` file!
                 The file must also be small in dimensions and in disk size.
                 Successful thumbnails were files below 20kB and 320x320px.
                 Width/height and dimensions/size ratios may be important.
-                For Telegram to accept a thumbnail, you must provide the
+                For SoroushPlus to accept a thumbnail, you must provide the
                 dimensions of the underlying media through ``attributes=``
                 with :tl:`DocumentAttributeVideo` or by installing the
                 optional ``hachoir`` dependency.
@@ -1166,7 +1170,7 @@ class MessageMethods:
 
             supports_streaming (`bool`, optional):
                 Whether the sent video supports streaming or not. Note that
-                Telegram only recognizes as streamable some formats like MP4,
+                SoroushPlus only recognizes as streamable some formats like MP4,
                 and others like AVI or MKV will not work. You should convert
                 these to MP4 before sending if you want them to be streamable.
                 Unsupported formats will result in ``VideoContentTypeError``.
@@ -1233,7 +1237,7 @@ class MessageMethods:
                 reply_markup=self.build_reply_markup(buttons)
             )
             # Invoke `messages.editInlineBotMessage` from the right datacenter.
-            # Otherwise, Telegram will error with `MESSAGE_ID_INVALID` and do nothing.
+            # Otherwise, SoroushPlus will error with `MESSAGE_ID_INVALID` and do nothing.
             exported = self.session.dc_id != entity.dc_id
             if exported:
                 try:

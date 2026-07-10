@@ -37,7 +37,7 @@ class _CacheType:
 def _resize_photo_if_needed(
         file, is_image, width=2560, height=2560, background=(255, 255, 255)):
 
-    # https://github.com/telegramdesktop/tdesktop/blob/12905f0dcb9d513378e7db11989455a1b764ef75/Telegram/SourceFiles/boxes/photo_crop_box.cpp#L254
+    # https://github.com/telegramdesktop/tdesktop/blob/12905f0dcb9d513378e7db11989455a1b764ef75/SoroushPlus/SourceFiles/boxes/photo_crop_box.cpp#L254
     if (not is_image
             or PIL is None
             or (isinstance(file, io.IOBase) and not file.seekable())):
@@ -153,7 +153,7 @@ class UploadMethods:
 
             If the ``pillow`` package is installed and you are sending a photo,
             it will be resized to fit within the maximum dimensions allowed
-            by Telegram to avoid ``errors.PhotoInvalidDimensionsError``. This
+            by SoroushPlus to avoid ``errors.PhotoInvalidDimensionsError``. This
             cannot be done if you are sending :tl:`InputFile`, however.
 
         Arguments
@@ -176,7 +176,7 @@ class UploadMethods:
                   or a default if it doesn't have one.
 
                 * An external URL to a file over the internet. This will
-                  send the file as "external" media, and Telegram is the
+                  send the file as "external" media, and SoroushPlus is the
                   one that will fetch the media and send it.
 
                 * A Bot API-like ``file_id``. You can convert previously
@@ -238,13 +238,13 @@ class UploadMethods:
                 :tl:`DocumentAttributeFilename` and so on.
 
             thumb (`str` | `bytes` | `file`, optional):
-                Optional JPEG thumbnail (for documents). **Telegram will
+                Optional JPEG thumbnail (for documents). **SoroushPlus will
                 ignore this parameter** unless you pass a ``.jpg`` file!
 
                 The file must also be small in dimensions and in disk size.
                 Successful thumbnails were files below 20kB and 320x320px.
                 Width/height and dimensions/size ratios may be important.
-                For Telegram to accept a thumbnail, you must provide the
+                For SoroushPlus to accept a thumbnail, you must provide the
                 dimensions of the underlying media through ``attributes=``
                 with :tl:`DocumentAttributeVideo` or by installing the
                 optional ``hachoir`` dependency.
@@ -292,7 +292,7 @@ class UploadMethods:
 
             supports_streaming (`bool`, optional):
                 Whether the sent video supports streaming or not. Note that
-                Telegram only recognizes as streamable some formats like MP4,
+                SoroushPlus only recognizes as streamable some formats like MP4,
                 and others like AVI or MKV will not work. You should convert
                 these to MP4 before sending if you want them to be streamable.
                 Unsupported formats will result in ``VideoContentTypeError``.
@@ -317,7 +317,7 @@ class UploadMethods:
                 history automatically.
 
                 The value must be at least 1 second, and at most 60 seconds,
-                otherwise Telegram will ignore this parameter.
+                otherwise SoroushPlus will ignore this parameter.
 
                 Not all types of media can be used with this parameter, such
                 as text documents, which will fail with ``TtlMediaInvalidError``.
@@ -325,7 +325,7 @@ class UploadMethods:
             nosound_video (`bool`, optional):
                 Only applicable when sending a video file without an audio
                 track. If set to ``True``, the video will be displayed in
-                Telegram as a video. If set to ``False``, Telegram will attempt
+                SoroushPlus as a video. If set to ``False``, SoroushPlus will attempt
                 to display the video as an animated gif. (It may still display
                 as a video due to other factors.) The value is ignored if set
                 on non-video files. This is set to ``True`` for albums, as gifs
@@ -583,7 +583,7 @@ class UploadMethods:
             iv: bytes = None,
             progress_callback: 'hints.ProgressCallback' = None) -> 'types.TypeInputFile':
         """
-        Uploads a file to Telegram's servers, without sending it.
+        Uploads a file to SoroushPlus's servers, without sending it.
 
         .. note::
 
@@ -594,7 +594,7 @@ class UploadMethods:
         it expires (they are usable during less than a day).
 
         Uploading a file will simply return a "handle" to the file stored
-        remotely in the Telegram servers, which can be later used on. This
+        remotely in the SoroushPlus servers, which can be later used on. This
         will **not** upload the file to your own chat or any chat at all.
 
         Arguments
@@ -688,13 +688,13 @@ class UploadMethods:
                 file_name = stream.name or str(file_id)
 
             # If the file name lacks extension, add it if possible.
-            # Else Telegram complains with `PHOTO_EXT_INVALID_ERROR`
+            # Else SoroushPlus complains with `PHOTO_EXT_INVALID_ERROR`
             # even if the uploaded image is indeed a photo.
             if not os.path.splitext(file_name)[-1]:
                 file_name += utils._get_extension(stream)
 
             # Determine whether the file is too big (over 10MB) or not
-            # Telegram does make a distinction between smaller or larger files
+            # SoroushPlus does make a distinction between smaller or larger files
             is_big = file_size > 10 * 1024 * 1024
             hash_md5 = hashlib.md5()
 
@@ -728,7 +728,7 @@ class UploadMethods:
                 if not is_big:
                     # Bit odd that MD5 is only needed for small files and not
                     # big ones with more chance for corruption, but that's
-                    # what Telegram wants.
+                    # what SoroushPlus wants.
                     hash_md5.update(part)
 
                 # The SavePartRequest is different depending on whether

@@ -1,5 +1,6 @@
 import datetime
 import io
+import logging
 import os
 import pathlib
 import typing
@@ -11,6 +12,8 @@ from ..crypto import AES
 from .. import utils, helpers, errors, hints
 from ..requestiter import RequestIter
 from ..tl import TLObject, types, functions
+
+_log = logging.getLogger(__name__)
 
 try:
     import aiohttp
@@ -653,7 +656,7 @@ class DownloadMethods:
                 By default, it equals to `request_size`.
 
             request_size (`int`, optional):
-                How many bytes will be requested to Telegram when more
+                How many bytes will be requested to SoroushPlus when more
                 data is required. By default, as many bytes as possible
                 are requested. If you would like to request data in
                 smaller sizes, adjust this parameter.
@@ -781,7 +784,7 @@ class DownloadMethods:
         if not thumbs:
             return None
 
-        # Seems Telegram has changed the order and put `PhotoStrippedSize`
+        # Seems SoroushPlus has changed the order and put `PhotoStrippedSize`
         # last while this is the smallest (layer 116). Ensure we have the
         # sizes sorted correctly with a custom function.
         def sort_thumbs(thumb):
@@ -1010,7 +1013,7 @@ class DownloadMethods:
         try:
             async with aiohttp.ClientSession() as session:
                 # TODO Use progress_callback; get content length from response
-                # https://github.com/telegramdesktop/tdesktop/blob/c7e773dd9aeba94e2be48c032edc9a78bb50234e/Telegram/SourceFiles/ui/images.cpp#L1318-L1319
+                # https://github.com/telegramdesktop/tdesktop/blob/c7e773dd9aeba94e2be48c032edc9a78bb50234e/SoroushPlus/SourceFiles/ui/images.cpp#L1318-L1319
                 async with session.get(web.url) as response:
                     while True:
                         chunk = await response.content.read(128 * 1024)
@@ -1061,6 +1064,7 @@ class DownloadMethods:
                     if x and not isreserved(x)
                 )
             except StopIteration:
+                _log.debug('No valid filename found in possible_names')
                 name = None
 
             if not name:

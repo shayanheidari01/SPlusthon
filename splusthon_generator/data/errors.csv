@@ -316,7 +316,7 @@ PHONE_HASH_EXPIRED,400,An invalid or expired `phone_code_hash` was provided
 PHONE_MIGRATE_X,303,The phone number a user is trying to use for authorization is associated with DC {new_dc}
 PHONE_NOT_OCCUPIED,400,No user is associated to the specified phone number
 PHONE_NUMBER_APP_SIGNUP_FORBIDDEN,400,You can't sign up using this app
-PHONE_NUMBER_BANNED,400,The used phone number has been banned from Telegram and cannot be used anymore. Maybe check https://www.telegram.org/faq_spam
+PHONE_NUMBER_BANNED,400,The used phone number has been banned from SoroushPlus and cannot be used anymore. Maybe check https://www.telegram.org/faq_spam
 PHONE_NUMBER_FLOOD,400,You asked for the code too many times.
 PHONE_NUMBER_INVALID,400 406,The phone number is invalid
 PHONE_NUMBER_OCCUPIED,400,The phone number is already in use
@@ -332,7 +332,7 @@ PHOTO_FILE_MISSING,400,Profile photo file missing
 PHOTO_ID_INVALID,400,Photo id is invalid
 PHOTO_INVALID,400,Photo invalid
 PHOTO_INVALID_DIMENSIONS,400,The photo dimensions are invalid (hint: `pip install pillow` for `send_file` to resize images)
-PHOTO_SAVE_FILE_INVALID,400,The photo you tried to send cannot be saved by Telegram. A reason may be that it exceeds 10MB. Try resizing it locally
+PHOTO_SAVE_FILE_INVALID,400,The photo you tried to send cannot be saved by SoroushPlus. A reason may be that it exceeds 10MB. Try resizing it locally
 PHOTO_THUMB_URL_EMPTY,400,The URL used as a thumbnail appears to be empty or has caused another HTTP error
 PINNED_DIALOGS_TOO_MUCH,400,Too many pinned dialogs
 PIN_RESTRICTED,400,You can't pin messages in private chats with other people
@@ -384,8 +384,8 @@ RESULT_TYPE_INVALID,400,Result type invalid
 REVOTE_NOT_ALLOWED,400,You cannot change your vote
 RIGHTS_NOT_MODIFIED,400,"The new admin rights are equal to the old rights, no change was made"
 RIGHT_FORBIDDEN,403,Either your admin rights do not allow you to do this or you passed the wrong rights combination (some rights only apply to channels and vice versa)
-RPC_CALL_FAIL,500,"Telegram is having internal issues, please try again later."
-RPC_MCGET_FAIL,500,"Telegram is having internal issues, please try again later."
+RPC_CALL_FAIL,500,"SoroushPlus is having internal issues, please try again later."
+RPC_MCGET_FAIL,500,"SoroushPlus is having internal issues, please try again later."
 RSA_DECRYPT_FAILED,400,Internal RSA decryption failed
 SCHEDULE_BOT_NOT_ALLOWED,400,Bots are not allowed to schedule messages
 SCHEDULE_DATE_INVALID,400,Invalid schedule date provided
@@ -425,7 +425,7 @@ STICKERSET_INVALID,400 406,The provided sticker set is invalid
 STICKERSET_OWNER_ANONYMOUS,406,This sticker set can't be used as the group's official stickers because it was created by one of its anonymous admins
 STICKERS_EMPTY,400,No sticker provided
 STICKERS_TOO_MUCH,400,"There are too many stickers in this stickerpack, you can't add any more"
-STICKER_DOCUMENT_INVALID,400,"The sticker file was invalid (this file has failed Telegram internal checks, make sure to use the correct format and comply with https://core.telegram.org/animated_stickers)"
+STICKER_DOCUMENT_INVALID,400,"The sticker file was invalid (this file has failed SoroushPlus internal checks, make sure to use the correct format and comply with https://core.telegram.org/animated_stickers)"
 STICKER_EMOJI_INVALID,400,Sticker emoji invalid
 STICKER_FILE_INVALID,400,Sticker file invalid
 STICKER_GIF_DIMENSIONS,400,The specified video sticker has invalid dimensions
@@ -524,7 +524,7 @@ WEBPAGE_MEDIA_EMPTY,400,Webpage media empty
 WEBPUSH_AUTH_INVALID,400,The specified web push authentication secret is invalid
 WEBPUSH_KEY_INVALID,400,The specified web push elliptic curve Diffie-Hellman public key is invalid
 WEBPUSH_TOKEN_INVALID,400,The specified web push token is invalid
-WORKER_BUSY_TOO_LONG_RETRY,500,Telegram workers are too busy to respond immediately
+WORKER_BUSY_TOO_LONG_RETRY,500,SoroushPlus workers are too busy to respond immediately
 YOU_BLOCKED_USER,400,You blocked this user
 FROZEN_METHOD_INVALID,420,You tried to use a method that is not available for frozen accounts
 FROZEN_PARTICIPANT_MISSING,400,Your account is frozen and can't access the chat

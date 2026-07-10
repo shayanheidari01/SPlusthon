@@ -1,3 +1,4 @@
+import logging
 from typing import Optional, List, TYPE_CHECKING
 from datetime import datetime
 from .chatgetter import ChatGetter
@@ -8,6 +9,8 @@ from .file import File
 from .types import FactCheck, SuggestedPost
 from .. import TLObject, types, functions, alltlobjects
 from ... import utils, errors
+
+_log = logging.getLogger(__name__)
 
 
 # TODO Figure out a way to have the code generator error on missing fields
@@ -476,7 +479,8 @@ class Message(ChatGetter, SenderGetter, TLObject):
                 return
             try:
                 bot = self._needed_markup_bot()
-            except ValueError:
+            except ValueError as e:
+                _log.debug('Could not determine markup bot: %s', e)
                 return
             else:
                 self._set_buttons(self._input_chat, bot)
@@ -493,7 +497,8 @@ class Message(ChatGetter, SenderGetter, TLObject):
                 return
             try:
                 bot = self._needed_markup_bot()
-            except ValueError:
+            except ValueError as e:
+                _log.debug('Could not determine markup bot, reloading message: %s', e)
                 await self._reload_message()
                 bot = self._needed_markup_bot()  # TODO use via_input_bot
 
@@ -612,7 +617,7 @@ class Message(ChatGetter, SenderGetter, TLObject):
         """
         The :tl:`Document` media in this message, if it's a "gif".
 
-        "Gif" files by Telegram are normally ``.mp4`` video files without
+        "Gif" files by SoroushPlus are normally ``.mp4`` video files without
         sound, the so called "animated" media. However, it may be the actual
         gif format if the file is too large.
         """
@@ -1170,7 +1175,8 @@ class Message(ChatGetter, SenderGetter, TLObject):
         try:
             chat = await self.get_input_chat() if self.is_channel else None
             msg = await self._client.get_messages(chat, ids=self.id)
-        except ValueError:
+        except ValueError as e:
+            _log.debug('Failed to reload message %s: %s', self.id, e)
             return  # We may not have the input chat/get message failed
         if not msg:
             return  # The message may be deleted and it will be None
@@ -1224,7 +1230,8 @@ class Message(ChatGetter, SenderGetter, TLObject):
                         try:
                             return self._client._mb_entity_cache.get(
                                 utils.resolve_id(self.via_bot_id)[0])._as_input_peer()
-                        except AttributeError:
+                        except AttributeError as e:
+                            _log.debug('Could not get input bot from entity cache: %s', e)
                             raise ValueError('No input sender') from None
 
     def _document_by_attribute(self, kind, condition=None):

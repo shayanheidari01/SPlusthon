@@ -1,9 +1,10 @@
 """
-Simple HTML -> Telegram entity parser.
+Simple HTML -> SoroushPlus entity parser.
 """
 from collections import deque
 from html import escape
 from html.parser import HTMLParser
+import logging
 from typing import Iterable, Tuple, List
 
 from ..helpers import add_surrogate, del_surrogate, within_surrogate, strip_text
@@ -16,8 +17,10 @@ from ..tl.types import (
     MessageEntityCustomEmoji, TypeMessageEntity
 )
 
+_log = logging.getLogger(__name__)
 
-class HTMLToTelegramParser(HTMLParser):
+
+class HTMLToSoroushPlusParser(HTMLParser):
     def __init__(self):
         super().__init__()
         self.text = ''
@@ -55,7 +58,7 @@ class HTMLToTelegramParser(HTMLParser):
                 try:
                     pre.language = attrs['class'][len('language-'):]
                 except KeyError:
-                    pass
+                    _log.debug('No language class found for code tag')
             except KeyError:
                 EntityType = MessageEntityCode
         elif tag == 'pre':
@@ -65,6 +68,7 @@ class HTMLToTelegramParser(HTMLParser):
             try:
                 url = attrs['href']
             except KeyError:
+                _log.debug('No href found for anchor tag')
                 return
             if url.startswith('mailto:'):
                 url = url[len('mailto:'):]
@@ -81,7 +85,8 @@ class HTMLToTelegramParser(HTMLParser):
         elif tag == 'tg-emoji':
             try:
                 emoji_id = int(attrs['emoji-id'])
-            except (KeyError, ValueError):
+            except (KeyError, ValueError) as e:
+                _log.debug('Invalid tg-emoji attributes: %s', e)
                 return
 
             EntityType = MessageEntityCustomEmoji
@@ -111,7 +116,7 @@ class HTMLToTelegramParser(HTMLParser):
             self._open_tags.popleft()
             self._open_tags_meta.popleft()
         except IndexError:
-            pass
+            _log.debug('Mismatched HTML tags: closing tag without matching open tag')
         entity = self._building_entities.pop(tag, None)
         if entity:
             self.entities.append(entity)
@@ -128,7 +133,7 @@ def parse(html: str) -> Tuple[str, List[TypeMessageEntity]]:
     if not html:
         return html, []
 
-    parser = HTMLToTelegramParser()
+    parser = HTMLToSoroushPlusParser()
     parser.feed(add_surrogate(html))
     text = strip_text(parser.text, parser.entities)
     parser.entities.reverse()

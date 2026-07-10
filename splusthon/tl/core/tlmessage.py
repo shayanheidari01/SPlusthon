@@ -5,12 +5,12 @@ class TLMessage(TLObject):
     """
     https://core.telegram.org/mtproto/service_messages#simple-container.
 
-    Messages are what's ultimately sent to Telegram:
+    Messages are what's ultimately sent to SoroushPlus:
         message msg_id:long seqno:int bytes:int body:bytes = Message;
 
     Each message has its own unique identifier, and the body is simply
     the serialized request that should be executed on the server, or
-    the response object from Telegram. Since the body is always a valid
+    the response object from SoroushPlus. Since the body is always a valid
     object, it makes sense to store the object and not the bytes to
     ease working with them.
 

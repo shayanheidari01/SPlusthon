@@ -40,7 +40,7 @@ class QRLogin:
     @property
     def url(self) -> str:
         """
-        The ``tg://login`` URI with the token. When opened by a Telegram
+        The ``tg://login`` URI with the token. When opened by a SoroushPlus
         application where the user is logged in, it will import the login
         token.
 

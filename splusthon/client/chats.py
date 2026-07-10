@@ -1,12 +1,15 @@
 import asyncio
 import inspect
 import itertools
+import logging
 import string
 import typing
 
 from .. import helpers, utils, hints, errors
 from ..requestiter import RequestIter
 from ..tl import types, functions, custom
+
+_log = logging.getLogger(__name__)
 
 if typing.TYPE_CHECKING:
     from .soroushclient import SoroushClient
@@ -84,8 +87,8 @@ class _ChatAction:
             while self._running:
                 await self._client(self._request)
                 await asyncio.sleep(self._delay)
-        except ConnectionError:
-            pass
+        except ConnectionError as e:
+            _log.debug('Connection error during typing action: %s', e)
         except asyncio.CancelledError:
             if self._auto_cancel:
                 await self._client(functions.messages.SetTypingRequest(
@@ -361,7 +364,7 @@ class _ProfilePhotoIter(RequestIter):
                 self.request.offset += len(result.photos)
         else:
             # Some broadcast channels have a photo that this request doesn't
-            # retrieve for whatever random reason the Telegram server feels.
+            # retrieve for whatever random reason the SoroushPlus server feels.
             #
             # This means the `total` count may be wrong but there's not much
             # that can be done around it (perhaps there are too many photos
@@ -433,7 +436,7 @@ class ChatMethods:
             aggressive (`bool`, optional):
                 Does nothing. This is kept for backwards-compatibility.
 
-                There have been several changes to Telegram's API that limits
+                There have been several changes to SoroushPlus's API that limits
                 the amount of members that can be retrieved, and this was a
                 hack that no longer works.
 

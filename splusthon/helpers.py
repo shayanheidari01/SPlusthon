@@ -1,4 +1,4 @@
-"""Various helpers not related to the Telegram API itself"""
+"""Various helpers not related to the SoroushPlus API itself"""
 import asyncio
 import io
 import enum
@@ -38,7 +38,7 @@ def ensure_parent_dir_exists(file_path):
 
 def add_surrogate(text):
     return ''.join(
-        # SMP -> Surrogate Pairs (Telegram offsets are calculated with these).
+        # SMP -> Surrogate Pairs (SoroushPlus offsets are calculated with these).
         # See https://en.wikipedia.org/wiki/Plane_(Unicode)#Overview for more.
         ''.join(chr(y) for y in struct.unpack('<HH', x.encode('utf-16le')))
         if (0x10000 <= ord(x) <= 0x10FFFF) else x for x in text

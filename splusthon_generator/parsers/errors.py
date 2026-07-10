@@ -42,7 +42,7 @@ class Error:
     def __init__(self, codes, name, description):
         # TODO Some errors have the same name but different integer codes
         # Should these be split into different files or doesn't really matter?
-        # Telegram isn't exactly consistent with returned errors anyway.
+        # SoroushPlus isn't exactly consistent with returned errors anyway.
         self.int_code = codes[0]
         self.int_codes = codes
         self.str_code = name

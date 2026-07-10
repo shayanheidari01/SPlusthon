@@ -25,8 +25,9 @@ from .session import SessionState, ChannelState
 from ..tl import types as tl, functions as fn
 from ..helpers import get_running_loop
 
+_log = logging.getLogger(__name__)
 
-# Telegram sends `seq` equal to `0` when "it doesn't matter", so we use that value too.
+# SoroushPlus sends `seq` equal to `0` when "it doesn't matter", so we use that value too.
 NO_SEQ = 0
 
 # See https://core.telegram.org/method/updates.getChannelDifference.
@@ -104,10 +105,12 @@ class PtsInfo:
         pts = getattr(update, 'pts', None)
         if pts:
             pts_count = getattr(update, 'pts_count', None) or 0
-            try:
-                entry = update.message.peer_id.channel_id
-            except AttributeError:
-                entry = getattr(update, 'channel_id', None) or ENTRY_ACCOUNT
+            entry = getattr(update, 'channel_id', None)
+            if entry is None:
+                try:
+                    entry = update.message.peer_id.channel_id
+                except AttributeError:
+                    entry = ENTRY_ACCOUNT
             return cls(pts=pts, pts_count=pts_count, entry=entry)
 
         qts = getattr(update, 'qts', None)
@@ -331,7 +334,7 @@ class MessageBox:
         else:
             self.map.pop(ENTRY_ACCOUNT, None)
 
-        # Telegram seems to use the `qts` for bot accounts, but while applying difference,
+        # SoroushPlus seems to use the `qts` for bot accounts, but while applying difference,
         # it might be reset back to 0. See issue #3873 for more details.
         #
         # During login, a value of zero would mean the `pts` is unknown,
@@ -464,7 +467,7 @@ class MessageBox:
 
         result.extend(filter(None, (
             self.apply_pts_info(u, reset_deadlines=reset_deadlines)
-            # Telegram can send updates out of order (e.g. ReadChannelInbox first
+            # SoroushPlus can send updates out of order (e.g. ReadChannelInbox first
             # and then NewChannelMessage, both with the same pts, but the count is
             # 0 and 1 respectively), so we sort them first.
             for u in sorted(updates, key=_sort_gaps))))
@@ -593,7 +596,7 @@ class MessageBox:
             # Note how the `pts` for the message is 2 and not 1 unlike the case described before!
             # This is likely because the `pts` cannot be 0 (or it would fail with PERSISTENT_TIMESTAMP_EMPTY),
             # which forces the first update to be 1. But if we got difference with 1 and the second update
-            # also used 1, we would miss it, so Telegram probably uses 2 to work around that.
+            # also used 1, we would miss it, so SoroushPlus probably uses 2 to work around that.
             self.map[pts.entry] = State(
                 pts=(pts.pts - (0 if pts.pts_count else 1)) or 1,
                 deadline=next_updates_deadline()

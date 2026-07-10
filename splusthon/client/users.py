@@ -1,6 +1,7 @@
 import asyncio
 import datetime
 import itertools
+import logging
 import time
 import typing
 
@@ -9,6 +10,8 @@ from .. import errors, helpers, utils, hints
 from ..errors import MultiError, RPCError
 from ..helpers import retry_range
 from ..tl import TLRequest, types, functions
+
+_log = logging.getLogger(__name__)
 
 _NOT_A_REQUEST = lambda: TypeError('You can only invoke requests, not types!')
 
@@ -101,7 +104,7 @@ class UserMethods:
                     errors.InterdcCallRichErrorError) as e:
                 last_error = e
                 self._log[__name__].warning(
-                    'Telegram is having internal issues %s: %s',
+                    'SoroushPlus is having internal issues %s: %s',
                     e.__class__.__name__, e)
 
                 await asyncio.sleep(2)
@@ -177,7 +180,8 @@ class UserMethods:
                 self._mb_entity_cache.set_self_user(me.id, me.bot, me.access_hash)
 
             return utils.get_input_peer(me, allow_self=False) if input_peer else me
-        except errors.UnauthorizedError:
+        except errors.UnauthorizedError as e:
+            _log.debug('Not authorized to get self user: %s', e)
             return None
 
     @property
@@ -224,7 +228,8 @@ class UserMethods:
                 # Any request that requires authorization will work
                 await self(functions.updates.GetStateRequest())
                 self._authorized = True
-            except errors.RPCError:
+            except errors.RPCError as e:
+                _log.debug('Authorization check failed: %s', e)
                 self._authorized = False
             except Exception:
                 raise
@@ -235,7 +240,7 @@ class UserMethods:
             self: 'SoroushClient',
             entity: 'hints.EntitiesLike') -> typing.Union['hints.Entity', typing.List['hints.Entity']]:
         """
-        Turns the given entity into a valid Telegram :tl:`User`, :tl:`Chat`
+        Turns the given entity into a valid SoroushPlus :tl:`User`, :tl:`Chat`
         or :tl:`Channel`. You can also pass a list or iterable of entities,
         and they will be efficiently fetched from the network.
 
@@ -310,8 +315,8 @@ class UserMethods:
         for x in inputs:
             try:
                 lists[helpers._entity_type(x)].append(x)
-            except TypeError:
-                pass
+            except TypeError as e:
+                _log.debug('Could not determine entity type for %s: %s', x, e)
 
         users = lists[helpers._EntityType.USER]
         chats = lists[helpers._EntityType.CHAT]
@@ -423,16 +428,16 @@ class UserMethods:
         # Short-circuit if the input parameter directly maps to an InputPeer
         try:
             return utils.get_input_peer(peer)
-        except TypeError:
-            pass
+        except TypeError as e:
+            _log.debug('Could not convert peer to input_peer: %s', e)
 
         # Next in priority is having a peer (or its ID) cached in-memory
         try:
             # 0x2d45687 == crc32(b'Peer')
             if isinstance(peer, int) or peer.SUBCLASS_OF_ID == 0x2d45687:
                 return self._mb_entity_cache.get(utils.get_peer_id(peer, add_mark=False))._as_input_peer()
-        except AttributeError:
-            pass
+        except AttributeError as e:
+            _log.debug('Could not get input entity from cache: %s', e)
 
         # Then come known strings that take precedence
         if peer in ('me', 'self'):
@@ -442,8 +447,8 @@ class UserMethods:
         try:
             input_entity = await utils.maybe_async(self.session.get_input_entity(peer))
             return input_entity
-        except ValueError:
-            pass
+        except ValueError as e:
+            _log.debug('Entity not found in session: %s', e)
 
         # Only network left to try
         if isinstance(peer, str):
@@ -474,8 +479,8 @@ class UserMethods:
                 channels = await self(functions.channels.GetChannelsRequest([
                     types.InputChannel(peer.channel_id, access_hash=0)]))
                 return utils.get_input_peer(channels.chats[0])
-            except errors.ChannelInvalidError:
-                pass
+            except errors.ChannelInvalidError as e:
+                _log.debug('Channel invalid: %s', e)
 
         raise ValueError(
             'Could not find the input entity for {} ({}). Please read https://'
@@ -513,7 +518,8 @@ class UserMethods:
             if peer.SUBCLASS_OF_ID not in (0x2d45687, 0xc91c90b6):
                 # 0x2d45687, 0xc91c90b6 == crc32(b'Peer') and b'InputPeer'
                 peer = await self.get_input_entity(peer)
-        except AttributeError:
+        except AttributeError as e:
+            _log.debug('Peer has no SUBCLASS_OF_ID: %s', e)
             peer = await self.get_input_entity(peer)
 
         if isinstance(peer, types.InputPeerSelf):
@@ -576,14 +582,14 @@ class UserMethods:
                         return next(x for x in result.users if x.id == pid)
                     else:
                         return next(x for x in result.chats if x.id == pid)
-                except StopIteration:
-                    pass
+                except StopIteration as e:
+                    _log.debug('Entity not found in resolve result: %s', e)
             try:
                 # Nobody with this username, maybe it's an exact name/title
                 input_entity = await utils.maybe_async(self.session.get_input_entity(string))
                 return await self.get_entity(input_entity)
-            except ValueError:
-                pass
+            except ValueError as e:
+                _log.debug('Entity not found by name: %s', e)
 
         raise ValueError(
             'Cannot find any entity corresponding to "{}"'.format(string)
@@ -601,8 +607,8 @@ class UserMethods:
                 return dialog
             elif dialog.SUBCLASS_OF_ID == 0xc91c90b6:  # crc32(b'InputPeer')
                 return types.InputDialogPeer(dialog)
-        except AttributeError:
-            pass
+        except AttributeError as e:
+            _log.debug('Dialog has no SUBCLASS_OF_ID: %s', e)
 
         return types.InputDialogPeer(await self.get_input_entity(dialog))
 
@@ -617,8 +623,8 @@ class UserMethods:
                 if isinstance(notify, types.InputNotifyPeer):
                     notify.peer = await self.get_input_entity(notify.peer)
                 return notify
-        except AttributeError:
-            pass
+        except AttributeError as e:
+            _log.debug('Notify has no SUBCLASS_OF_ID: %s', e)
 
         return types.InputNotifyPeer(await self.get_input_entity(notify))
 

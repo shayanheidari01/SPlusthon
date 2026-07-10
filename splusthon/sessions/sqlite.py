@@ -1,4 +1,5 @@
 import datetime
+import logging
 import os
 import time
 
@@ -9,6 +10,8 @@ from ..crypto import AuthKey
 from ..tl.types import (
     InputPhoto, InputDocument, PeerUser, PeerChat, PeerChannel
 )
+
+_log = logging.getLogger(__name__)
 
 try:
     import sqlite3
@@ -23,11 +26,11 @@ CURRENT_VERSION = 8  # database version
 
 class SQLiteSession(MemorySession):
     """This session contains the required information to login into your
-       Telegram account. NEVER give the saved session file to anyone, since
+       SoroushPlus account. NEVER give the saved session file to anyone, since
        they would gain instant access to all your messages and contacts.
 
        If you think the session has been compromised, close all the sessions
-       through an official Telegram client to revoke the authorization.
+       through an official SoroushPlus client to revoke the authorization.
     """
 
     def __init__(self, session_id=None, store_tmp_auth_key_on_disk:bool=False):
@@ -286,7 +289,8 @@ class SQLiteSession(MemorySession):
         try:
             os.remove(self.filename)
             return True
-        except OSError:
+        except OSError as e:
+            _log.debug('Failed to delete session file %s: %s', self.filename, e)
             return False
 
     @classmethod

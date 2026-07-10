@@ -3,6 +3,6 @@ contact_links:
   - name: Ask questions in StackOverflow
     url: https://stackoverflow.com/questions/ask?tags=splusthon
     about: Questions are not bugs. Please ask them in StackOverflow instead. Questions in the bug tracker will be closed
-  - name: Find about updates and our Telegram groups
+  - name: Find about updates and our SoroushPlus groups
     url: https://t.me/s/SPlusthonUpdates
     about: Be notified of updates, chat with other people about the library or ask questions in these groups

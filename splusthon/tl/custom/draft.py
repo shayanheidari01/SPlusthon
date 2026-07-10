@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from .. import TLObject, types
 from ..functions.messages import SaveDraftRequest
@@ -7,10 +8,12 @@ from ...errors import RPCError
 from ...extensions import markdown
 from ...utils import get_input_peer, get_peer, get_peer_id
 
+_log = logging.getLogger(__name__)
+
 
 class Draft:
     """
-    Custom class that encapsulates a draft on the Telegram servers, providing
+    Custom class that encapsulates a draft on the SoroushPlus servers, providing
     an abstraction to change the message conveniently. The library will return
     instances of this class when calling :meth:`get_drafts()`.
 
@@ -55,8 +58,8 @@ class Draft:
             try:
                 self._input_entity = self._client._mb_entity_cache.get(
                         get_peer_id(self._peer, add_mark=False))._as_input_peer()
-            except AttributeError:
-                pass
+            except AttributeError as e:
+                _log.debug('Could not get input_entity from entity cache: %s', e)
 
         return self._input_entity
 
@@ -68,8 +71,8 @@ class Draft:
             try:
                 self._entity =\
                     await self._client.get_entity(self._input_entity)
-            except ValueError:
-                pass
+            except ValueError as e:
+                _log.debug('Could not get entity for draft: %s', e)
 
         return self._entity
 
@@ -108,7 +111,7 @@ class Draft:
             self, text=None, reply_to=0, parse_mode=(),
             link_preview=None):
         """
-        Changes the draft message on the Telegram servers. The changes are
+        Changes the draft message on the SoroushPlus servers. The changes are
         reflected in this object.
 
         :param str text: New text of the draft.

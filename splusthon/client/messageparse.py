@@ -156,7 +156,7 @@ class MessageParseMethods:
                   and helpers._entity_type(request.peer) != helpers._EntityType.CHANNEL):
                 update.message._finish_init(self, entities, input_chat)
 
-                # Live locations use `sendMedia` but Telegram responds with
+                # Live locations use `sendMedia` but SoroushPlus responds with
                 # `updateEditMessage`, which means we won't have `id` field.
                 if hasattr(request, 'random_id'):
                     id_to_message[update.message.id] = update.message
@@ -214,7 +214,7 @@ class MessageParseMethods:
         except KeyError:
             # Sometimes forwards fail (`MESSAGE_ID_INVALID` if a message gets
             # deleted or `WORKER_BUSY_TOO_LONG_RETRY` if there are issues at
-            # Telegram), in which case we get some "missing" message mappings.
+            # SoroushPlus), in which case we get some "missing" message mappings.
             # Log them with the hope that we can better work around them.
             #
             # This also happens when trying to forward messages that can't

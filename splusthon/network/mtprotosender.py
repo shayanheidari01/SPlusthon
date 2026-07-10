@@ -168,7 +168,7 @@ class MTProtoSender:
                 # Receiving (waits for the receive loop to read the result)
                 result = await future
 
-        Designed like this because Telegram may send the response at
+        Designed like this because SoroushPlus may send the response at
         any point, and it can send other items while one waits for it.
         Once the response for this future arrives, it is set with the
         received result, quite similar to how a ``receive()`` call
@@ -211,7 +211,7 @@ class MTProtoSender:
     @property
     def disconnected(self):
         """
-        Future that resolves when the connection to Telegram
+        Future that resolves when the connection to SoroushPlus
         ends, either by user action or in the background.
 
         Note that it may resolve in either a ``ConnectionError``
@@ -250,7 +250,7 @@ class MTProtoSender:
                         continue  # keep retrying until we have the auth key
                 except (IOError, asyncio.TimeoutError) as e:
                     # Sometimes, specially during user-DC migrations,
-                    # Telegram may close the connection during auth_key
+                    # SoroushPlus may close the connection during auth_key
                     # generation. If that's the case, we will need to
                     # connect again.
                     self._log.warning('Connection error %d during auth_key gen: %s: %s',
@@ -266,7 +266,7 @@ class MTProtoSender:
             break  # all steps done, break retry loop
         else:
             if not connected:
-                raise ConnectionError('Connection to Telegram failed {} time(s)'.format(self._retries))
+                raise ConnectionError('Connection to SoroushPlus failed {} time(s)'.format(self._retries))
 
             e = ConnectionError('auth_key generation failed {} time(s)'.format(self._retries))
             await self._disconnect(error=e)
@@ -895,7 +895,7 @@ class MTProtoSender:
 
             auth.logOut#5717da40 = Bool;
 
-        Telegram doesn't seem to send its result so we need to confirm
+        SoroushPlus doesn't seem to send its result so we need to confirm
         it manually. No other request is known to have this behaviour.
 
         Since the ID of sent messages consisting of a container is

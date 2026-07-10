@@ -110,7 +110,7 @@ class Entity:
     * hash: 64-bit signed number needed to use this entity with the API.
 
     The string representation of this class is considered to be stable, for as long as
-    Telegram doesn't need to add more fields to the entities. It can also be converted
+    SoroushPlus doesn't need to add more fields to the entities. It can also be converted
     to bytes with ``bytes(entity)``, for a more compact representation.
     """
     __slots__ = ('ty', 'id', 'hash')

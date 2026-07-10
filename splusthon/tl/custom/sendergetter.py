@@ -1,6 +1,9 @@
 import abc
+import logging
 
 from ... import utils
+
+_log = logging.getLogger(__name__)
 
 
 class SenderGetter(abc.ABC):
@@ -19,7 +22,7 @@ class SenderGetter(abc.ABC):
     def sender(self):
         """
         Returns the :tl:`User` or :tl:`Channel` that sent this object.
-        It may be `None` if Telegram didn't send the sender.
+        It may be `None` if SoroushPlus didn't send the sender.
 
         If you only need the ID, use `sender_id` instead.
 
@@ -54,7 +57,8 @@ class SenderGetter(abc.ABC):
                 try:
                     self._sender =\
                         await self._client.get_entity(self._input_sender)
-                except ValueError:
+                except ValueError as e:
+                    _log.debug('Could not get sender entity: %s', e)
                     await self._refetch_sender()
         return self._sender
 
@@ -73,8 +77,8 @@ class SenderGetter(abc.ABC):
             try:
                 self._input_sender = self._client._mb_entity_cache.get(
                         utils.resolve_id(self._sender_id)[0])._as_input_peer()
-            except AttributeError:
-                pass
+            except AttributeError as e:
+                _log.debug('Could not get input_sender from entity cache: %s', e)
         return self._input_sender
 
     async def get_input_sender(self):

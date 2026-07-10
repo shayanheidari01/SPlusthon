@@ -33,14 +33,14 @@ PHONE_FORM = '''
 
 CODE_FORM = '''
 <form action='/' method='post'>
-    Telegram code: <input name='code' type='text' placeholder='70707'>
+    SoroushPlus code: <input name='code' type='text' placeholder='70707'>
     <input type='submit'>
 </form>
 '''
 
 PASSWORD_FORM = '''
 <form action='/' method='post'>
-    Telegram password: <input name='password' type='text' placeholder='your password'>
+    SoroushPlus password: <input name='password' type='text' placeholder='your password'>
     <input type='submit'>
 </form>
 '''

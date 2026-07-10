@@ -70,7 +70,7 @@ class _ExportState:
 
 
 # TODO How hard would it be to support both `trio` and `asyncio`?
-class TelegramBaseClient(abc.ABC):
+class SoroushPlusBaseClient(abc.ABC):
     """
     This is the abstract base class for the client. It defines some
     basic stuff like connecting, switching data center, etc, and
@@ -128,7 +128,7 @@ class TelegramBaseClient(abc.ABC):
 
         request_retries (`int` | `None`, optional):
             How many times a request should be retried. Request are retried
-            when Telegram is having internal issues (due to either
+            when SoroushPlus is having internal issues (due to either
             ``errors.ServerError`` or ``errors.RpcCallFailError``),
             when there is a ``errors.FloodWaitError`` less than
             `flood_sleep_threshold`, or when there's a migrate error.
@@ -139,7 +139,7 @@ class TelegramBaseClient(abc.ABC):
 
         connection_retries (`int` | `None`, optional):
             How many times the reconnection should retry, either on the
-            initial connection or when Telegram disconnects us. May be
+            initial connection or when SoroushPlus disconnects us. May be
             set to a negative or `None` value for infinite retries, but
             this is not recommended, since the program can get stuck in an
             infinite loop.
@@ -149,7 +149,7 @@ class TelegramBaseClient(abc.ABC):
 
         auto_reconnect (`bool`, optional):
             Whether reconnection should be retried `connection_retries`
-            times automatically if Telegram disconnects us or not.
+            times automatically if SoroushPlus disconnects us or not.
 
         sequential_updates (`bool`, optional):
             By default every incoming update will create a new task, so
@@ -174,7 +174,7 @@ class TelegramBaseClient(abc.ABC):
             When API calls fail in a way that causes SPlusthon to retry
             automatically, should the RPC error of the last attempt be raised
             instead of a generic ValueError. This is mostly useful for
-            detecting when Telegram has internal issues.
+            detecting when SoroushPlus has internal issues.
 
         device_model (`str`, optional):
             "Device model" to be sent when creating the initial connection.
@@ -208,9 +208,9 @@ class TelegramBaseClient(abc.ABC):
 
         receive_updates (`bool`, optional):
             Whether the client will receive updates or not. By default, updates
-            will be received from Telegram as they occur.
+            will be received from SoroushPlus as they occur.
 
-            Turning this off means that Telegram will not send updates at all
+            Turning this off means that SoroushPlus will not send updates at all
             so event handlers, conversations, and QR login will not work.
             However, certain scripts don't need updates, so this will reduce
             the amount of bandwidth used.
@@ -403,7 +403,7 @@ class TelegramBaseClient(abc.ABC):
         # {chat_id: {Conversation}}
         self._conversations = collections.defaultdict(set)
 
-        # Hack to workaround the fact Telegram may send album updates as
+        # Hack to workaround the fact SoroushPlus may send album updates as
         # different Updates when being sent from a different data center.
         # {grouped_id: AlbumHack}
         #
@@ -498,15 +498,15 @@ class TelegramBaseClient(abc.ABC):
 
     async def connect(self: 'SoroushClient') -> None:
         """
-        Connects to Telegram.
+        Connects to SoroushPlus.
 
         .. note::
 
             Connect means connect and nothing else, and only one low-level
-            request is made to notify Telegram about which layer we will be
+            request is made to notify SoroushPlus about which layer we will be
             using.
 
-            Before Telegram sends you updates, you need to make a high-level
+            Before SoroushPlus sends you updates, you need to make a high-level
             request, like `client.get_me() <splusthon.client.users.UserMethods.get_me>`,
             as described in https://core.telegram.org/api/updates.
 
@@ -573,8 +573,8 @@ class TelegramBaseClient(abc.ABC):
             self_id = self_entity.access_hash
             self_user = await utils.maybe_async(self.session.get_input_entity(self_id))
             self._mb_entity_cache.set_self_user(self_id, None, self_user.access_hash)
-        except ValueError:
-            pass
+        except ValueError as e:
+            _base_log.debug('Could not load self user from session: %s', e)
 
         if self._catch_up:
             ss = SessionState(0, 0, False, 0, 0, 0, 0, None)
@@ -606,11 +606,11 @@ class TelegramBaseClient(abc.ABC):
 
         try:
             await self._sender.send(functions.InvokeWithLayerRequest(LAYER, req))
-        except (errors.TypeNotFoundError, BufferError):
+        except (errors.TypeNotFoundError, BufferError) as e:
             # Soroush server sends config types with custom constructor IDs
-            # and different field layouts than standard Telegram. The response
+            # and different field layouts than standard SoroushPlus. The response
             # is not used anyway, so we can safely ignore parse errors.
-            pass
+            _base_log.debug('Ignored config parse error during init: %s', e)
 
         # Don't call get_me() here — on Soroush the auth key is not
         # registered until after login, and GetUsersRequest (used by
@@ -638,7 +638,7 @@ class TelegramBaseClient(abc.ABC):
 
     def disconnect(self: 'SoroushClient'):
         """
-        Disconnects from Telegram.
+        Disconnects from SoroushPlus.
 
         If the event loop is already running, this method returns a
         coroutine that you should await on your own code; otherwise
@@ -665,13 +665,13 @@ class TelegramBaseClient(abc.ABC):
         else:
             try:
                 self.loop.run_until_complete(self._disconnect_coro())
-            except RuntimeError:
+            except RuntimeError as e:
                 # Python 3.5.x complains when called from
                 # `__aexit__` and there were pending updates with:
                 #   "Event loop stopped before Future completed."
                 #
                 # However, it doesn't really make a lot of sense.
-                pass
+                _base_log.debug('RuntimeError during disconnect: %s', e)
 
     def set_proxy(self: 'SoroushClient', proxy: typing.Union[tuple, dict]):
         """
@@ -735,7 +735,7 @@ class TelegramBaseClient(abc.ABC):
             for state, sender in self._borrowed_senders.values():
                 # Note that we're not checking for `state.should_disconnect()`.
                 # If the user wants to disconnect the client, ALL connections
-                # to Telegram (including exported senders) should be closed.
+                # to SoroushPlus (including exported senders) should be closed.
                 #
                 # Disconnect should never raise, so there's no try/except.
                 await sender.disconnect()
@@ -860,6 +860,7 @@ class TelegramBaseClient(abc.ABC):
                     if dc.id == dc_id and bool(dc.cdn) == cdn
                 )
             except StopIteration:
+                self._log[__name__].warning('DC %s (cdn=%s) not found in config', dc_id, cdn)
                 raise ValueError(f'Failed to get DC {dc_id} (cdn = {cdn})')
 
     async def _create_exported_sender(self: 'SoroushClient', dc_id):
@@ -872,7 +873,7 @@ class TelegramBaseClient(abc.ABC):
         dc = await self._get_dc(dc_id)
         # Can't reuse self._sender._connection as it has its own seqno.
         #
-        # If one were to do that, Telegram would reset the connection
+        # If one were to do that, SoroushPlus would reset the connection
         # with no further clues.
         sender = MTProtoSender(None, loggers=self._log)
         await sender.connect(self._connection(
@@ -976,7 +977,7 @@ class TelegramBaseClient(abc.ABC):
 
     # endregion
 
-    # region Invoking Telegram requests
+    # region Invoking SoroushPlus requests
 
     @abc.abstractmethod
     def __call__(self: 'SoroushClient', request, ordered=False):
@@ -996,7 +997,7 @@ class TelegramBaseClient(abc.ABC):
             flood_sleep_threshold (`int` | `None`, optional):
                 The flood sleep threshold to use for this request. This overrides
                 the default value stored in
-                `client.flood_sleep_threshold <splusthon.client.telegrambaseclient.TelegramBaseClient.flood_sleep_threshold>`
+                `client.flood_sleep_threshold <splusthon.client.telegrambaseclient.SoroushPlusBaseClient.flood_sleep_threshold>`
 
         Returns:
             The result of the request (often a `TLObject`) or a list of

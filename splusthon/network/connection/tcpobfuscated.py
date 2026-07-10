@@ -53,7 +53,7 @@ class ObfuscatedIO:
 
 class ConnectionTcpObfuscated(ObfuscatedConnection):
     """
-    Mode that Telegram defines as "obfuscated2". Encodes the packet
+    Mode that SoroushPlus defines as "obfuscated2". Encodes the packet
     just like `ConnectionTcpAbridged`, but encrypts every message with
     a randomly generated key using the AES-CTR mode so the packets are
     harder to discern.

@@ -1,5 +1,6 @@
 import getpass
 import inspect
+import logging
 import os
 import sys
 import typing
@@ -8,6 +9,8 @@ import warnings
 from .. import utils, helpers, errors, password as pwd_mod
 from ..tl import types, functions, custom
 from .._updates import SessionState
+
+_log = logging.getLogger(__name__)
 
 if typing.TYPE_CHECKING:
     from .soroushclient import SoroushClient
@@ -60,7 +63,7 @@ class AuthMethods:
                 This only makes sense when signing in with a `phone`.
 
             code_callback (`callable`, optional):
-                A callable that will be used to retrieve the Telegram
+                A callable that will be used to retrieve the SoroushPlus
                 login code. Defaults to `input()`.
                 The argument may be a coroutine.
 
@@ -103,7 +106,7 @@ class AuthMethods:
         elif not callable(code_callback):
             raise ValueError(
                 'The code_callback parameter needs to be a callable '
-                'function that returns the code you received by Telegram.'
+                'function that returns the code you received by SoroushPlus.'
             )
 
         if not phone and not bot_token:
@@ -156,8 +159,8 @@ class AuthMethods:
                             'if you were expecting a different user, check whether '
                             'you are accidentally reusing an existing session'
                         )
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug('Failed to verify existing session user: %s', e)
 
             return self
 
@@ -288,7 +291,7 @@ class AuthMethods:
             bot_token: str = None,
             phone_code_hash: str = None) -> 'typing.Union[types.User, types.auth.SentCode]':
         """
-        Logs in to Telegram to an existing user or bot account.
+        Logs in to SoroushPlus to an existing user or bot account.
 
         You should only use this if you are not authorized yet.
 
@@ -305,7 +308,7 @@ class AuthMethods:
                 these requests.
 
             code (`str` | `int`):
-                The code that Telegram sent. Note that if you have sent this
+                The code that SoroushPlus sent. Note that if you have sent this
                 code through the application itself it will immediately
                 expire. If you want to send the code, obfuscate it somehow.
                 If you're not doing any of this you can ignore this note.
@@ -346,9 +349,10 @@ class AuthMethods:
         if not (phone and code):
             try:
                 me = await self.get_me()
-            except Exception:
+            except Exception as e:
                 # get_me may fail on Soroush (GetUsersRequest returns 500).
                 # Check authorization via GetState instead.
+                _log.debug('get_me failed, checking auth state: %s', e)
                 if await self.is_user_authorized():
                     return None
             if me:
@@ -395,7 +399,8 @@ class AuthMethods:
             if await self.is_user_authorized():
                 try:
                     me = await self.get_me()
-                except Exception:
+                except Exception as e:
+                    _log.debug('get_me failed after auth check: %s', e)
                     me = None
                 if me:
                     return await self._on_login(me)
@@ -415,8 +420,8 @@ class AuthMethods:
                         SessionState(0, 0, 0, state.pts, state.qts,
                                      int(state.date.timestamp()), state.seq, 0),
                         [])
-                except Exception:
-                    pass
+                except Exception as e:
+                    _log.debug('Failed to initialize message box during login: %s', e)
                 return None
             raise
 
@@ -438,7 +443,7 @@ class AuthMethods:
         """
         This method can no longer be used, and will immediately raise a ``ValueError``.
         """
-        raise ValueError('Third-party applications cannot sign up for Telegram.')
+        raise ValueError('Third-party applications cannot sign up for SoroushPlus.')
 
     async def _on_login(self, user):
         """
@@ -471,7 +476,7 @@ class AuthMethods:
             force_sms: bool = False,
             _retry_count: int = 0) -> 'types.auth.SentCode':
         """
-        Sends the Telegram code needed to login to the given phone number.
+        Sends the SoroushPlus code needed to login to the given phone number.
 
         Arguments
             phone (`str` | `int`):
@@ -587,7 +592,7 @@ class AuthMethods:
 
     async def log_out(self: 'SoroushClient') -> bool:
         """
-        Logs out Telegram and deletes the current ``*.session`` file.
+        Logs out SoroushPlus and deletes the current ``*.session`` file.
 
         The client is unusable after logging out and a new instance should be created.
 
@@ -602,7 +607,8 @@ class AuthMethods:
         """
         try:
             await self(functions.auth.LogOutRequest())
-        except errors.RPCError:
+        except errors.RPCError as e:
+            _log.debug('Logout failed: %s', e)
             return False
 
         self._mb_entity_cache.set_self_user(None, None, None)
@@ -645,7 +651,7 @@ class AuthMethods:
                 Leaving this blank or `None` will remove the password.
 
             hint (`str`, optional):
-                Hint to be displayed by Telegram when it asks for 2FA.
+                Hint to be displayed by SoroushPlus when it asks for 2FA.
                 Leaving unspecified is highly discouraged.
                 Has no effect if ``new_password`` is not set.
 

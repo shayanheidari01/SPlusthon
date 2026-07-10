@@ -1,7 +1,10 @@
 import abc
+import logging
 
 from ... import errors, utils
 from ...tl import types
+
+_log = logging.getLogger(__name__)
 
 
 class ChatGetter(abc.ABC):
@@ -21,7 +24,7 @@ class ChatGetter(abc.ABC):
     def chat(self):
         """
         Returns the :tl:`User`, :tl:`Chat` or :tl:`Channel` where this object
-        belongs to. It may be `None` if Telegram didn't send the chat.
+        belongs to. It may be `None` if SoroushPlus didn't send the chat.
 
         If you only need the ID, use `chat_id` instead.
 
@@ -48,7 +51,8 @@ class ChatGetter(abc.ABC):
             try:
                 self._chat =\
                     await self._client.get_entity(self._input_chat)
-            except ValueError:
+            except ValueError as e:
+                _log.debug('Could not get chat entity: %s', e)
                 await self._refetch_chat()
         return self._chat
 
@@ -68,8 +72,8 @@ class ChatGetter(abc.ABC):
             try:
                 self._input_chat = self._client._mb_entity_cache.get(
                         utils.get_peer_id(self._chat_peer, add_mark=False))._as_input_peer()
-            except AttributeError:
-                pass
+            except AttributeError as e:
+                _log.debug('Could not get input_chat from entity cache: %s', e)
 
         return self._input_chat
 
@@ -87,8 +91,8 @@ class ChatGetter(abc.ABC):
                         self._chat = d.entity
                         self._input_chat = d.input_entity
                         break
-            except errors.RPCError:
-                pass
+            except errors.RPCError as e:
+                _log.debug('Failed to get chat from dialogs: %s', e)
 
         return self._input_chat
 

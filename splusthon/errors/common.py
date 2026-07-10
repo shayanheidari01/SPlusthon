@@ -1,4 +1,4 @@
-"""Errors not related to the Telegram API itself"""
+"""Errors not related to the SoroushPlus API itself"""
 import struct
 import textwrap
 

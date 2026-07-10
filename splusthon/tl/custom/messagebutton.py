@@ -1,12 +1,16 @@
+import logging
+
 from .. import types, functions
 from ... import password as pwd_mod
 from ...errors import BotResponseTimeoutError
 try:
     import webbrowser
 except ModuleNotFoundError:
-    pass
+    webbrowser = None
 import sys
 import os
+
+_log = logging.getLogger(__name__)
 
 
 class MessageButton:
@@ -91,7 +95,7 @@ class MessageButton:
         which case either `str` or :tl:`InputMediaContact` should be used.
 
         If it's a :tl:`KeyboardButtonRequestGeoLocation`, you must pass a
-        tuple in ``share_geo=(longitude, latitude)``. Note that Telegram seems
+        tuple in ``share_geo=(longitude, latitude)``. Note that SoroushPlus seems
         to have some heuristics to determine impossible locations, so changing
         this value a lot quickly may not work as expected. You may also pass a
         :tl:`InputGeoPoint` if you find the order confusing.
@@ -110,7 +114,8 @@ class MessageButton:
             )
             try:
                 return await self._client(req)
-            except BotResponseTimeoutError:
+            except BotResponseTimeoutError as e:
+                _log.debug('Bot callback response timed out: %s', e)
                 return None
         elif isinstance(self.button, types.KeyboardButtonSwitchInline):
             return await self._client(functions.messages.StartBotRequest(
@@ -127,7 +132,8 @@ class MessageButton:
             )
             try:
                 return await self._client(req)
-            except BotResponseTimeoutError:
+            except BotResponseTimeoutError as e:
+                _log.debug('Bot callback response timed out: %s', e)
                 return None
         elif isinstance(self.button, types.KeyboardButtonRequestPhone):
             if not share_phone:

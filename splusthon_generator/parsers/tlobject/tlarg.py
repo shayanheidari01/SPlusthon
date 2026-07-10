@@ -158,7 +158,7 @@ class TLArg:
             # The name may contain "date" in it, if this is the case and
             # the type is "int", we can safely assume that this should be
             # treated as a "date" object. Note that this is not a valid
-            # Telegram object, but it's easier to work with
+            # SoroushPlus object, but it's easier to work with
             if self.type == 'int' and (
                         re.search(r'(\b|_)(date|until|since)(\b|_)', name) or
                         name in ('expires', 'expires_at', 'was_online')):

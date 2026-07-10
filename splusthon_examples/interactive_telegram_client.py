@@ -64,11 +64,11 @@ def get_env(name, message, cast=str):
 
 
 class InteractiveSoroushClient(SoroushClient):
-    """Full featured Telegram client, meant to be used on an interactive
+    """Full featured SoroushPlus client, meant to be used on an interactive
        session to see what SPlusthon is capable off -
 
        This client allows the user to perform some basic interaction with
-       Telegram through SPlusthon, such as listing dialogs (open chats),
+       SoroushPlus through SPlusthon, such as listing dialogs (open chats),
        talking to people, downloading media, and receiving updates.
     """
 
@@ -77,8 +77,8 @@ class InteractiveSoroushClient(SoroushClient):
         """
         Initializes the InteractiveSoroushClient.
         :param session_user_id: Name of the *.session file.
-        :param api_id: Telegram's api_id acquired through my.telegram.org.
-        :param api_hash: Telegram's api_hash.
+        :param api_id: SoroushPlus's api_id acquired through my.telegram.org.
+        :param api_hash: SoroushPlus's api_hash.
         :param proxy: Optional proxy tuple/dictionary.
         """
         print_title('Initialization')
@@ -110,7 +110,7 @@ class InteractiveSoroushClient(SoroushClient):
         # Calling .connect() may raise a connection error False, so you need
         # to except those before continuing. Otherwise you may want to retry
         # as done here.
-        print('Connecting to Telegram servers...')
+        print('Connecting to SoroushPlus servers...')
         try:
             await self.connect()
         except IOError:
@@ -147,7 +147,7 @@ class InteractiveSoroushClient(SoroushClient):
 
         # Once everything is ready, we can add an event handler.
         #
-        # Events are an abstraction over Telegram's "Updates" and
+        # Events are an abstraction over SoroushPlus's "Updates" and
         # are much easier to use.
         self.add_event_handler(self.message_handler, events.NewMessage)
 
@@ -236,7 +236,7 @@ class InteractiveSoroushClient(SoroushClient):
                         # Note how we access .sender here. Since we made an
                         # API call using the self client, it will always have
                         # information about the sender. This is different to
-                        # events, where Telegram may not always send the user.
+                        # events, where SoroushPlus may not always send the user.
                         name = get_display_name(msg.sender)
 
                         # Format the message content
@@ -361,8 +361,8 @@ class InteractiveSoroushClient(SoroushClient):
     async def message_handler(self, event):
         """Callback method for received events.NewMessage"""
 
-        # Note that message_handler is called when a Telegram update occurs
-        # and an event is created. Telegram may not always send information
+        # Note that message_handler is called when a SoroushPlus update occurs
+        # and an event is created. SoroushPlus may not always send information
         # about the ``.sender`` or the ``.chat``, so if you *really* want it
         # you should use ``get_chat()`` and ``get_sender()`` while working
         # with events. Since they are methods, you know they may make an API

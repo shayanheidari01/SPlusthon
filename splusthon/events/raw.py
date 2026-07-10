@@ -5,7 +5,7 @@ from .. import utils
 class Raw(EventBuilder):
     """
     Raw events are not actual events. Instead, they are the raw
-    :tl:`Update` object that Telegram sends. You normally shouldn't
+    :tl:`Update` object that SoroushPlus sends. You normally shouldn't
     need these.
 
     Args:

@@ -4,12 +4,12 @@ This package defines clients as subclasses of others, and then a single
 all to provide the final unified interface while the methods can live in
 different subclasses to be more maintainable.
 
-The ABC is `splusthon.client.telegrambaseclient.TelegramBaseClient` and the
+The ABC is `splusthon.client.telegrambaseclient.SoroushPlusBaseClient` and the
 first implementor is `splusthon.client.users.UserMethods`, since calling
 requests require them to be resolved first, and that requires accessing
 entities (users).
 """
-from .telegrambaseclient import TelegramBaseClient
+from .telegrambaseclient import SoroushPlusBaseClient
 from .users import UserMethods  # Required for everything
 from .messageparse import MessageParseMethods  # Required for messages
 from .uploads import UploadMethods  # Required for messages to send files

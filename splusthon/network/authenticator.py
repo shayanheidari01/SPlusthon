@@ -1,6 +1,6 @@
 """
 This module contains several functions that authenticate the client machine
-with Telegram's servers, effectively creating an authorization key.
+with SoroushPlus's servers, effectively creating an authorization key.
 """
 import os
 import time
@@ -21,7 +21,7 @@ from ..tl.functions import (
 
 async def do_authentication(sender):
     """
-    Executes the authentication process with the Telegram servers.
+    Executes the authentication process with the SoroushPlus servers.
 
     :param sender: a connected `MTProtoPlainSender`.
     :return: returns a (authorization key, time offset) tuple.

@@ -84,7 +84,7 @@ class MessagePacker:
                 break
 
             # If a single message exceeds the maximum size, then the
-            # message payload cannot be sent. Telegram would forcibly
+            # message payload cannot be sent. SoroushPlus would forcibly
             # close the connection; message would never be confirmed.
             #
             # We don't put the item back because it can never be sent.

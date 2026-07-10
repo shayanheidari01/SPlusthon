@@ -132,7 +132,7 @@ def compute_digest(algo: types.PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter10
     return big_num_for_hash(value)
 
 
-# https://github.com/telegramdesktop/tdesktop/blob/18b74b90451a7db2379a9d753c9cbaf8734b4d5d/Telegram/SourceFiles/core/core_cloud_password.cpp
+# https://github.com/telegramdesktop/tdesktop/blob/18b74b90451a7db2379a9d753c9cbaf8734b4d5d/SoroushPlus/SourceFiles/core/core_cloud_password.cpp
 def compute_check(request: types.account.Password, password: str):
     algo = request.current_algo
     if not isinstance(algo, types.PasswordKdfAlgoSHA256SHA256PBKDF2HMACSHA512iter100000SHA256ModPow):

@@ -1,6 +1,7 @@
 """
 This module contains the BinaryReader utility class.
 """
+import logging
 import struct
 import time
 from datetime import datetime, timedelta, timezone
@@ -8,6 +9,8 @@ from datetime import datetime, timedelta, timezone
 from ..errors import TypeNotFoundError
 from ..tl.alltlobjects import tlobjects
 from ..tl.core import core_objects
+
+_log = logging.getLogger(__name__)
 
 _EPOCH_NAIVE = datetime(*time.gmtime(0)[:6])
 _EPOCH = _EPOCH_NAIVE.replace(tzinfo=timezone.utc)
@@ -87,11 +90,11 @@ class BinaryReader:
 
     # endregion
 
-    # region Telegram custom reading
+    # region SoroushPlus custom reading
 
     def tgread_bytes(self):
         """
-        Reads a Telegram-encoded byte array, without the need of
+        Reads a SoroushPlus-encoded byte array, without the need of
         specifying its length.
         """
         first_byte = self.read_byte()
@@ -111,11 +114,11 @@ class BinaryReader:
         return data
 
     def tgread_string(self):
-        """Reads a Telegram-encoded string."""
+        """Reads a SoroushPlus-encoded string."""
         return str(self.tgread_bytes(), encoding='utf-8', errors='replace')
 
     def tgread_bool(self):
-        """Reads a Telegram boolean value."""
+        """Reads a SoroushPlus boolean value."""
         value = self.read_int(signed=False)
         if value == 0x997275b5:  # boolTrue
             return True
@@ -125,14 +128,14 @@ class BinaryReader:
             raise RuntimeError('Invalid boolean code {}'.format(hex(value)))
 
     def tgread_date(self):
-        """Reads and converts Unix time (used by Telegram)
+        """Reads and converts Unix time (used by SoroushPlus)
            into a Python datetime object.
         """
         value = self.read_int()
         return _EPOCH + timedelta(seconds=value)
 
     def tgread_object(self):
-        """Reads a Telegram object."""
+        """Reads a SoroushPlus object."""
         constructor_id = self.read_int(signed=False)
         clazz = tlobjects.get(constructor_id, None)
         if clazz is None:
@@ -158,7 +161,7 @@ class BinaryReader:
         return clazz.from_reader(self)
 
     def tgread_vector(self):
-        """Reads a vector (a list) of Telegram objects."""
+        """Reads a vector (a list) of SoroushPlus objects."""
         if 0x1cb5c415 != self.read_int(signed=False):
             raise RuntimeError('Invalid constructor code, vector was expected')
 
@@ -167,8 +170,8 @@ class BinaryReader:
         for _ in range(count):
             try:
                 result.append(self.tgread_object())
-            except TypeNotFoundError:
-                pass  # skip unknown types in vectors (Soroush compatibility)
+            except TypeNotFoundError as e:
+                _log.debug('Skipping unknown type in vector: %s', e)
         return result
 
     # endregion

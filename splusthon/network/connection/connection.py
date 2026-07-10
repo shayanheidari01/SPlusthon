@@ -47,8 +47,8 @@ class Connection(abc.ABC):
         self._recv_task = None
         self._codec = None
         self._obfuscation = None  # TcpObfuscated and MTProxy
-        self._send_queue = asyncio.Queue(500)
-        self._recv_queue = asyncio.Queue(500)
+        self._send_queue = asyncio.Queue()
+        self._recv_queue = asyncio.Queue()
 
     @staticmethod
     def _wrap_socket_ssl(sock):
@@ -382,7 +382,7 @@ class Connection(abc.ABC):
         After this method finishes, the writer will be drained.
 
         Subclasses should make use of this if they need to send
-        data to Telegram to indicate which connection mode will
+        data to SoroushPlus to indicate which connection mode will
         be used.
         """
         if self._codec.tag:

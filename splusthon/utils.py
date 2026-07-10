@@ -1,5 +1,5 @@
 """
-Utilities for working with the Telegram API itself (such as handy methods
+Utilities for working with the SoroushPlus API itself (such as handy methods
 to convert between an entity like a User, Chat, etc. into its Input version)
 """
 import base64
@@ -72,7 +72,7 @@ _log = logging.getLogger(__name__)
 def chunks(iterable, size=100):
     """
     Turns the given iterable into chunks of the specified size,
-    which is 100 by default since that's what Telegram uses the most.
+    which is 100 by default since that's what SoroushPlus uses the most.
     """
     it = iter(iterable)
     size -= 1
@@ -103,9 +103,9 @@ def get_display_name(entity):
 
 
 def get_extension(media):
-    """Gets the corresponding extension for any Telegram media."""
+    """Gets the corresponding extension for any SoroushPlus media."""
 
-    # Photos are always compressed as .jpg by Telegram
+    # Photos are always compressed as .jpg by SoroushPlus
     try:
         get_input_photo(media)
         return '.jpg'
@@ -852,13 +852,13 @@ def _get_extension(file):
         # Note: ``file.name`` works for :tl:`InputFile` and some `IOBase`
         return _get_extension(file.name)
     else:
-        # Maybe it's a Telegram media
+        # Maybe it's a SoroushPlus media
         return get_extension(file)
 
 
 def is_image(file):
     """
-    Returns `True` if the file extension looks like an image file to Telegram.
+    Returns `True` if the file extension looks like an image file to SoroushPlus.
     """
     match = re.match(r'\.(png|jpe?g)', _get_extension(file), re.IGNORECASE)
     if match:
@@ -869,7 +869,7 @@ def is_image(file):
 
 def is_gif(file):
     """
-    Returns `True` if the file extension looks like a gif file to Telegram.
+    Returns `True` if the file extension looks like a gif file to SoroushPlus.
     """
     return re.match(r'\.gif', _get_extension(file), re.IGNORECASE)
 
@@ -1104,7 +1104,7 @@ def _decode_telegram_base64(string):
     Decodes a url-safe base64-encoded string into its bytes
     by first adding the stripped necessary padding characters.
 
-    This is the way Telegram shares binary data as strings,
+    This is the way SoroushPlus shares binary data as strings,
     such as Bot API-style file IDs or invite links.
 
     Returns `None` if the input string was not valid.
@@ -1531,7 +1531,7 @@ def stripped_photo_to_jpg(stripped):
     """
     Adds the JPG header and footer to a stripped image.
 
-    Ported from https://github.com/telegramdesktop/tdesktop/blob/bec39d89e19670eb436dc794a8f20b657cb87c71/Telegram/SourceFiles/ui/image/image.cpp#L225
+    Ported from https://github.com/telegramdesktop/tdesktop/blob/bec39d89e19670eb436dc794a8f20b657cb87c71/SoroushPlus/SourceFiles/ui/image/image.cpp#L225
     """
     # NOTE: Changes here should update _photo_size_byte_count
     if len(stripped) < 3 or stripped[0] != 1:

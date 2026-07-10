@@ -1,5 +1,6 @@
 import asyncio
 import collections
+import logging
 import socket
 
 try:
@@ -7,9 +8,12 @@ try:
 except ImportError:
     aiohttp = None
 
+_log = logging.getLogger(__name__)
+
 from .tcpabridged import AbridgedPacketCodec
 from .connection import ObfuscatedConnection
 
+from ... import helpers
 from ...crypto import AESModeCTR
 
 import os
@@ -35,7 +39,8 @@ class WebSocketReader:
         while self._total_len < n:
             try:
                 msg = await self._ws.receive()
-            except Exception:
+            except Exception as e:
+                _log.debug('WebSocket receive error: %s', e)
                 break
             if msg.type in (aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSING,
                             aiohttp.WSMsgType.CLOSED):
@@ -132,8 +137,8 @@ class WebSocketWriter:
         if self._ws is not None:
             try:
                 await self._ws.close()
-            except Exception:
-                pass
+            except Exception as e:
+                _log.debug('WebSocket close error during wait_closed: %s', e)
 
 
 class WebSocketObfuscatedIO:
@@ -212,6 +217,8 @@ class ConnectionWebSocket(ObfuscatedConnection):
         super().__init__(*args, **kwargs)
         self._cached_session = None
         self._cached_session_key = None
+        self._reconnect_task = None
+        self._reconnect_interval = 30
 
     async def _connect(self, timeout=None, ssl=None):
         if aiohttp is None:
@@ -245,8 +252,8 @@ class ConnectionWebSocket(ObfuscatedConnection):
             if self._cached_session is not None:
                 try:
                     await asyncio.wait_for(self._cached_session.close(), timeout=5)
-                except Exception:
-                    pass
+                except Exception as e:
+                    _log.debug('Error closing cached session: %s', e)
                 self._cached_session = None
                 self._cached_session_key = None
 
@@ -264,7 +271,8 @@ class ConnectionWebSocket(ObfuscatedConnection):
                 ),
                 timeout=timeout
             )
-        except Exception:
+        except Exception as e:
+            _log.warning('WebSocket connection failed: %s', e)
             # Only the session we just created here should be closed on
             # failure; a pre-existing cached session may still be healthy
             # and used by a later reconnect attempt.
@@ -300,21 +308,49 @@ class ConnectionWebSocket(ObfuscatedConnection):
                     try:
                         sock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 65536)
                         sock.setsockopt(socket.SOL_SOCKET, socket.SO_RCVBUF, 65536)
-                    except OSError:
-                        pass
+                    except OSError as e:
+                        _log.debug('Failed to set socket buffer sizes: %s', e)
 
                     # Enable TCP Quick ACK on Linux for faster response
                     try:
                         TCP_QUICKACK = 12
                         sock.setsockopt(socket.IPPROTO_TCP, TCP_QUICKACK, 1)
-                    except (OSError, AttributeError):
-                        pass
-        except Exception:
-            pass
+                    except (OSError, AttributeError) as e:
+                        _log.debug('Failed to set TCP_QUICKACK: %s', e)
+        except Exception as e:
+            _log.debug('Failed to optimize socket settings: %s', e)
 
         self._codec = self.packet_codec(self)
         self._init_conn()
         await self._writer.drain()
+
+        # Start periodic reconnect loop
+        self._reconnect_task = asyncio.ensure_future(self._reconnect_loop())
+
+    async def _reconnect_loop(self):
+        """Periodically reset the WebSocket connection every N seconds."""
+        try:
+            while self._connected:
+                await asyncio.sleep(self._reconnect_interval)
+                if not self._connected:
+                    break
+                _log.info('Resetting WebSocket connection (every %ds)', self._reconnect_interval)
+                try:
+                    await self.disconnect()
+                except Exception as e:
+                    _log.debug('Error during reconnect disconnect: %s', e)
+                try:
+                    # Reconnect without starting the reconnect loop again
+                    await self._connect()
+                    self._connected = True
+                    loop = helpers.get_running_loop()
+                    self._send_task = loop.create_task(self._send_loop())
+                    self._recv_task = loop.create_task(self._recv_loop())
+                except Exception as e:
+                    _log.warning('WebSocket reconnect failed: %s', e)
+                    break
+        except asyncio.CancelledError:
+            pass
 
     async def disconnect(self):
         if not self._connected:
@@ -322,11 +358,11 @@ class ConnectionWebSocket(ObfuscatedConnection):
 
         self._connected = False
 
-        from ... import helpers
         await helpers._cancel(
             self._log,
             send_task=self._send_task,
-            recv_task=self._recv_task
+            recv_task=self._recv_task,
+            reconnect_task=self._reconnect_task
         )
 
         if hasattr(self, '_writer') and self._writer:
@@ -347,5 +383,5 @@ class ConnectionWebSocket(ObfuscatedConnection):
             if self._session is not self._cached_session:
                 try:
                     await asyncio.wait_for(self._session.close(), timeout=5)
-                except Exception:
-                    pass
+                except Exception as e:
+                    _log.debug('Error closing session during disconnect: %s', e)

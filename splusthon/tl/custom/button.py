@@ -33,7 +33,7 @@ class Button:
     and it will error if you try to do so.
 
     The text for all buttons may be at most 142 characters.
-    If more characters are given, Telegram will cut the text
+    If more characters are given, SoroushPlus will cut the text
     to 128 characters and add the ellipsis (…) character as
     the 129.
     """
@@ -133,7 +133,7 @@ class Button:
         for the desired `bot` via `@BotFather <https://t.me/BotFather>`_ using
         the ``/setdomain`` command.
 
-        For more information about letting the user login via Telegram to
+        For more information about letting the user login via SoroushPlus to
         a certain domain, see https://core.telegram.org/widgets/login.
 
         If no `url` is specified, it will default to `text`.
@@ -324,7 +324,7 @@ class Button:
         This can only be used when sending files of type
         :tl:`InputMediaInvoice`, and must be the first button.
 
-        If the button is not specified, Telegram will automatically
+        If the button is not specified, SoroushPlus will automatically
         add the button to the message. See the
         `Payments API <https://core.telegram.org/api/payments>`__
         documentation for more information.

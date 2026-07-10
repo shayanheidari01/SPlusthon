@@ -180,7 +180,7 @@ class InlineQuery(EventBuilder):
                     results and it repeats the request.
 
                 private (`bool`, optional):
-                    Whether the results should be cached by Telegram
+                    Whether the results should be cached by SoroushPlus
                     (not private) or by the user's client (private).
 
                 switch_pm (`str`, optional):

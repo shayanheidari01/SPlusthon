@@ -1,10 +1,13 @@
 import functools
 import inspect
+import logging
 import typing
 
 from .users import _NOT_A_REQUEST
 from .. import helpers, utils
 from ..tl import functions, TLRequest
+
+_log = logging.getLogger(__name__)
 
 if typing.TYPE_CHECKING:
     from .soroushclient import SoroushClient
@@ -144,7 +147,7 @@ class AccountMethods:
 
         There's also a `success` property available in the takeout proxy
         object, so from the `with` body you can set the boolean result that
-        will be sent back to Telegram. But if it's left `None` as by
+        will be sent back to SoroushPlus. But if it's left `None` as by
         default, then the action is based on the `finalize` parameter. If
         it's `True` then the takeout will be finished, and if no exception
         occurred during it, then `True` will be considered as a result.
@@ -238,6 +241,7 @@ class AccountMethods:
         try:
             async with _TakeoutClient(True, self, None) as takeout:
                 takeout.success = success
-        except ValueError:
+        except ValueError as e:
+            _log.debug('Failed to end takeout: %s', e)
             return False
         return True

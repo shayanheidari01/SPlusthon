@@ -1,11 +1,14 @@
 import asyncio
 import inspect
 import itertools
+import logging
 import typing
 
 from .. import helpers, utils, hints, errors
 from ..requestiter import RequestIter
 from ..tl import types, functions, custom
+
+_log = logging.getLogger(__name__)
 
 _MAX_CHUNK_SIZE = 100
 
@@ -66,7 +69,7 @@ class _DialogsIter(RequestIter):
             messages[_dialog_message_key(m.peer_id, m.id)] = m
 
         for d in r.dialogs:
-            # We check the offset date here because Telegram may ignore it
+            # We check the offset date here because SoroushPlus may ignore it
             message = messages.get(_dialog_message_key(d.peer, d.top_message))
             if self.offset_date:
                 date = getattr(message, 'date', None)
@@ -167,7 +170,7 @@ class DialogMethods:
             limit (`int` | `None`):
                 How many dialogs to be retrieved as maximum. Can be set to
                 `None` to retrieve all dialogs. Note that this may take
-                whole minutes if you have hundreds of dialogs, as Telegram
+                whole minutes if you have hundreds of dialogs, as SoroushPlus
                 will tell the library to slow down through a
                 ``FloodWaitError``.
 
@@ -202,7 +205,7 @@ class DialogMethods:
                 If set to a folder number like ``1``, only those from
                 said folder will be returned.
 
-                By default Telegram assigns the folder ID ``1`` to
+                By default SoroushPlus assigns the folder ID ``1`` to
                 archived chats, so you should use that if you need
                 to fetch the archived dialogs.
 
@@ -462,8 +465,9 @@ class DialogMethods:
                 result = await self(functions.messages.DeleteChatUserRequest(
                     entity.chat_id, types.InputUserSelf(), revoke_history=revoke
                 ))
-            except errors.PeerIdInvalidError:
+            except errors.PeerIdInvalidError as e:
                 # Happens if we didn't have the deactivated information
+                _log.debug('PeerIdInvalidError when deleting chat: %s', e)
                 result = None
         else:
             result = None

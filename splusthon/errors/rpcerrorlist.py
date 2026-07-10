@@ -2869,7 +2869,7 @@ class PhoneNumberAppSignupForbiddenError(BadRequestError):
 class PhoneNumberBannedError(BadRequestError):
     def __init__(self, request):
         self.request = request
-        super(Exception, self).__init__('The used phone number has been banned from Telegram and cannot be used anymore. Maybe check https://www.telegram.org/faq_spam' + self._fmt_request(self.request))
+        super(Exception, self).__init__('The used phone number has been banned from SoroushPlus and cannot be used anymore. Maybe check https://www.telegram.org/faq_spam' + self._fmt_request(self.request))
 
     def __reduce__(self):
         return type(self), (self.request,)
@@ -3013,7 +3013,7 @@ class PhotoInvalidDimensionsError(BadRequestError):
 class PhotoSaveFileInvalidError(BadRequestError):
     def __init__(self, request):
         self.request = request
-        super(Exception, self).__init__('The photo you tried to send cannot be saved by Telegram. A reason may be that it exceeds 10MB. Try resizing it locally' + self._fmt_request(self.request))
+        super(Exception, self).__init__('The photo you tried to send cannot be saved by SoroushPlus. A reason may be that it exceeds 10MB. Try resizing it locally' + self._fmt_request(self.request))
 
     def __reduce__(self):
         return type(self), (self.request,)
@@ -3482,7 +3482,7 @@ class RightForbiddenError(ForbiddenError):
 class RpcCallFailError(ServerError):
     def __init__(self, request):
         self.request = request
-        super(Exception, self).__init__('Telegram is having internal issues, please try again later.' + self._fmt_request(self.request))
+        super(Exception, self).__init__('SoroushPlus is having internal issues, please try again later.' + self._fmt_request(self.request))
 
     def __reduce__(self):
         return type(self), (self.request,)
@@ -3491,7 +3491,7 @@ class RpcCallFailError(ServerError):
 class RpcMcgetFailError(ServerError):
     def __init__(self, request):
         self.request = request
-        super(Exception, self).__init__('Telegram is having internal issues, please try again later.' + self._fmt_request(self.request))
+        super(Exception, self).__init__('SoroushPlus is having internal issues, please try again later.' + self._fmt_request(self.request))
 
     def __reduce__(self):
         return type(self), (self.request,)
@@ -3854,7 +3854,7 @@ class StickersTooMuchError(BadRequestError):
 class StickerDocumentInvalidError(BadRequestError):
     def __init__(self, request):
         self.request = request
-        super(Exception, self).__init__('The sticker file was invalid (this file has failed Telegram internal checks, make sure to use the correct format and comply with https://core.telegram.org/animated_stickers)' + self._fmt_request(self.request))
+        super(Exception, self).__init__('The sticker file was invalid (this file has failed SoroushPlus internal checks, make sure to use the correct format and comply with https://core.telegram.org/animated_stickers)' + self._fmt_request(self.request))
 
     def __reduce__(self):
         return type(self), (self.request,)
@@ -4747,7 +4747,7 @@ class WebpushTokenInvalidError(BadRequestError):
 class WorkerBusyTooLongRetryError(ServerError):
     def __init__(self, request):
         self.request = request
-        super(Exception, self).__init__('Telegram workers are too busy to respond immediately' + self._fmt_request(self.request))
+        super(Exception, self).__init__('SoroushPlus workers are too busy to respond immediately' + self._fmt_request(self.request))
 
     def __reduce__(self):
         return type(self), (self.request,)

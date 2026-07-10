@@ -39,7 +39,7 @@
     <noscript>Please enable JavaScript if you would like to use search.</noscript>
     <h1>SPlusthon API</h1>
     <p>This documentation was generated straight from the <code>scheme.tl</code>
-    provided by Telegram. However, there is no official documentation per se
+    provided by SoroushPlus. However, there is no official documentation per se
     on what the methods, constructors and types mean. Nevertheless, this
     page aims to provide easy access to all the available methods, their
     definition and parameters.</p>
@@ -80,9 +80,9 @@ users.getUsers#0d91a548 id:Vector&lt;InputUser&gt; = Vector&lt;User&gt;</pre>
     {layer}. <a href="methods/index.html">See the complete method list</a>.
     <br /><br />
     Methods, also known as <i>requests</i>, are used to interact with the
-    Telegram API itself and are invoked through <code>client(Request(...))</code>.
+    SoroushPlus API itself and are invoked through <code>client(Request(...))</code>.
     <b>Only these</b> can be used like that! You cannot invoke types or
-    constructors, only requests. After this, Telegram will return a
+    constructors, only requests. After this, SoroushPlus will return a
     <code>result</code>, which may be, for instance, a bunch of messages,
     some dialogs, users, etc.</p>
 
@@ -90,14 +90,14 @@ users.getUsers#0d91a548 id:Vector&lt;InputUser&gt; = Vector&lt;User&gt;</pre>
     <p>Currently there are <b>{type_count} types</b>.
     <a href="types/index.html">See the complete list of types</a>.</p>
 
-    <p>The Telegram types are the <i>abstract</i> results that you receive
+    <p>The SoroushPlus types are the <i>abstract</i> results that you receive
     after invoking a request. They are "abstract" because they can have
     multiple constructors. For instance, the abstract type <code>User</code>
     can be either <code>UserEmpty</code> or <code>User</code>. You should,
     most of the time, make sure you received the desired type by using
     the <code>isinstance(result, Constructor)</code> Python function.
 
-    When a request needs a Telegram type as argument, you should create
+    When a request needs a SoroushPlus type as argument, you should create
     an instance of it by using one of its, possibly multiple, constructors.</p>
 
     <h3 id="constructors">Constructors</h3>
@@ -109,7 +109,7 @@ users.getUsers#0d91a548 id:Vector&lt;InputUser&gt; = Vector&lt;User&gt;</pre>
     the functions although they all share a common abstract type.</p>
 
     <h3 id="core">Core types</h3>
-    <p>Core types are types from which the rest of Telegram types build upon:</p>
+    <p>Core types are types from which the rest of SoroushPlus types build upon:</p>
     <ul>
     <li id="int"><b>int</b>:
         The value should be an integer type, like <span class="sh1">42</span>.

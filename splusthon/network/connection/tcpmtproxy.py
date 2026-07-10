@@ -82,7 +82,7 @@ class MTProxyIO:
 
 class TcpMTProxy(ObfuscatedConnection):
     """
-    Connector which allows user to connect to the Telegram via proxy servers
+    Connector which allows user to connect to the SoroushPlus via proxy servers
     commonly known as MTProxy.
     Implemented very ugly due to the leaky abstractions in SPlusthon networking
     classes that should be refactored later (TODO).

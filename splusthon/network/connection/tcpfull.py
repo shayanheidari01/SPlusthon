@@ -11,7 +11,7 @@ class FullPacketCodec(PacketCodec):
 
     def __init__(self, connection):
         super().__init__(connection)
-        self._send_counter = 0  # Important or Telegram won't reply
+        self._send_counter = 0  # Important or SoroushPlus won't reply
 
     def encode_packet(self, data):
         # https://core.telegram.org/mtproto#tcp-transport
@@ -52,7 +52,7 @@ class FullPacketCodec(PacketCodec):
 
 class ConnectionTcpFull(Connection):
     """
-    Default Telegram mode. Sends 12 additional bytes and
+    Default SoroushPlus mode. Sends 12 additional bytes and
     needs to calculate the CRC value of the packet itself.
     """
     packet_codec = FullPacketCodec

@@ -10,7 +10,7 @@ from ..extensions import BinaryReader
 class AuthKey:
     """
     Represents an authorization key, used to encrypt and decrypt
-    messages sent to Telegram's data centers.
+    messages sent to SoroushPlus's data centers.
     """
     def __init__(self, data):
         """

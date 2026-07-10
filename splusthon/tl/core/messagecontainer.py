@@ -6,12 +6,12 @@ class MessageContainer(TLObject):
     CONSTRUCTOR_ID = 0x73f1f8dc
 
     # Maximum size in bytes for the inner payload of the container.
-    # Telegram will close the connection if the payload is bigger.
+    # SoroushPlus will close the connection if the payload is bigger.
     # The overhead of the container itself is subtracted.
     MAXIMUM_SIZE = 1044456 - 8
 
     # Maximum amount of messages that can't be sent inside a single
-    # container, inclusive. Beyond this limit Telegram will respond
+    # container, inclusive. Beyond this limit SoroushPlus will respond
     # with BAD_MESSAGE 64 (invalid container).
     #
     # This limit is not 100% accurate and may in some cases be higher.

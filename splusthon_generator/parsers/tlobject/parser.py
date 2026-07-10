@@ -14,7 +14,7 @@ CORE_TYPES = {
     0x56730bcc   # null#56730bcc = Null;
 }
 
-# Telegram Desktop (C++) doesn't care about string/bytes, and the .tl files
+# SoroushPlus Desktop (C++) doesn't care about string/bytes, and the .tl files
 # don't either. However in Python we *do*, and we want to deal with bytes
 # for the authorization key process, not UTF-8 strings (they won't be).
 #

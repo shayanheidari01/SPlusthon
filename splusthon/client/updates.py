@@ -55,7 +55,7 @@ class UpdateMethods:
         """
         Change the value of `receive_updates`.
 
-        This is an `async` method, because in order for Telegram to start
+        This is an `async` method, because in order for SoroushPlus to start
         sending updates again, a request must be made.
         """
         self._no_updates = not receive_updates
@@ -66,13 +66,13 @@ class UpdateMethods:
         """
         Runs the event loop until the library is disconnected.
 
-        It also notifies Telegram that we want to receive updates
+        It also notifies SoroushPlus that we want to receive updates
         as described in https://core.telegram.org/api/updates.
         If an unexpected error occurs during update handling,
         the client will disconnect and said error will be raised.
 
         Manual disconnections can be made by calling `disconnect()
-        <splusthon.client.telegrambaseclient.TelegramBaseClient.disconnect>`
+        <splusthon.client.telegrambaseclient.SoroushPlusBaseClient.disconnect>`
         or sending a ``KeyboardInterrupt`` (e.g. by pressing ``Ctrl+C`` on
         the console window running the script).
 
@@ -308,8 +308,8 @@ class UpdateMethods:
                         errors.FloodWaitError,
                         ValueError
                     ) as e:
-                        # Telegram is having issues
-                        self._log[__name__].info('Cannot get difference since Telegram is having issues: %s', type(e).__name__)
+                        # SoroushPlus is having issues
+                        self._log[__name__].info('Cannot get difference since SoroushPlus is having issues: %s', type(e).__name__)
                         self._message_box.end_difference()
                         continue
                     except (errors.UnauthorizedError, errors.AuthKeyError) as e:
@@ -322,7 +322,7 @@ class UpdateMethods:
                             break
                         continue
                     except (errors.TypeNotFoundError, OperationalError) as e:
-                        # User is likely doing weird things with their account or session and Telegram gets confused as to what layer they use
+                        # User is likely doing weird things with their account or session and SoroushPlus gets confused as to what layer they use
                         self._log[__name__].warning('Cannot get difference since the account is likely misusing the session: %s', e)
                         self._message_box.end_difference()
                         self._updates_error = e
@@ -395,13 +395,13 @@ class UpdateMethods:
                         errors.FloodWaitError,
                         ValueError
                     ) as e:
-                        # According to Telegram's docs:
+                        # According to SoroushPlus's docs:
                         # "Channel internal replication issues, try again later (treat this like an RPC_CALL_FAIL)."
                         # We can treat this as "empty difference" and not update the local pts.
                         # Then this same call will be retried when another gap is detected or timeout expires.
                         #
                         # Another option would be to literally treat this like an RPC_CALL_FAIL and retry after a few
-                        # seconds, but if Telegram is having issues it's probably best to wait for it to send another
+                        # seconds, but if SoroushPlus is having issues it's probably best to wait for it to send another
                         # update (hinting it may be okay now) and retry then.
                         #
                         # This is a bit hacky because MessageBox doesn't really have a way to "not update" the pts.
@@ -724,7 +724,7 @@ class UpdateMethods:
                     self._log[__name__].exception('Unhandled exception on %s', name)
 
     async def _handle_auto_reconnect(self: 'SoroushClient'):
-        # Use lightweight get_me to let Telegram know we want updates
+        # Use lightweight get_me to let SoroushPlus know we want updates
         try:
             await self.get_me(input_peer=True)
         except Exception as e:

@@ -6,12 +6,12 @@ from ..tl import types
 class MessageDeleted(EventBuilder):
     """
     Occurs whenever a message is deleted. Note that this event isn't 100%
-    reliable, since Telegram doesn't always notify the clients that a message
+    reliable, since SoroushPlus doesn't always notify the clients that a message
     was deleted.
 
     .. important::
 
-        Telegram **does not** send information about *where* a message
+        SoroushPlus **does not** send information about *where* a message
         was deleted if it occurs in private conversations with other users
         or in small group chats, because message IDs are *unique* and you
         can identify the chat with the message ID alone if you saved it

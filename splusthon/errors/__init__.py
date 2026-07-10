@@ -17,7 +17,7 @@ from .rpcerrorlist import *
 
 def rpc_message_to_error(rpc_error, request):
     """
-    Converts a Telegram's RPC Error to a Python error.
+    Converts a SoroushPlus's RPC Error to a Python error.
 
     :param rpc_error: the RpcError instance.
     :param request: the request that caused this error.

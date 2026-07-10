@@ -16,9 +16,9 @@ def _datetime_to_timestamp(dt):
     # We use .total_seconds() method instead of simply dt.timestamp(), 
     # because on Windows the latter raises OSError on datetimes ~< datetime(1970,1,1)
     secs = int((dt - _EPOCH).total_seconds())
-    # Make sure it's a valid signed 32 bit integer, as used by Telegram.
+    # Make sure it's a valid signed 32 bit integer, as used by SoroushPlus.
     # This does make very large dates wrap around, but it's the best we
-    # can do with Telegram's limitations.
+    # can do with SoroushPlus's limitations.
     return struct.unpack('i', struct.pack('I', secs & 0xffffffff))[0]
 
 
@@ -104,7 +104,7 @@ class TLObject:
 
     @staticmethod
     def serialize_bytes(data):
-        """Write bytes by using Telegram guidelines"""
+        """Write bytes by using SoroushPlus guidelines"""
         if not isinstance(data, bytes):
             if isinstance(data, str):
                 data = data.encode('utf-8')
