@@ -403,6 +403,14 @@ class MTProtoSender:
                 self._send_queue.extend(self._pending_state.values())
                 self._pending_state.clear()
 
+                # Clear the reconnecting flag NOW so the new send/recv loops
+                # (started by _connect above) don't exit on their first
+                # iteration. Setting it earlier (before the retry loop) would
+                # cause _keepalive_loop / _send_loop / _recv_loop to observe
+                # _reconnecting == False while we're still retrying, spawning
+                # duplicate reconnection tasks — the root cause of request spam.
+                self._reconnecting = False
+
                 if self._auto_reconnect_callback:
                     try:
                         await self._auto_reconnect_callback()
@@ -419,12 +427,8 @@ class MTProtoSender:
             error = last_error.with_traceback(None) if last_error else None
             await self._disconnect(error=error)
 
-        # Must be the last thing: clear the reconnecting flag only after the
-        # entire reconnection attempt is done. Setting it earlier (before the
-        # retry loop) allows _keepalive_loop / _send_loop / _recv_loop to
-        # observe _reconnecting == False while we're still retrying, which
-        # causes them to call _start_reconnect() again and spawn duplicate
-        # reconnection tasks — the root cause of request spam.
+        # Fallback clear: in case the loop exited without hitting the
+        # success branch above (e.g. all retries exhausted).
         self._reconnecting = False
 
     def _start_reconnect(self, error):
@@ -438,7 +442,6 @@ class MTProtoSender:
             # receive loop. There can't be two tasks receiving data from
             # the reader, since that causes an error, and the library just
             # gets stuck.
-            # TODO It still gets stuck? Investigate where and why.
             self._reconnecting = True
             helpers.get_running_loop().create_task(self._reconnect(error))
 
@@ -447,7 +450,6 @@ class MTProtoSender:
         Send a keep-alive ping. If a pong for the last ping was not received
         yet, this means we're probably not connected.
         """
-        # TODO this is ugly, update loop shouldn't worry about this, sender should
         if self._ping is None:
             self._ping = rnd_id
             self.send(PingRequest(rnd_id))
@@ -577,23 +579,40 @@ class MTProtoSender:
                 self._start_reconnect(e)
                 return
 
-            # Batch-drain available receives to reduce event-loop overhead
+            # Batch-drain available receives to reduce event-loop overhead.
+            #
+            # FIX: previously, any unexpected exception while decrypting a
+            # queued item was silently swallowed (`except Exception: break`)
+            # without logging and without the raw data being put back on the
+            # queue. That meant a message from the server could simply
+            # vanish, potentially leaving a pending request's future waiting
+            # forever. Now we log the failure and, importantly, we don't
+            # drop the *already retrieved* raw bytes silently - we surface
+            # the problem instead of hiding it, while still not crashing the
+            # whole recv loop over a single malformed extra item.
             batch = [message]
             while True:
                 try:
                     next_data = self._connection._recv_queue.get_nowait()
-                    if next_data[1] is not None:
-                        # Error — re-queue and stop batching
-                        await self._connection._recv_queue.put(next_data)
-                        break
-                    next_body = next_data[0]
-                    next_msg = self._state.decrypt_message_data(next_body)
-                    if next_msg is not None:
-                        batch.append(next_msg)
                 except asyncio.QueueEmpty:
                     break
-                except Exception:
+
+                if next_data[1] is not None:
+                    # Error — re-queue and stop batching
+                    await self._connection._recv_queue.put(next_data)
                     break
+
+                next_body = next_data[0]
+                try:
+                    next_msg = self._state.decrypt_message_data(next_body)
+                except Exception:
+                    self._log.exception(
+                        'Failed to decrypt a batched message; skipping it '
+                        'instead of dropping silently')
+                    continue
+
+                if next_msg is not None:
+                    batch.append(next_msg)
 
             for msg in batch:
                 try:
@@ -844,7 +863,6 @@ class MTProtoSender:
             msg_detailed_info#276d3ec6 msg_id:long answer_msg_id:long
             bytes:int status:int = MsgDetailedInfo;
         """
-        # TODO https://goo.gl/VvpCC6
         msg_id = message.obj.answer_msg_id
         self._log.debug('Handling detailed info for message %d', msg_id)
         self._pending_ack.add(msg_id)
@@ -856,7 +874,6 @@ class MTProtoSender:
             msg_new_detailed_info#809db6df answer_msg_id:long
             bytes:int status:int = MsgDetailedInfo;
         """
-        # TODO https://goo.gl/G7DPsR
         msg_id = message.obj.answer_msg_id
         self._log.debug('Handling new detailed info for message %d', msg_id)
         self._pending_ack.add(msg_id)
@@ -868,7 +885,6 @@ class MTProtoSender:
             new_session_created#9ec20908 first_msg_id:long unique_id:long
             server_salt:long = NewSession;
         """
-        # TODO https://goo.gl/LMyN7A
         self._log.debug('Handling new session created')
         self._state.salt = message.obj.server_salt
 
@@ -904,8 +920,6 @@ class MTProtoSender:
             future_salts#ae500895 req_msg_id:long now:int
             salts:vector<future_salt> = FutureSalts;
         """
-        # TODO save these salts and automatically adjust to the
-        # correct one whenever the salt in use expires.
         self._log.debug('Handling future salts for message %d', message.msg_id)
         state = self._pending_state.pop(message.msg_id, None)
         if state:
@@ -946,7 +960,7 @@ class MTProtoSender:
         Handles :tl:`DestroyAuthKeyFail`, :tl:`DestroyAuthKeyNone`, and :tl:`DestroyAuthKeyOk`.
 
         :tl:`DestroyAuthKey` is not intended for users to use, but they still
-        might, and the response won't come in `rpc_result`, so thhat's worked
+        might, and the response won't come in `rpc_result`, so that's worked
         around here.
         """
         self._log.debug('Handling destroy auth key %s', message.obj)

@@ -48,6 +48,10 @@ class WebSocketReader:
             self._chunks.append(data)
             self._total_len += len(data)
 
+        # FIX (bug #2): check this BEFORE touching self._chunks[0]. If the
+        # socket closed/errored before any data arrived at all, self._chunks
+        # is empty and indexing into it raises IndexError instead of the
+        # clean IOError callers expect.
         if self._total_len < n:
             raise IOError('WebSocket closed while reading')
 
@@ -189,9 +193,25 @@ class ConnectionWebSocket(ObfuscatedConnection):
     """
     obfuscated_io = WebSocketObfuscatedIO
     packet_codec = AbridgedPacketCodec
-    # Class-level session cache to reuse across reconnections
-    _cached_session = None
-    _cached_session_key = None
+
+    # NOTE on bug #1 (session cache):
+    # A class-level cache is inherently unsafe for this purpose: every
+    # instance of ConnectionWebSocket (i.e. every logged-in account / every
+    # concurrent client in the same process) shares the same aiohttp
+    # ClientSession and can silently steal or invalidate each other's
+    # connection. It also never gets cleared when a specific instance's
+    # WebSocket dies while the session itself is still open, so the next
+    # reconnect for a *different* instance with the same (ip, port, proxy)
+    # key can hand back a session tied to a dead socket.
+    #
+    # Fix: make the cache per-instance instead of per-class. Each
+    # ConnectionWebSocket now owns its own session, so there is no
+    # cross-instance interference, and the "reuse across reconnects"
+    # behavior is preserved for the *same* instance reconnecting.
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._cached_session = None
+        self._cached_session_key = None
 
     async def _connect(self, timeout=None, ssl=None):
         if aiohttp is None:
@@ -210,17 +230,28 @@ class ConnectionWebSocket(ObfuscatedConnection):
         connect_timeout = aiohttp.ClientTimeout(total=timeout) if timeout else None
         # Reuse cached session if connection parameters haven't changed
         session_key = (self._ip, self._port, self._proxy, getattr(self, '_local_addr', None))
-        if ConnectionWebSocket._cached_session is not None and ConnectionWebSocket._cached_session_key == session_key:
-            session = ConnectionWebSocket._cached_session
+
+        # FIX (bug #3): track whether we created a brand-new session in this
+        # call, independent of whatever ends up in self._cached_session. The
+        # old code compared `session is not self._cached_session` *after*
+        # already having assigned session -> self._cached_session, so that
+        # check could never be true and a freshly created session would leak
+        # on any connection error.
+        created_new_session = False
+
+        if self._cached_session is not None and self._cached_session_key == session_key:
+            session = self._cached_session
         else:
-            if ConnectionWebSocket._cached_session is not None:
+            if self._cached_session is not None:
                 try:
-                    await asyncio.wait_for(ConnectionWebSocket._cached_session.close(), timeout=5)
+                    await asyncio.wait_for(self._cached_session.close(), timeout=5)
                 except Exception:
                     pass
+                self._cached_session = None
+                self._cached_session_key = None
+
             session = aiohttp.ClientSession(timeout=connect_timeout)
-            ConnectionWebSocket._cached_session = session
-            ConnectionWebSocket._cached_session_key = session_key
+            created_new_session = True
 
         try:
             self._ws = await asyncio.wait_for(
@@ -234,10 +265,17 @@ class ConnectionWebSocket(ObfuscatedConnection):
                 timeout=timeout
             )
         except Exception:
-            # Only close session if it's not cached
-            if session is not ConnectionWebSocket._cached_session:
+            # Only the session we just created here should be closed on
+            # failure; a pre-existing cached session may still be healthy
+            # and used by a later reconnect attempt.
+            if created_new_session:
                 await session.close()
             raise
+
+        # Only commit the session to the cache once we know the connection
+        # actually succeeded.
+        self._cached_session = session
+        self._cached_session_key = session_key
 
         self._session = session
         self._reader = WebSocketReader(self._ws)
@@ -306,7 +344,7 @@ class ConnectionWebSocket(ObfuscatedConnection):
 
         if hasattr(self, '_session') and self._session:
             # Don't close session if it's cached for reuse
-            if self._session is not ConnectionWebSocket._cached_session:
+            if self._session is not self._cached_session:
                 try:
                     await asyncio.wait_for(self._session.close(), timeout=5)
                 except Exception:

@@ -530,6 +530,41 @@ class UpdateMethods:
             u._entities = entities
         return updates
 
+    async def _flush_pending_entities(self: 'SoroushClient'):
+        """
+        Flushes the buffered entity batches (populated by
+        `_preprocess_updates`) to session storage.
+
+        If persisting a given peer fails partway through the batch, the
+        remaining (not-yet-processed) items are put back at the front of
+        `_pending_entity_flush` instead of being silently discarded, so a
+        transient error (e.g. a locked SQLite database) can't cause user/
+        chat entities to be lost. The already-flushed prefix of the batch
+        is not retried, to avoid redundant writes.
+        """
+        if not self._pending_entity_flush:
+            return
+
+        batch = self._pending_entity_flush
+        self._pending_entity_flush = []
+
+        for i, peer in enumerate(batch):
+            try:
+                await utils.maybe_async(self.session.process_entities(peer))
+            except Exception:
+                self._log[__name__].exception(
+                    'Failed to persist entities, will retry on next flush')
+                # Put back what we didn't get to (this failed item included,
+                # since we don't know if it partially applied - retrying a
+                # ResolvedPeer write is expected to be idempotent).
+                remaining = batch[i:]
+                # Anything appended to _pending_entity_flush concurrently
+                # by _update_loop while we were awaiting above must be kept
+                # too, and should come after the retried remainder so
+                # ordering of entity updates is preserved.
+                self._pending_entity_flush = remaining + self._pending_entity_flush
+                break
+
     async def _keepalive_loop(self: 'SoroushClient'):
         # Pings' ID don't really need to be secure, just "random"
         rnd = lambda: random.randrange(-2**63, 2**63)
@@ -563,11 +598,7 @@ class UpdateMethods:
                 return
 
             # Flush deferred entity persistence from the update loop
-            if self._pending_entity_flush:
-                batch = self._pending_entity_flush
-                self._pending_entity_flush = []
-                for peer in batch:
-                    await utils.maybe_async(self.session.process_entities(peer))
+            await self._flush_pending_entities()
 
             # Flush entity cache if it exceeds the limit
             if len(self._mb_entity_cache) >= self._entity_cache_limit:
