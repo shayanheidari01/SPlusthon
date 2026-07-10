@@ -229,7 +229,7 @@ class ConnectionWebSocket(ObfuscatedConnection):
                     headers=extra_headers,
                     protocols=["binary"],
                     max_msg_size=2 ** 24,  # 16 MB
-                    heartbeat=None,        # MTProto keepalive is used instead
+                    heartbeat=30,          # 30s WebSocket-level keepalive
                 ),
                 timeout=timeout
             )

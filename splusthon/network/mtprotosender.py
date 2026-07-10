@@ -364,13 +364,6 @@ class MTProtoSender:
             recv_loop_handle=self._recv_loop_handle
         )
 
-        # TODO See comment in `_start_reconnect`
-        # Perhaps this should be the last thing to do?
-        # But _connect() creates tasks which may run and,
-        # if they see that reconnecting is True, they will end.
-        # Perhaps that task creation should not belong in connect?
-        self._reconnecting = False
-
         # Start with a clean state (and thus session ID) to avoid old msgs
         self._state.reset()
 
@@ -419,6 +412,14 @@ class MTProtoSender:
             # There may be no error (e.g. automatic reconnection was turned off).
             error = last_error.with_traceback(None) if last_error else None
             await self._disconnect(error=error)
+
+        # Must be the last thing: clear the reconnecting flag only after the
+        # entire reconnection attempt is done. Setting it earlier (before the
+        # retry loop) allows _keepalive_loop / _send_loop / _recv_loop to
+        # observe _reconnecting == False while we're still retrying, which
+        # causes them to call _start_reconnect() again and spawn duplicate
+        # reconnection tasks — the root cause of request spam.
+        self._reconnecting = False
 
     def _start_reconnect(self, error):
         """Starts a reconnection in the background."""
