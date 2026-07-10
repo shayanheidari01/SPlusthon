@@ -30,6 +30,9 @@ from ..crypto import AuthKey
 from ..helpers import retry_range
 
 
+_RECV_TIMEOUT = 90  # seconds; triggers reconnection if no data received
+
+
 class MTProtoSender:
     """
     MTProto Mobile Protocol sender
@@ -401,7 +404,10 @@ class MTProtoSender:
                 self._pending_state.clear()
 
                 if self._auto_reconnect_callback:
-                    helpers.get_running_loop().create_task(self._auto_reconnect_callback())
+                    try:
+                        await self._auto_reconnect_callback()
+                    except Exception:
+                        self._log.exception('Error in auto-reconnect callback')
 
                 break
         else:
@@ -511,7 +517,14 @@ class MTProtoSender:
         while self._user_connected and not self._reconnecting:
             self._log.debug('Receiving items from the network...')
             try:
-                body = await self._connection.recv()
+                body = await asyncio.wait_for(
+                    self._connection.recv(), timeout=_RECV_TIMEOUT)
+            except asyncio.TimeoutError:
+                self._log.warning(
+                    'No data received for %d seconds, connection may be dead', _RECV_TIMEOUT)
+                self._start_reconnect(
+                    TimeoutError(f'No data received for {_RECV_TIMEOUT}s'))
+                return
             except asyncio.CancelledError:
                 raise  # bypass except Exception
             except (IOError, asyncio.IncompleteReadError) as e:

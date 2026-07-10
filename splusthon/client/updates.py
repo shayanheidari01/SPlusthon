@@ -342,6 +342,7 @@ class UpdateMethods:
                         # If disconnect is called this task will be cancelled along with the sleep.
                         # If disconnect is not called, getting difference should be retried after a few seconds.
                         self._log[__name__].info('Cannot get difference since the network is down: %s: %s', type(e).__name__, e)
+                        self._message_box.end_difference()
                         await asyncio.sleep(5)
                         continue
                     updates, users, chats = self._message_box.apply_difference(diff, self._mb_entity_cache)
@@ -452,6 +453,11 @@ class UpdateMethods:
                         self._log[__name__].info(
                             'Cannot get difference for channel %d since the network is down: %s: %s',
                             get_diff.channel.channel_id, type(e).__name__, e
+                        )
+                        self._message_box.end_channel_difference(
+                            get_diff,
+                            PrematureEndReason.TEMPORARY_SERVER_ISSUES,
+                            self._mb_entity_cache
                         )
                         await asyncio.sleep(5)
                         continue
