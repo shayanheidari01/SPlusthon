@@ -218,7 +218,7 @@ class ConnectionWebSocket(ObfuscatedConnection):
         self._cached_session = None
         self._cached_session_key = None
         self._reconnect_task = None
-        self._reconnect_interval = 30
+        self._reconnect_interval = 1800
 
     async def _connect(self, timeout=None, ssl=None):
         if aiohttp is None:
