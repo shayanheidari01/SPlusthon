@@ -1,165 +1,204 @@
-```rst
 .. raw:: html
 
    <div align="center">
 
-   <img src="logo.svg" width="200" alt="SPlusthon Logo">
+   <img src="logo.svg" width="180" alt="SPlusthon Logo">
 
    <h1>SPlusthon</h1>
 
    <p>
-   <strong>کتابخانه‌ای قدرتمند برای Python 3 مبتنی بر asyncio جهت تعامل با API پیام‌رسان سروش پلاس</strong>
+     <strong>Asynchronous Python library for the Soroush Plus API</strong>
    </p>
 
    <p>
-   ساخته‌شده بر پایه Telethon و سازگار با معماری اختصاصی سروش پلاس
+     Built on <strong>Telethon</strong> and fully adapted for the
+     <strong>Soroush Plus</strong> protocol.
+   </p>
+
+   <p>
+
+   <a href="https://pypi.org/project/splusthon/">
+     <img src="https://img.shields.io/pypi/v/splusthon.svg?style=for-the-badge" alt="PyPI">
+   </a>
+
+   <a href="https://pypi.org/project/splusthon/">
+     <img src="https://img.shields.io/pypi/pyversions/splusthon.svg?style=for-the-badge" alt="Python">
+   </a>
+
+   <a href="LICENSE">
+     <img src="https://img.shields.io/github/license/shayanheidari01/SPlusthon?style=for-the-badge" alt="License">
+   </a>
+
+   <a href="https://github.com/shayanheidari01/SPlusthon/stargazers">
+     <img src="https://img.shields.io/github/stars/shayanheidari01/SPlusthon?style=for-the-badge" alt="Stars">
+   </a>
+
+   <a href="https://github.com/shayanheidari01/SPlusthon/issues">
+     <img src="https://img.shields.io/github/issues/shayanheidari01/SPlusthon?style=for-the-badge" alt="Issues">
+   </a>
+
+   <a href="https://github.com/shayanheidari01/SPlusthon/actions">
+     <img src="https://img.shields.io/github/actions/workflow/status/shayanheidari01/SPlusthon/tests.yml?style=for-the-badge" alt="Build">
+   </a>
+
+   </p>
+
+   <p>
+
+   <a href="https://shayanheidari01.github.io/SPlusthon/"><strong>Documentation</strong></a>
+   •
+   <a href="https://pypi.org/project/splusthon/"><strong>PyPI</strong></a>
+   •
+   <a href="https://github.com/shayanheidari01/SPlusthon"><strong>GitHub</strong></a>
+   •
+   <a href="https://web.splus.ir"><strong>Soroush Plus</strong></a>
+
    </p>
 
    </div>
 
 ----
 
-کتابخانه **SPlusthon** یک کتابخانه قدرتمند برای **Python 3** مبتنی بر **asyncio** است که
-امکان تعامل با API پیام‌رسان
-`سروش پلاس <https://web.splus.ir>`_
-را به‌عنوان **کاربر** یا **ربات** (جایگزین Bot API) فراهم می‌کند.
+کتابخانه SPlusthon یک کتابخانه مدرن و قدرتمند برای **Python 3** است که بر پایه
+**asyncio** توسعه یافته و امکان تعامل مستقیم با **API پیام‌رسان سروش پلاس**
+را به‌عنوان **کاربر** یا **ربات** فراهم می‌کند.
 
-این پروژه بر پایه فورک **Telethon** توسعه یافته و به‌طور کامل برای معماری
-سروش پلاس سازگار شده است. SPlusthon از **TL Schema اختصاصی سروش (Layer 182)**،
-**مسیریابی DC**، **کلیدهای RSA** و **ارتباط WebSocket** پشتیبانی می‌کند تا
-تجربه‌ای سریع، پایدار و نزدیک به کلاینت رسمی ارائه دهد.
+این پروژه بر پایه **Telethon** توسعه یافته و برای معماری اختصاصی سروش پلاس
+بازطراحی شده است. کتابخانه از **TL Schema (Layer 182)**،
+**RSA Encryption**، **DC Routing** و **WebSocket Transport**
+پشتیبانی می‌کند و تجربه‌ای سریع، پایدار و نزدیک به کلاینت رسمی ارائه می‌دهد.
 
 .. note::
 
-   استفاده از این کتابخانه بر عهده کاربر است. لطفاً هنگام توسعه برنامه‌های خود،
-   قوانین و شرایط استفاده سروش پلاس را رعایت کنید تا از محدود شدن یا مسدود شدن
-   حساب کاربری جلوگیری شود.
+   لطفاً هنگام استفاده از این کتابخانه، قوانین و شرایط استفاده سروش پلاس را
+   رعایت کنید. مسئولیت استفاده از این پروژه بر عهده کاربر است.
 
 ویژگی‌ها
---------
+========
 
-- ارتباط با API سروش پلاس به‌عنوان کاربر یا ربات
-- پشتیبانی کامل از TL Schema اختصاصی سروش (Layer 182)
-- پشتیبانی از DC Routing، RSA و WebSocket
-- مدیریت Session و ذخیره‌سازی نشست
-- پشتیبانی از هر دو حالت **async** و **sync**
-- بدون نیاز به API ID و API Hash اختصاصی
-
-این کتابخانه چیست؟
-------------------
-
-کتابخانه SPlusthon توسعه برنامه‌های مبتنی بر سروش پلاس را تا حد زیادی ساده می‌کند.
-
-به‌جای درگیر شدن با جزئیات پیچیده پروتکل، احراز هویت، رمزنگاری و ارتباطات شبکه،
-می‌توانید تنها با چند خط کد به امکانات سروش پلاس دسترسی داشته باشید و تمرکز خود
-را روی توسعه برنامه قرار دهید.
+- پشتیبانی کامل از حساب کاربری و ربات
+- مبتنی بر asyncio با کارایی بالا
+- امکان استفاده به‌صورت Sync و Async
+- پشتیبانی کامل از TL Schema اختصاصی سروش
+- مدیریت Session و StringSession
+- پشتیبانی از WebSocket
+- پشتیبانی از DC Routing
+- رمزنگاری RSA و AES
+- بدون نیاز به API ID و API Hash
+- API مشابه Telethon برای مهاجرت آسان
 
 نصب
----
+====
 
-از طریق PyPI:
+از PyPI:
 
 .. code-block:: bash
 
    pip install splusthon
 
-یا آخرین نسخه توسعه از GitHub:
+یا آخرین نسخه توسعه:
 
 .. code-block:: bash
 
    pip install git+https://github.com/shayanheidari01/SPlusthon.git
 
-شروع کار
---------
-
-کتابخانه SPlusthon به‌صورت پیش‌فرض شامل اطلاعات موردنیاز برای اتصال به API سروش پلاس است؛
-بنابراین برای ساخت کلاینت نیازی به **API ID** یا **API Hash** نخواهید داشت.
+شروع سریع
+==========
 
 .. code-block:: python
 
-    from splusthon import SoroushClient, events, sync
-    from splusthon.sessions import StringSession
+   from splusthon import SoroushClient
+   from splusthon.sessions import StringSession
 
-    client = SoroushClient(StringSession())
-    client.start()
+   client = SoroushClient(StringSession())
 
-نمونه استفاده
--------------
+   client.start()
 
-.. code-block:: python
-
-    # دریافت اطلاعات حساب
-    print(client.get_me().stringify())
-
-    # ارسال پیام
-    client.send_message(
-        "username",
-        "سلام! این پیام توسط SPlusthon ارسال شده است."
-    )
-
-    # ارسال فایل
-    client.send_file(
-        "username",
-        "/home/myself/Pictures/holidays.jpg"
-    )
-
-    # دانلود تصویر پروفایل
-    client.download_profile_photo("me")
-
-    # دریافت پیام‌ها
-    messages = client.get_messages("username")
-    messages[0].download_media()
-
-    # دریافت رویداد پیام جدید
-    @client.on(events.NewMessage(pattern="(?i)hi|hello"))
-    async def handler(event):
-        await event.respond("سلام!")
-
-استفاده از Session ذخیره‌شده
-----------------------------
-
-اگر قبلاً Session خود را ذخیره کرده باشید، می‌توانید به‌سادگی آن را دوباره بارگذاری کنید.
+نمونه
+======
 
 .. code-block:: python
 
-    from splusthon import SoroushClient
-    from splusthon.sessions import StringSession
+   from splusthon import SoroushClient, events
+   from splusthon.sessions import StringSession
 
-    session_string = "1AwA..."
+   client = SoroushClient(StringSession())
 
-    with SoroushClient(StringSession(session_string)) as client:
-        print(client.get_me())
+   @client.on(events.NewMessage)
+   async def handler(event):
+       await event.reply("سلام 👋")
+
+   client.start()
+   client.run_until_disconnected()
+
+ارسال پیام
+
+.. code-block:: python
+
+   client.send_message(
+       "username",
+       "سلام از SPlusthon ❤️"
+   )
+
+ارسال فایل
+
+.. code-block:: python
+
+   client.send_file(
+       "username",
+       "/path/image.jpg"
+   )
+
+دانلود رسانه
+
+.. code-block:: python
+
+   message = client.get_messages("username", limit=1)[0]
+   message.download_media()
+
+Session ذخیره‌شده
+=================
+
+.. code-block:: python
+
+   from splusthon import SoroushClient
+   from splusthon.sessions import StringSession
+
+   session = "1AwA..."
+
+   with SoroushClient(StringSession(session)) as client:
+       print(client.get_me())
 
 وابستگی‌ها
-----------
+==========
 
-وابستگی‌های اصلی:
+- aiohttp
+- pyaes
+- rsa
 
-- ``pyaes`` — پیاده‌سازی رمزنگاری AES
-- ``rsa`` — پیاده‌سازی رمزنگاری RSA
-- ``aiohttp`` — ارتباطات HTTP ناهمگام
+اختیاری:
 
-وابستگی اختیاری:
+- cryptg (افزایش سرعت رمزنگاری)
 
-- ``cryptg`` — افزایش سرعت عملیات رمزنگاری
+مستندات
+========
 
-لینک‌ها
--------
+مستندات کامل پروژه:
 
-- گیت هاب: https://github.com/shayanheidari01/SPlusthon
-- مستندات: https://shayanheidari01.github.io/SPlusthon/
-- سروش پلاس: https://web.splus.ir
+https://shayanheidari01.github.io/SPlusthon/
 
 مجوز
-----
+=====
 
-این پروژه تحت مجوز
-`GNU General Public License v3.0 <LICENSE>`_
-منتشر شده است.
+این پروژه تحت مجوز **GNU GPL v3** منتشر شده است.
 
 ----
 
-**توسعه و نگهداری توسط**
+<div align="center">
 
-`ShayanHeidari <https://github.com/shayanheidari01>`_
+**Made with ❤️ by Shayan Heidari**
+
+https://github.com/shayanheidari01
+
+</div>
 ```
