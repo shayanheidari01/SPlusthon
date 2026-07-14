@@ -205,7 +205,7 @@ def main(argv):
             generate(['tl', 'errors'])
 
         # Get the long description from the README file
-        with open('README.rst', 'r', encoding='utf-8') as f:
+        with open('README.md', 'r', encoding='utf-8') as f:
             long_description = f.read()
 
         with open('splusthon/version.py', 'r', encoding='utf-8') as f:
@@ -216,6 +216,7 @@ def main(argv):
             version=version,
             description="Soroush Plus library for Python",
             long_description=long_description,
+            long_description_content_type='text/markdown',
 
             url='https://github.com/shayanheidari01/SPlusthon',
             download_url='https://github.com/shayanheidari01/SPlusthon/releases',
